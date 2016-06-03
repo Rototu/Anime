@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <title>Lumea în 24 cadre/secundă</title>
+
+   <link rel="stylesheet" href="css/style.css" />
+   <link rel="stylesheet" href="css/animeParallax.css" />
+   <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,latin-ext'
+   rel='stylesheet' type='text/css'>
+
+   <link rel="icon" href="img/favicon.gif">
+   <link rel="manifest" href="manifest.json">
+
+   <script src="js/vendor/jquery-1.12.1.min.js"></script>
+   <script src="js/vendor/jquery-ui.min.js"></script>
+
+</head>
+
+<body class=".noselect">
+
+   <!-- loading screen -->
+   <div id="loadingScreen">
+      <img src="img/loadingScreen/loadingSin.gif" id="loadingGif" class="loadElement"/>
+      <img src="img/loadingScreen/Sinon.png" id="Sinon" class="loadElement"/>
+   </div>
+
+   <section id="mySite">
+
+   <!-- hoverable parallax -->
+   <div class="container noselect screen" id="myParallax">
+      <ul id="scene" class="scene">
+         <li class="layer" data-depth="0.2">
+            <div class="background"><img id="parallaxBg" src="img/anime/fundal.jpg" style="height: 100vh;"/></div>
+         </li>
+         <li class="layer" data-depth="0.3">
+            <div class="fireflies"><img src="img/anime/fireflies.png" style="height: 50vh;"></div>
+         </li>
+         <li class="layer" data-depth="2.50">
+            <div class="snow"><img src="img/anime/snow.png" style="height: 100vh;"></div>
+         </li>
+         <li class="layer" data-depth="0.45">
+            <div class="evangelion"><img src="img/anime/evangelion.png" style="height: 130vh;"></div>
+         </li>
+         <li class="layer" data-depth="0.60">
+            <div class="forest"><img id="forest" src="img/anime/forest1.png" style="height: 40vh;"></div>
+         </li>
+         <li class="layer" data-depth="0.70">
+            <div class="sao"><img src="img/anime/sao.png" style="height: 80vh;"></div>
+         </li>
+         <li class="layer" data-depth="0.70">
+            <div class="totoro"><img id="totoro" src="img/anime/totoro.png" style="height: 60vh;"></div>
+         </li>
+         <li class="layer" data-depth="1.2">
+            <div class="scarlet"><img src="img/anime/scarlet.png" style="height: 45vh;"></div>
+         </li>
+      </ul>
+   </div>
+
+
+
+   </section>
+
+   <!-- vendor scripts -->
+   <script src="js/vendor/jquery.enllax.min.js"></script>
+   <script src="js/vendor/jScrollability.min.js"></script>
+   <script src="js/vendor/jquery.parallax.min.js"></script>
+   <script src="js/vendor/move.min.js"></script>
+   <script src="js/vendor/masonry.pkgd.min.js"></script>
+   <script src="js/vendor/imagesloaded.pkgd.min.js"></script>
+
+   <!-- page scripts  -->
+   <script src="js/app/main.js"></script>
+
+</body>
+</html>
