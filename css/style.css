@@ -1,0 +1,74 @@
+* {
+   box-sizing: border-box;
+}
+
+#container { display:block; }
+
+@media only screen and (orientation:portrait){
+   #container {
+      height: 100vw;
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      transform: rotate(90deg);
+   }
+}
+
+@media only screen and (orientation:landscape){
+   #container {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      transform: rotate(0deg);
+   }
+}
+
+body{
+   margin: 0;
+   background-color: white;
+   position: relative;
+   width: 100%;
+   height: 300vh;
+   font-family: 'Roboto', sans-serif;
+}
+
+.noselect {
+   cursor: default;
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+   user-select: none;           /* non-prefixed version, currently
+   not supported by any browser */
+}
+
+#loadingScreen{
+   position: fixed;
+   top: 0; left: 0;
+   width: 100%;
+   height: 100vh;
+   background-color: white;
+   z-index: 10;
+}
+
+.loadElement{
+   display: none;
+}
+
+#loadingGif{
+   height: 25vh;
+   bottom: 10vh;
+   right: 5vw;
+   position: absolute;;
+   z-index: 100;
+}
+
+#Sinon{
+   height: 35vh;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+}
