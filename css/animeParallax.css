@@ -7,9 +7,13 @@
    background: #000;
 }
 
+.scene {
+   margin: 0;
+}
+
 .background  {
-   top: -50px;
-   left: -15vw;
+   top: -10vh;
+   left: -12.5vw;
 }
 
 .layer div  {
@@ -17,35 +21,29 @@
 }
 
 .totoro {
-   opacity: 0.6;
-   top: 40vh;
-   left: -5vw;
-   transition: opacity 1s;
-}
-
-.totoro:hover{
-   opacity: 1;
+   top: 70vh;
+   left:5vw;
 }
 
 .evangelion {
-   top: -10vh;
-   left: 10vw;
+   top: 10vh;
+   left: calc(50vw - 67vh);
 }
 
 .snow{
-   opacity: 0.4;
+   opacity: 0.25;
    top: -2vh;
    left: -25vw;
 }
 
 .forest{
-   top: 75vh;
+   top: 55vh;
    left: -15vw;
 }
 
 .sao {
-   top: 20vh;
-   left: 60vw;
+   top: 60vh;
+   left: calc(100vw - 55vh);
 }
 
 .scarlet {

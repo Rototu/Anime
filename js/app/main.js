@@ -19,6 +19,12 @@ var MainModule = (function() {
          $("html").css("overflow", "hidden");
          window.scrollTo(0, 0);
 
+         //set audio volume
+         $("#audio").prop("volume", 0.01);
+
+         //set scroll scrollSpeed
+         jQuery.scrollSpeed(100, 2000, 'easeOutCubic');
+
       },
 
       //assign controllers/handlers for main elements
@@ -26,32 +32,31 @@ var MainModule = (function() {
 
          //on hover enable parallaxAnime
          $(".container").on({
-
-            //enable
             mouseenter: function () {
                $("#scene").parallax('enable');
             },
-
-            //disable
             mouseleave: function () {
                $("#scene").parallax('disable');
             }
-
          });
       },
 
       //change to website from loading screen
       windowLoaded: function() {
 
+         //enable animeParallax
+         $("#scene").parallax('enable');
+
          //delete setTimeout after further development !!!
          setTimeout(function() {
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
-               $("html").css("overflow-y", "scroll");
+               // $("html").css("overflow-y", "scroll");
                setTimeout(function() {
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);
+
             });
          },3000);
 
