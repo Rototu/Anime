@@ -57,12 +57,12 @@ body{
 }
 
 #menu{
-   position: relative;
+   position: absolute;
    display: none;
    width: 100%;
    height: 70px;
    left: 0;
-   top: 0;
+   top: 120vh;
    color: rgb(149,149,149);
    background-color: white;
    font-size: 20px;
