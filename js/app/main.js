@@ -29,7 +29,7 @@ var MainModule = (function() {
 
          //loadingBar init values
          imgNumber = $("img").length;
-         console.log(imgNumber);
+         console.log("number of images to be loaded: " + imgNumber);
 
 
       },
@@ -53,7 +53,10 @@ var MainModule = (function() {
          $("img").each(function() {
             $(this).imagesLoaded(function() {
                imgCounter++;
-               $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber}, {queue: true, duration: 100, delay: 0, easing: "linear"});
+               $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
+                  $("#loadedPercentage").text((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
+                  console.log((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
+               }});
             });
          });
 

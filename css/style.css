@@ -22,13 +22,12 @@ body{
 }
 
 #loadingBar{
-   width: 80%;
-   margin-left: 10%;
-   margin-top: calc(30vh - 15px);
-   height: 30px;
+   width: 96%;
+   margin-left: 2%;
    border: solid black 5px;
    border-radius: 20px;
    overflow: hidden;
+   text-align: center;
 }
 
 #loadedPercentage{
@@ -37,6 +36,9 @@ body{
    width: 0;
    background-color: rgb(116, 0, 2);
    margin-left: 0;
+   z-index: 15;
+   font-weight: 900;
+   color: white;
 }
 
 #loadingScreen{
@@ -46,6 +48,7 @@ body{
    height: 100vh;
    background-color: white;
    z-index: 10;
+   text-align: center;
 }
 
 .loadElement{
@@ -172,8 +175,8 @@ body{
 @media (min-width: 1025px) {
 
    #loadingBar{
-      margin-top: calc(30vh - 25px);
-      height: 50px;
+      margin-top: calc(30vh - 15px);
+      height: 30px;
    }
 
    #loadingGif{
