@@ -86,7 +86,8 @@ var ScrollModule = (function() {
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
             i = Math.floor( relativeTopPos / windowHeight );
-            if (relativeTopPos >= menuPos) {
+            
+            if (relativeTopPos >= windowHeight * 1.7) {
                $("#menu").addClass("affix");
                console.log("menu fixed");
             }
@@ -94,6 +95,7 @@ var ScrollModule = (function() {
                $("#menu").removeClass("affix");
                console.log("menu free");
             }
+            
          });
 
          //buttonScroll
@@ -116,8 +118,9 @@ var ScrollModule = (function() {
             // menu
             {
                "selector": "#menu",
-               "start": 1000,
-               "end": 1700,
+               "start": 100,
+               "end": 170,
+               "unit": "vh",
                "fn": {
                   "top": {
                      "start": 120,
