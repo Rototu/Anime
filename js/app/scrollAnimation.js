@@ -115,7 +115,7 @@ var ScrollModule = (function() {
                "selector": "#menu",
                "start": "100",
                "end": "170",
-               "unit": "vh"
+               "unit": "vh",
                "fn": {
                   "top": {
                      "start": 120,
