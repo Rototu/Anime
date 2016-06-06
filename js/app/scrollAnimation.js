@@ -113,13 +113,15 @@ var ScrollModule = (function() {
       //scrolling animations
       animations: function() {
 
+         
+         var wH = Number(windowHeight);
          $.jScrollability([
          
             // menu
             {
                "selector": "#menu",
                "start": 0,
-               "end": windowHeight,
+               "end": wH,
                "fn": {
                   "top": {
                      "start": 120,
