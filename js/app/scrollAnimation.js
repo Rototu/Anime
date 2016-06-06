@@ -85,12 +85,12 @@ var ScrollModule = (function() {
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
             i = Math.floor( relativeTopPos / windowHeight );
-            // if (relativeTopPos > menuPos) {
-            //    $("#menu").addClass("affix");
-            // }
-            // else {
-            //    $("#menu").removeClass("affix");
-            // }
+            if (relativeTopPos > menuPos) {
+               $("#menu").addClass("affix");
+            }
+            else {
+               $("#menu").removeClass("affix");
+            }
          });
 
          //buttonScroll
@@ -108,23 +108,24 @@ var ScrollModule = (function() {
       //scrolling animations
       animations: function() {
 
-         // $.jScrollability([
-         //
-         //    // menu
-         //    {
-         //       "selector": "#menu",
-         //       "start": 'parent',
-         //       "end": 'parent',
-         //       "fn": {
-         //          "top": {
-         //             "start": 100,
-         //             "end": 0,
-         //             "unit": "px"
-         //          }
-         //       }
-         //    }
-         //
-         // ]);
+         $.jScrollability([
+         
+            // menu
+            {
+               "selector": "#menu",
+               "start": "100",
+               "end": "170",
+               "unit": "vh"
+               "fn": {
+                  "top": {
+                     "start": 120,
+                     "end": 100,
+                     "unit": "vh"
+                  }
+               }
+            }
+         
+         ]);
 
       }
 
