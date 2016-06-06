@@ -54,6 +54,7 @@ var MainModule = (function() {
                //enable scroll
                // $("html").css("overflow-y", "scroll");
                setTimeout(function() {
+                  $("#menu").show(0);
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);
 
