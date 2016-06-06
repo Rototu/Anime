@@ -12,7 +12,6 @@ var MainModule = (function() {
          });
 
          //activate parallax and hide elements
-         $(window).enllax();
          $("#mySite").css("opacity", 0);
 
          //disable scroll while loading screen is active
