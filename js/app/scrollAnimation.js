@@ -120,8 +120,8 @@ var ScrollModule = (function() {
             // menu
             {
                "selector": "#menu",
-               "start": 0,
-               "end": wH,
+               "start": "window",
+               "end": "window",
                "fn": {
                   "top": {
                      "start": 120,
