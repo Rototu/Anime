@@ -13,7 +13,7 @@
 
 .background  {
    top: -10vh;
-   left: -12.5vw;
+   left: calc(50vw - 121.2vh);
 }
 
 .layer div  {
