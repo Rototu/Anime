@@ -82,9 +82,9 @@ var ScrollModule = (function() {
          //on window scroll
          var menuPos = $("#menu").position().top;
          $(window).scrolled(function() {
-            console.log("menuPos: " + menuPos);
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
+            console.log(windowHeight);
             i = Math.floor( relativeTopPos / windowHeight );
             
             if (relativeTopPos >= windowHeight) {
