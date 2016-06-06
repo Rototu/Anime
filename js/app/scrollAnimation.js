@@ -92,7 +92,7 @@ var ScrollModule = (function() {
                console.log("menu fixed");
             }
             else {
-               $("#menu").removeClass("affix");
+               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 100);
                console.log("menu free");
             }
             
