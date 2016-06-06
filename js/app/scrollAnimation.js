@@ -114,24 +114,24 @@ var ScrollModule = (function() {
       animations: function() {
 
          
-         var wH = Number(windowHeight);
-         $.jScrollability([
+         // var wH = Number(windowHeight);
+         // $.jScrollability([
          
-            // menu
-            {
-               "selector": "#menu",
-               "start": "window",
-               "end": "window",
-               "fn": {
-                  "top": {
-                     "start": 110,
-                     "end": 100,
-                     "unit": "vh"
-                  }
-               }
-            }
+         //    // menu
+         //    {
+         //       "selector": "#menu",
+         //       "start": "window",
+         //       "end": "window",
+         //       "fn": {
+         //          "top": {
+         //             "start": 110,
+         //             "end": 100,
+         //             "unit": "vh"
+         //          }
+         //       }
+         //    }
          
-         ]);
+         // ]);
 
       }
 
