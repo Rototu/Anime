@@ -82,10 +82,11 @@ var ScrollModule = (function() {
          //on window scroll
          var menuPos = $("#menu").offset().top;
          $(window).scrolled(function() {
+            console.log("menuPos: " + menuPos);
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
             i = Math.floor( relativeTopPos / windowHeight );
-            if (relativeTopPos > menuPos) {
+            if (relativeTopPos >= menuPos) {
                $("#menu").addClass("affix");
             }
             else {
@@ -113,8 +114,8 @@ var ScrollModule = (function() {
             // menu
             {
                "selector": "#menu",
-               "start": "100",
-               "end": "170",
+               "start": 100,
+               "end": 170,
                "unit": "vh",
                "fn": {
                   "top": {
