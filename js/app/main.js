@@ -1,6 +1,9 @@
 //index.html controller
 var MainModule = (function() {
 
+   var imgNumber;
+   var imgCounter = 0;
+
    return {
 
       //initialize parallax/scroll scripts
@@ -24,6 +27,11 @@ var MainModule = (function() {
          //set scroll scrollSpeed
          jQuery.scrollSpeed(100, 2000, 'easeOutCubic');
 
+         //loadingBar init values
+         imgNumber = $("img").length;
+         console.log(imgNumber);
+
+
       },
 
       //assign controllers/handlers for main elements
@@ -38,6 +46,17 @@ var MainModule = (function() {
                $("#scene").parallax('disable');
             }
          });
+
+
+         //loading percentage bar set
+         var loadingBarWidth = $("#loadingBar").width();
+         $("img").each(function() {
+            $(this).imagesLoaded(function() {
+               imgCounter++;
+               $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber}, {queue: true, duration: 100, delay: 0, easing: "linear"});
+            });
+         });
+
       },
 
       //change to website from loading screen
@@ -53,7 +72,6 @@ var MainModule = (function() {
                //enable scroll
                // $("html").css("overflow-y", "scroll");
                setTimeout(function() {
-                  $("#menu").show(0);
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);
 

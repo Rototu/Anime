@@ -4,7 +4,7 @@
    $.fn.scrolled = function (waitTime, fn) {
       if (typeof waitTime === "function") {
          fn = waitTime;
-         waitTime = 5;
+         waitTime = 10;
       }
       var tag = "scrollTimer" + uniqueCntr++;
       this.scroll(function () {
@@ -39,7 +39,7 @@ var ScrollModule = (function() {
 
          //select first menuElement
          $("#menu1").css("color", "rgb(15,15,15)");
-         blueTweenWidth = $("#menu1").width() + 60;
+         blueTweenWidth = $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"));
          $blueTween.width(blueTweenWidth);
 
       },
@@ -54,17 +54,11 @@ var ScrollModule = (function() {
                //set to init state
                $(".menuSelector").css("color", "rgb(149,149,149)");
                $(this).css("color", "rgb(15,15,15)");
-               blueTweenWidth = $(this).width() + 60;
-               blueTweenOffset = $(this).position().left;
+               blueTweenWidth = $(this).width() + 2 * parseInt($(this).css("padding-left"));
+               blueTweenOffset = $(this).offset().left;
+               console.log(blueTweenWidth);
                $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
-
-               //select action
-               if(this.id !== "menu1") {
-                  $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
-               }
-               else if(this.id === "menu1") {
-                  $blueTween.animate({left: blueTweenOffset + 50}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
-               }
+               $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
 
             },
             mouseleave: function() {
@@ -74,8 +68,8 @@ var ScrollModule = (function() {
          });
          $("#menuElements").on({
             mouseleave: function() {
-               $blueTween.animate({left: 50}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
-               $blueTween.animate({width: $("#menu1").width() + 60}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+               $blueTween.animate({left: $("#menu1").offset().left}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+               $blueTween.animate({width: $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"))}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             }
          });
 
@@ -84,18 +78,15 @@ var ScrollModule = (function() {
          $(window).scrolled(function() {
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
-            console.log(windowHeight);
             i = Math.floor( relativeTopPos / windowHeight );
-            
-            if (relativeTopPos >= windowHeight) {
+
+            if(relativeTopPos >= windowHeight) {
                $("#menu").addClass("affix").css("top", 0);
-               console.log("menu fixed");
             }
             else {
-               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 100);
-               console.log("menu free");
+               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
-            
+
          });
 
          //buttonScroll
@@ -113,10 +104,10 @@ var ScrollModule = (function() {
       //scrolling animations
       animations: function() {
 
-         
+
          // var wH = Number(windowHeight);
          // $.jScrollability([
-         
+
          //    // menu
          //    {
          //       "selector": "#menu",
@@ -130,7 +121,7 @@ var ScrollModule = (function() {
          //          }
          //       }
          //    }
-         
+
          // ]);
 
       }
@@ -143,5 +134,4 @@ $(document).on("ready", function() {
    ScrollModule.init();
    ScrollModule.bindHandlers();
    ScrollModule.animations();
-
 });
