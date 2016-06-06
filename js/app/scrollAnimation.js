@@ -88,7 +88,7 @@ var ScrollModule = (function() {
             i = Math.floor( relativeTopPos / windowHeight );
             
             if (relativeTopPos >= windowHeight) {
-               $("#menu").addClass("affix");
+               $("#menu").addClass("affix").css("top", 0);
                console.log("menu fixed");
             }
             else {
