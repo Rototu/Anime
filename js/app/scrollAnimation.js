@@ -53,43 +53,32 @@ var ScrollModule = (function() {
 
                //set to init state
                $(".menuSelector").css("color", "rgb(149,149,149)");
-               $(this).css("color", "rgb(15,15,15)");
+
+               //get element props
                blueTweenWidth = $(this).width() + 2 * parseInt($(this).css("padding-left"));
                blueTweenOffset = $(this).offset().left;
-               console.log(blueTweenWidth);
+
+               //animate
+               $(this).css("color", "rgb(15,15,15)");
                $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
 
             },
             mouseleave: function() {
+               //deselect element
                $(this).css("color", "rgb(149,149,149)");
                $("#menu1").css("color", "rgb(15,15,15)");
             }
          });
          $("#menuElements").on({
+            //set to current state
             mouseleave: function() {
                $blueTween.animate({left: $("#menu1").offset().left}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $blueTween.animate({width: $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"))}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             }
          });
 
-         //on window scroll
-         var menuPos = $("#menu").position().top;
-         $(window).scrolled(function() {
-            windowHeight = $(window).height();
-            relativeTopPos = $(window).scrollTop();
-            i = Math.floor( relativeTopPos / windowHeight );
-
-            if(relativeTopPos >= windowHeight) {
-               $("#menu").addClass("affix").css("top", 0);
-            }
-            else {
-               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
-            }
-
-         });
-
-         //buttonScroll
+         //buttonScroll function
          $("#scrollUp").click(function() {
             console.log(i);
             $("html, body").stop().animate({scrollTop: (i-1)*windowHeight}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
@@ -101,28 +90,28 @@ var ScrollModule = (function() {
 
       },
 
-      //scrolling animations
+      //onScrolling animations
       animations: function() {
 
 
-         // var wH = Number(windowHeight);
-         // $.jScrollability([
+         //on window scroll
+         var menuPos = $("#menu").position().top;
+         $(window).scrolled(function() {
 
-         //    // menu
-         //    {
-         //       "selector": "#menu",
-         //       "start": "window",
-         //       "end": "window",
-         //       "fn": {
-         //          "top": {
-         //             "start": 110,
-         //             "end": 100,
-         //             "unit": "vh"
-         //          }
-         //       }
-         //    }
+            //get props
+            windowHeight = $(window).height();
+            relativeTopPos = $(window).scrollTop();
+            i = Math.floor( relativeTopPos / windowHeight );
 
-         // ]);
+            //set menu pos
+            if(relativeTopPos >= windowHeight) {
+               $("#menu").addClass("affix").css("top", 0);
+            }
+            else {
+               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
+            }
+
+         });
 
       }
 
