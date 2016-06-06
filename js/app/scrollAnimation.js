@@ -80,7 +80,7 @@ var ScrollModule = (function() {
          });
 
          //on window scroll
-         var menuPos = $("#menu").offset().top;
+         var menuPos = $("#menu").position().top;
          $(window).scrolled(function() {
             console.log("menuPos: " + menuPos);
             windowHeight = $(window).height();
@@ -88,9 +88,11 @@ var ScrollModule = (function() {
             i = Math.floor( relativeTopPos / windowHeight );
             if (relativeTopPos >= menuPos) {
                $("#menu").addClass("affix");
+               console.log("menu fixed");
             }
             else {
                $("#menu").removeClass("affix");
+               console.log("menu free");
             }
          });
 
