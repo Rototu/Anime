@@ -52,10 +52,11 @@ var MainModule = (function() {
          var loadingBarWidth = $("#loadingBar").width();
          $("img").each(function() {
             $(this).imagesLoaded(function() {
+               var self = this;
                imgCounter++;
                $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
                   $("#loadedPercentage").text((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
-                  console.log((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
+                  console.log(this.src);
                }});
             });
          });
