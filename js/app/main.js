@@ -56,7 +56,7 @@ var MainModule = (function() {
                imgCounter++;
                $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
                   $("#loadedPercentage").text((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
-                  console.log(this.src);
+                  console.log(self.src);
                }});
             });
          });
