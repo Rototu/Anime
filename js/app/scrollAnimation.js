@@ -123,10 +123,6 @@ var ScrollModule = (function() {
             scrollAnimation();
          });
 
-         $('body').on("touchmove", function() {
-            scrollAnimation();
-         });
-
          var scrollAnimation = function() {
 
             //get props
