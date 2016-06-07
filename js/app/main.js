@@ -51,12 +51,12 @@ var MainModule = (function() {
          //loading percentage bar set
          var loadingBarWidth = $("#loadingBar").width();
          $("img").each(function() {
+            var self = this;
             $(this).imagesLoaded(function() {
-               var self = this;
                imgCounter++;
+               console.log(self.src);
                $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
                   $("#loadedPercentage").text((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
-                  console.log(self.src);
                }});
             });
          });
