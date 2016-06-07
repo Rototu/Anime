@@ -51,10 +51,9 @@ var MainModule = (function() {
          //loading percentage bar set
          var loadingBarWidth = $("#loadingBar").width();
          $("img").each(function() {
-            var self = this;
             $(this).imagesLoaded(function() {
                imgCounter++;
-               console.log(self.src);
+               console.log(this.src + " with file size of " + this.filesize + " has loaded.");
                $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
                   $("#loadedPercentage").text((Math.ceil(100 * $(this).width() / loadingBarWidth)) + "%");
                }});
