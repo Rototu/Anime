@@ -3,6 +3,7 @@ var MainModule = (function() {
 
    var imgNumber;
    var imgCounter = 0;
+   var loadingBarWidth;
 
    return {
 
@@ -49,16 +50,23 @@ var MainModule = (function() {
 
 
          //loading percentage bar set
-         var loadingBarWidth = $("#loadingBar").width();
          $("img").each(function() {
             var self = this;
             $(this).imagesLoaded(function() {
+               loadingBarWidth = $("#loadingBar").width();
                imgCounter++;
                console.log(self.src + " has loaded.");
-               $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: true, duration: 200, delay: 0, easing: "linear", step: function() {
-                  $("#loadedPercentage").text((Math.floor(100 * $(this).width() / loadingBarWidth)) + "%");
+               $("#loadedPercentage").animate({width: loadingBarWidth * imgCounter/imgNumber + 1}, {queue: false, duration: 200, delay: 0, easing: "linear", done: function() {
+                  var myPercentage = (Math.round(100 * $(this).width() / loadingBarWidth));
+                  if(myPercentage == 101 || myPercentage == 99) myPercentage = 100; //pure 100% value
+                  $("#loadedPercentage").text(myPercentage + "%");
                }});
             });
+         });
+
+         $(window).resize(function() {
+            loadingBarWidth = $("#loadingBar").width();
+            $("#loadedPercentage").stop().css("width", loadingBarWidth * imgCounter/imgNumber + 1);
          });
 
       },

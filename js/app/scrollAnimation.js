@@ -30,7 +30,7 @@ var ScrollModule = (function() {
    var blueTweenOffset;
    var windowHeight;
    var relativeTopPos;
-   var i = 0;
+   var i = 1;
 
    return {
 
@@ -67,14 +67,21 @@ var ScrollModule = (function() {
             mouseleave: function() {
                //deselect element
                $(this).css("color", "rgb(149,149,149)");
-               $("#menu1").css("color", "rgb(15,15,15)");
+               $("#menu"+i).css("color", "rgb(15,15,15)");
             }
          });
          $("#menuElements").on({
+
             //set to current state
             mouseleave: function() {
-               $blueTween.animate({left: $("#menu1").offset().left}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
-               $blueTween.animate({width: $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"))}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+
+               //get el props
+               blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
+               blueTweenOffset = $("#menu"+i).offset().left;
+
+               //animate
+               $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+               $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             }
          });
 
@@ -96,12 +103,29 @@ var ScrollModule = (function() {
 
          //on window scroll
          var menuPos = $("#menu").position().top;
+         var j = 1;
          $(window).scrolled(function() {
 
             //get props
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
-            i = Math.floor( relativeTopPos / windowHeight );
+            i = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
+            if(i == 0) i=1;
+            if(j != i) {
+
+               j = i;
+
+               //get el props
+               blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
+               blueTweenOffset = $("#menu"+i).offset().left;
+
+               //animate
+               $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+               $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+               $(".menuSelector").css("color", "rgb(149,149,149)");
+               $("#menu"+i).css("color", "rgb(15,15,15)");
+
+            }
 
             //set menu pos
             if(relativeTopPos >= windowHeight) {
@@ -113,6 +137,29 @@ var ScrollModule = (function() {
 
          });
 
+      },
+
+      resizeElements: function() {
+
+         //vars
+         var ii = $("#menu"+i).offset().left;
+
+         //functions
+         if(ii != blueTweenOffset) {
+            blueTweenOffset =  ii;
+
+            //get el props
+            blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
+            blueTweenOffset = $("#menu"+i).offset().left;
+
+            //animate
+            $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+            $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
+            $(".menuSelector").css("color", "rgb(149,149,149)");
+            $("#menu"+i).css("color", "rgb(15,15,15)");
+
+            console.log("menu resized");
+         }
       }
 
    };
@@ -123,4 +170,7 @@ $(document).on("ready", function() {
    ScrollModule.init();
    ScrollModule.bindHandlers();
    ScrollModule.animations();
+   $(window).resize(function() {
+      ScrollModule.resizeElements();
+   });
 });
