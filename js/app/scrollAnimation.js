@@ -118,7 +118,16 @@ var ScrollModule = (function() {
          //on window scroll
          var menuPos = $("#menu").position().top;
          var j = 1;
+
          $('body').scroll(function() {
+            scrollAnimation();
+         });
+
+         $('body').on("touchmove", function() {
+            scrollAnimation();
+         });
+
+         var scrollAnimation = function() {
 
             //get props
             windowHeight = $('body').height();
@@ -157,7 +166,7 @@ var ScrollModule = (function() {
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
 
-         });
+         }
 
       },
 
