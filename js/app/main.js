@@ -19,18 +19,20 @@ var MainModule = (function() {
          $("#mySite").css("opacity", 0);
 
          //disable scroll while loading screen is active
-         $("html").css("overflow", "hidden");
-         window.scrollTo(0, 0);
+         // $("html").css("overflow-x", "hidden");
 
          //set audio volume
          $("#audio").prop("volume", 0.01);
 
          //set scroll scrollSpeed
-         jQuery.scrollSpeed(100, 2000, 'easeOutCubic');
+         // jQuery.scrollSpeed(50, 200, 'linear');
 
          //loadingBar init values
          imgNumber = $("img").length;
          console.log("number of images to be loaded: " + imgNumber);
+
+         //disable image drag
+         $('img').on('dragstart', function(event) { event.preventDefault(); });
 
 
       },
@@ -79,10 +81,11 @@ var MainModule = (function() {
 
          //delete setTimeout after further development !!!
          setTimeout(function() {
+            $("html, body").stop().animate({scrollTop: 0, scrollLeft: 0}, {queue: false, duration: 0, delay: 0, easing: "easeInOutCubic"});
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
-               // $("html").css("overflow-y", "scroll");
+               // $("#mySite").css("overflow-y", "scroll");
                setTimeout(function() {
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);

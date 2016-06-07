@@ -3,15 +3,25 @@
 }
 
 html{
-   height: auto;
+   overflow: hidden;
+   width: 100vw;
+   height: 100vh;
+   margin: 0;
 }
 
 body{
-   margin: 0;
    background-color: white;
-   position: relative;
-   width: 100%;
+   position: absolute;
+   margin: 0;
+   top: 0;
+   left: 0;
    font-family: 'Roboto', sans-serif;
+   width: calc(100vw + 30px);
+   overflow-x: hidden;
+   overflow-y: auto;
+   height: 100vh;
+   padding-right: 20px;
+
 }
 
 .noselect {
@@ -23,6 +33,10 @@ body{
    -ms-user-select: none;       /* IE/Edge */
    user-select: none;           /* non-prefixed version, currently
    not supported by any browser */
+}
+
+#mySite{
+   background-color: white;
 }
 
 #loadingBar{
@@ -60,16 +74,16 @@ body{
 }
 
 .section{
-   width: 100%;
+   width: calc(100vw + 30px);
    position: relative;
    overflow: hidden;
-   height: 100vh;
+   height: 200vh;
 }
 
 #menu{
    display: block;
    position: absolute;
-   width: 100%;
+   width: calc(100vw + 30px);
    left: 0;
    top: calc(100vh + 50px);
    color: rgb(149,149,149);
@@ -81,9 +95,9 @@ body{
 }
 
 #menu.affix{
-    position: fixed !important;
-    top: 0;
-    right: 0;
+   position: fixed !important;
+   top: 0;
+   left: 0;
 }
 
 .menuSelector{
@@ -124,6 +138,25 @@ body{
 
 .fa:hover{
    color: rgb(116, 0, 2);
+}
+
+#prezentareImg{
+   height: 60vh;
+   position: absolute;
+   left: -10vw;
+   bottom: 100vh;
+}
+
+#prezentareImg.affix{
+   position: fixed;
+   bottom: 0;
+   left: 10vw;
+}
+
+#prezentareImg.bottomSticky{
+   position: absolute;
+   bottom: 0;
+   left: 10vw;
 }
 
 @media (max-width: 500px) {
@@ -180,7 +213,7 @@ body{
       display: none;
       line-height: 50px;
       font-size: 25px;
-      margin-right: 10px;
+      margin-right: 40px;
    }
 
 }
@@ -230,7 +263,7 @@ body{
       display: inline-block;
       line-height: 60px;
       font-size: 25px;
-      margin-right: 20px;
+      margin-right: 60px;
    }
 
 }

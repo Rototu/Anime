@@ -88,11 +88,25 @@ var ScrollModule = (function() {
          //buttonScroll function
          $("#scrollUp").click(function() {
             console.log(i);
-            $("html, body").stop().animate({scrollTop: (i-1)*windowHeight}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+            if($('body').scrollTop() > i * windowHeight) i++;
+            var scrollValue = (i-1)*windowHeight - $("#menu").height();
+            if( i >= 2 && scrollValue < $(window).height() ) scrollValue = $(window).height();
+            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
          $("#scrollDown").click(function() {
             console.log(i);
-            $("html, body").stop().animate({scrollTop: (i+1)*windowHeight}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+            if($('body').scrollTop() < windowHeight) i = 0;
+            var scrollValue = (i+1)*windowHeight - $("#menu").height();
+            if($('body').scrollTop() < windowHeight) scrollValue += $("#menu").height();
+            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+         });
+
+         //menuSelector clicked move to page
+         $(".menuSelector").click(function() {
+            var id = this.id;
+            var mySect = id.substr(id.length - 1);
+            var scrollValue = mySect*windowHeight - $("#menu").height();
+            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
       },
@@ -104,12 +118,15 @@ var ScrollModule = (function() {
          //on window scroll
          var menuPos = $("#menu").position().top;
          var j = 1;
-         $(window).scrolled(function() {
+         $('body').scroll(function() {
 
             //get props
-            windowHeight = $(window).height();
-            relativeTopPos = $(window).scrollTop();
+            windowHeight = $('body').height();
+            relativeTopPos = $('body').scrollTop();
+            console.log($("#menu").offset().top);
             i = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
+
+            //set selected menu button
             if(i == 0) i=1;
             if(j != i) {
 
@@ -130,8 +147,13 @@ var ScrollModule = (function() {
             //set menu pos
             if(relativeTopPos >= windowHeight) {
                $("#menu").addClass("affix").css("top", 0);
+               $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
             }
-            else {
+            if(relativeTopPos >= 2*windowHeight) {
+               $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
+            }
+            if(relativeTopPos <= windowHeight) {
+               $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
 
@@ -143,6 +165,7 @@ var ScrollModule = (function() {
 
          //vars
          var ii = $("#menu"+i).offset().left;
+         var windowHeight = $(window).height();
 
          //functions
          if(ii != blueTweenOffset) {
