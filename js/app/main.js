@@ -25,7 +25,7 @@ var MainModule = (function() {
          $("#audio").prop("volume", 0.01);
 
          //set scroll scrollSpeed
-         jQuery.scrollSpeed(50, 200, 'linear');
+         jQuery.scrollSpeed(20, 200, 'linear');
 
          //loadingBar init values
          imgNumber = $("img").length;
