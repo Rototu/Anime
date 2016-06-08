@@ -3,24 +3,27 @@
 }
 
 html{
-   overflow: hidden;
-   width: 100vw;
-   height: 100vh;
    margin: 0;
 }
 
 body{
+   overflow: hidden;
+   width: 100vw;
+   height: 100vh;
    background-color: white;
    position: absolute;
    margin: 0;
    top: 0;
    left: 0;
    font-family: 'Roboto', sans-serif;
+   padding-right: 20px;
+
+}
+
+#wrapper{
    width: calc(100vw + 30px);
    overflow-y: auto;
    height: 100vh;
-   padding-right: 20px;
-
 }
 
 .noselect {
