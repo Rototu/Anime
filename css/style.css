@@ -20,12 +20,6 @@ body{
 
 }
 
-#wrapper{
-   width: calc(100vw + 30px);
-   overflow-y: auto;
-   height: 100vh;
-}
-
 .noselect {
    cursor: default;
    -webkit-touch-callout: none; /* iOS Safari */
@@ -38,7 +32,12 @@ body{
 }
 
 #mySite{
+   display: block;
+   margin: 0;
    background-color: white;
+   width: calc(100vw + 30px);
+   overflow-y: auto;
+   height: 100vh;
 }
 
 #loadingBar{
