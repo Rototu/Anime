@@ -7,16 +7,12 @@ html{
 }
 
 body{
-   overflow: hidden;
-   width: 100vw;
-   height: 100vh;
    background-color: white;
    position: absolute;
    margin: 0;
    top: 0;
    left: 0;
    font-family: 'Roboto', sans-serif;
-   padding-right: 20px;
 
 }
 
@@ -31,13 +27,20 @@ body{
    not supported by any browser */
 }
 
+#wrapper{
+   overflow: hidden;
+   width: 100vw;
+   height: 100vh;
+}
+
 #mySite{
    display: block;
    margin: 0;
    background-color: white;
    width: calc(100vw + 30px);
-   overflow-y: auto;
+   overflow-y: scroll;
    height: 100vh;
+   padding-right: 20px;
 }
 
 #loadingBar{
