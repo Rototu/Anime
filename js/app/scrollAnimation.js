@@ -124,8 +124,6 @@ var ScrollModule = (function() {
          });
 
          var scrollAnimation = function() {
-            
-            console.log("scrolling");
 
             //get props
             windowHeight = $(window).height();
@@ -152,16 +150,13 @@ var ScrollModule = (function() {
 
             //set menu pos
             if(relativeTopPos >= windowHeight) {
-               console.log("menu fixed");
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
             }
             if(relativeTopPos >= 2*windowHeight) {
-               console.log("img sticked to bottom");
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
             }
             if(relativeTopPos <= windowHeight) {
-               console.log("animating " + relativeTopPos + " " + windowHeight);
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
