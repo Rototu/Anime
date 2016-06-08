@@ -88,16 +88,17 @@ var ScrollModule = (function() {
          //buttonScroll function
          $("#scrollUp").click(function() {
             console.log(i);
-            if($('body').scrollTop() > i * windowHeight) i++;
-            var scrollValue = (i-1)*windowHeight - $("#menu").height();
-            if( i >= 2 && scrollValue < $(window).height() ) scrollValue = $(window).height();
+            var mySect = Math.floor(relativeTopPos / windowHeight); 
+            var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
+            if( mySect == 2) scrollValue = $(window).height();
+            else if( mySect == 1) scrollValue = 0;
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
          $("#scrollDown").click(function() {
             console.log(i);
-            if($('body').scrollTop() < windowHeight) i = 0;
-            var scrollValue = (i+1)*windowHeight - $("#menu").height();
-            if($('body').scrollTop() < windowHeight) scrollValue += $("#menu").height();
+            var mySect = Math.floor(relativeTopPos / windowHeight); 
+            var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
+            if( mySect == 0) scrollValue = $(window).height();
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
@@ -105,7 +106,7 @@ var ScrollModule = (function() {
          $(".menuSelector").click(function() {
             var id = this.id;
             var mySect = id.substr(id.length - 1);
-            var scrollValue = mySect*windowHeight - $("#menu").height();
+            var scrollValue = $(".prez" + mySect).position().top - $("#menu").height();
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
