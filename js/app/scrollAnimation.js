@@ -126,7 +126,7 @@ var ScrollModule = (function() {
          var scrollAnimation = function() {
 
             //get props
-            windowHeight = $('body').height();
+            windowHeight = $(window).height();
             relativeTopPos = $('body').scrollTop();
             i = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
 
