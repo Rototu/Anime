@@ -17,7 +17,6 @@ body{
    left: 0;
    font-family: 'Roboto', sans-serif;
    width: calc(100vw + 30px);
-   overflow-x: hidden;
    overflow-y: auto;
    height: 100vh;
    padding-right: 20px;
