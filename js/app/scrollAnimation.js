@@ -128,7 +128,12 @@ var ScrollModule = (function() {
             //get props
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
-            i = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
+            if(relativeTopPos < 3 * windowHeight - $("#menu").height()) {
+               i = 1;
+            }
+            else if(relativeTopPos < 4 * windowHeight - $("#menu").height()) {
+               i = 2;
+            }
 
             //set selected menu button
             if(i == 0) i=1;
