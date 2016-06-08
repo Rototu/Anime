@@ -19,13 +19,13 @@ var MainModule = (function() {
          $("#mySite").css("opacity", 0);
 
          //disable scroll while loading screen is active
-         // $("html").css("overflow-x", "hidden");
+         $("body").css("overflow-x", "hidden");
 
          //set audio volume
          $("#audio").prop("volume", 0.01);
 
          //set scroll scrollSpeed
-         // jQuery.scrollSpeed(50, 200, 'linear');
+         jQuery.scrollSpeed(50, 200, 'linear');
 
          //loadingBar init values
          imgNumber = $("img").length;
@@ -85,7 +85,7 @@ var MainModule = (function() {
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
-               // $("#mySite").css("overflow-y", "scroll");
+               $("body").css("overflow-y", "scroll");
                setTimeout(function() {
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);
