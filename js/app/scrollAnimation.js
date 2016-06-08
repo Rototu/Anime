@@ -159,7 +159,7 @@ var ScrollModule = (function() {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
             }
             if(relativeTopPos <= windowHeight) {
-               console.log("animating");
+               console.log("animating " + relativeTopPos + " " + windowHeight);
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
