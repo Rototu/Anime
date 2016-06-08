@@ -37,11 +37,10 @@ body{
    display: block;
    margin: 0;
    background-color: white;
-   width: calc(100vw + 30px);
+   width: 100vw;
    overflow-x: hidden;
    overflow-y: scroll;
    height: 100vh;
-   padding-right: 20px;
 }
 
 #loadingBar{
@@ -79,7 +78,7 @@ body{
 }
 
 .section{
-   width: calc(100vw + 30px);
+   width: 100vw;
    position: relative;
    overflow: hidden;
    height: 200vh;
@@ -88,7 +87,7 @@ body{
 #menu{
    display: block;
    position: absolute;
-   width: calc(100vw + 30px);
+   width: 100vw;
    left: 0;
    top: calc(100vh + 50px);
    color: rgb(149,149,149);
