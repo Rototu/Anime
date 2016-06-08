@@ -16,7 +16,11 @@ body{
    overflow-x: hidden;
 }
 
-.noselect {
+body::-webkit-scrollbar{
+   display:none;
+}
+
+.noselect{
    cursor: default;
    -webkit-touch-callout: none; /* iOS Safari */
    -webkit-user-select: none;   /* Chrome/Safari/Opera */
