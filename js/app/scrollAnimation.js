@@ -95,7 +95,7 @@ var ScrollModule = (function() {
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
          $("#scrollDown").click(function() {
-            var mySect = Math.floor(relativeTopPos / windowHeight); 
+            var mySect = Math.floor(relativeTopPos + $("#menu").height() / windowHeight); 
             console.log(mySect); 
             var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
             if( mySect == 0) scrollValue = $(window).height();
