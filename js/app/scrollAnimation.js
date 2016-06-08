@@ -107,6 +107,7 @@ var ScrollModule = (function() {
             var id = this.id;
             var mySect = id.substr(id.length - 1);
             var scrollValue = $(".prez" + mySect).position().top - $("#menu").height();
+            if( mySect == 1 ) scrollValue = windowHeight;
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
