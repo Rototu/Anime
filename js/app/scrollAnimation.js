@@ -119,15 +119,17 @@ var ScrollModule = (function() {
          var menuPos = $("#menu").position().top;
          var j = 1;
 
-         $('body').scroll(function() {
+         $(window).scroll(function() {
             scrollAnimation();
          });
 
          var scrollAnimation = function() {
+            
+            console.log("scrolling");
 
             //get props
             windowHeight = $(window).height();
-            relativeTopPos = $('body').scrollTop();
+            relativeTopPos = $(window).scrollTop();
             i = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
 
             //set selected menu button
