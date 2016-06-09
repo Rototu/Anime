@@ -163,12 +163,12 @@ body::-webkit-scrollbar{
    font-weight: 900;
 }
 
-#prezentareImg.affix{
+#prezentareTxt.affix{
    position: fixed;
    top: 20vh;
 }
 
-#prezentareImg.bottomSticky{
+#prezentareTxt.bottomSticky{
    position: absolute;
    top: 120vh;
 }
