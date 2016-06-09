@@ -165,11 +165,13 @@ body::-webkit-scrollbar{
 
 #prezentareTxt.affix{
    position: fixed;
+   right: 10vw;
    top: 20vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
+   right: 10vw;
    top: 120vh;
 }
 
