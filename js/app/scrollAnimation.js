@@ -46,7 +46,7 @@ var ScrollModule = (function() {
          
          //set parallax font size
          prezTxtWidth = $prezTxt.width();
-         $prezTxt.css("font-size", prezTxtWidth / 60);
+         $prezTxt.css("font-size", prezTxtWidth / 20);
 
       },
 
@@ -168,7 +168,7 @@ var ScrollModule = (function() {
                $prezTxt.addClass("affix").removeClass("bottomSticky");
                $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vh");
                prezTxtWidth = $prezTxt.width();
-               $prezTxt.css("font-size", prezTxtWidth / 60);
+               $prezTxt.css("font-size", prezTxtWidth / 20);
             }
             if(relativeTopPos >= 2*windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
