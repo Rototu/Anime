@@ -90,15 +90,15 @@ var ScrollModule = (function() {
             var mySect = Math.floor(relativeTopPos / windowHeight);
             console.log(mySect); 
             var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
-            if( mySect == 2) scrollValue = $(window).height();
-            else if( mySect == 1) scrollValue = 0;
+            if( mySect == 2 ) scrollValue = $(window).height();
+            else if( mySect == 1 ) scrollValue = $(window).height();
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
          $("#scrollDown").click(function() {
-            var mySect = Math.floor(relativeTopPos + $("#menu").height() / windowHeight); 
+            var mySect = Math.floor(relativeTopPos / windowHeight); 
             console.log(mySect); 
             var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
-            if( mySect == 0) scrollValue = $(window).height();
+            if( mySect == 0 ) scrollValue = $(window).height();
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
