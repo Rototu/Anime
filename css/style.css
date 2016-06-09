@@ -163,6 +163,16 @@ body::-webkit-scrollbar{
    font-weight: 900;
 }
 
+#prezentareImg.affix{
+   position: fixed;
+   top: 20vh;
+}
+
+#prezentareImg.bottomSticky{
+   position: absolute;
+   top: 120vh;
+}
+
 @media (max-width: 500px) {
 
    #menu{
