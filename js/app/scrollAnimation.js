@@ -104,7 +104,7 @@ var ScrollModule = (function() {
             var mySect = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight ); 
             console.log(mySect); 
             var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
-            if(mySect == 0) scrollValue = $(window).height();
+            if(mySect == 0) scrollValue = 2 * $(window).height() - $("#menu").height();
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
