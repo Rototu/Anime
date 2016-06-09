@@ -172,7 +172,7 @@ body::-webkit-scrollbar{
 #prezentareTxt.bottomSticky{
    position: absolute;
    right: 10vw;
-   top: 40vh;
+   top: 140vh;
 }
 
 @media (max-width: 500px) {
