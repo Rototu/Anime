@@ -87,7 +87,7 @@ var ScrollModule = (function() {
 
          //buttonScroll function
          $("#scrollUp").click(function() {
-            var mySect = Math.floor( ( relativeTopPos + 10 ) / windowHeight );
+            var mySect = Math.floor( ( relativeTopPos + $("#menu").height() ) / windowHeight );
             console.log(mySect); 
             var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
             if( mySect == 2 ) scrollValue = $(window).height();
