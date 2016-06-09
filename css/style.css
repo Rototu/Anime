@@ -156,6 +156,7 @@ body::-webkit-scrollbar{
 }
 
 #prezentareTxt{
+   text-align: right;
    position: absolute;
    width: 30vw;
    top: 40vh;
