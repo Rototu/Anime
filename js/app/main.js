@@ -34,7 +34,6 @@ var MainModule = (function() {
          //disable image drag
          $('img').on('dragstart', function(event) { event.preventDefault(); });
 
-
       },
 
       //assign controllers/handlers for main elements
