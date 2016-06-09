@@ -170,11 +170,11 @@ var ScrollModule = (function() {
                prezTxtWidth = $prezTxt.width();
                $prezTxt.css("font-size", prezTxtWidth / 15);
             }
-            if(relativeTopPos >= 2*windowHeight) {
+            else if(relativeTopPos >= 2*windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
                $prezTxt.removeClass("affix").addClass("bottomSticky");
             }
-            if(relativeTopPos <= windowHeight) {
+            else if(relativeTopPos <= windowHeight) {
                $prezTxt.removeClass("affix");
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
