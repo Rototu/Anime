@@ -91,7 +91,7 @@ var ScrollModule = (function() {
             console.log(mySect); 
             var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
             if( mySect == 2 ) scrollValue = $(window).height();
-            else if( mySect == 1 ) scrollValue = $(window).height();
+            else if( mySect == 1 ) scrollValue = 0;
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
          $("#scrollDown").click(function() {
