@@ -46,7 +46,7 @@ var ScrollModule = (function() {
          
          //set parallax font size
          prezTxtWidth = $prezTxt.width();
-         $prezTxt.css("font-size", prezTxtWidth / 20);
+         $prezTxt.css("font-size", prezTxtWidth / 15);
 
       },
 
@@ -166,9 +166,9 @@ var ScrollModule = (function() {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
                $prezTxt.addClass("affix").removeClass("bottomSticky");
-               $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vh");
+               $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
                prezTxtWidth = $prezTxt.width();
-               $prezTxt.css("font-size", prezTxtWidth / 20);
+               $prezTxt.css("font-size", prezTxtWidth / 15);
             }
             if(relativeTopPos >= 2*windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
