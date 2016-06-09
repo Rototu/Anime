@@ -31,6 +31,8 @@ var ScrollModule = (function() {
    var windowHeight;
    var relativeTopPos;
    var i = 1;
+   var $prezTxt = $("#prezentareTxt");
+   var prezTxtWidth;
 
    return {
 
@@ -41,6 +43,10 @@ var ScrollModule = (function() {
          $("#menu1").css("color", "rgb(15,15,15)");
          blueTweenWidth = $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"));
          $blueTween.width(blueTweenWidth);
+         
+         //set parallax font size
+         prezTxtWidth = $prezTxt.width();
+         $prezTxt.css("font-size", prezTxtWidth / 60);
 
       },
 
@@ -159,11 +165,17 @@ var ScrollModule = (function() {
             if(relativeTopPos >= windowHeight) {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
+               $prezTxt.addClass("affix").removeClass("bottomSticky");
+               $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vh");
+               prezTxtWidth = $prezTxt.width();
+               $prezTxt.css("font-size", prezTxtWidth / 60);
             }
             if(relativeTopPos >= 2*windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
+               $prezTxt.removeClass("affix").addClass("bottomSticky");
             }
             if(relativeTopPos <= windowHeight) {
+               $prezTxt.removeClass("affix");
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
