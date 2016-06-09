@@ -167,7 +167,7 @@ var ScrollModule = (function() {
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
             }
-            else if(relativeTopPos >= windowHeight && relativeTopPos < 2 * windowHeight) {
+            if(relativeTopPos >= windowHeight && relativeTopPos < 2 * windowHeight) {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
                $prezTxt.addClass("affix").removeClass("bottomSticky");
@@ -175,7 +175,7 @@ var ScrollModule = (function() {
                prezTxtWidth = $prezTxt.width();
                $prezTxt.css("font-size", prezTxtWidth / 15);
             }
-            else if(relativeTopPos >= 2 * windowHeight) {
+            if(relativeTopPos >= 2 * windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
                $prezTxt.removeClass("affix").addClass("bottomSticky");
             }
