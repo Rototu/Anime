@@ -166,13 +166,13 @@ body::-webkit-scrollbar{
 #prezentareTxt.affix{
    position: fixed;
    right: 10vw;
-   top: 40vh;
+   top: 35vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
    right: 10vw;
-   top: 140vh;
+   top: 35vh;
 }
 
 @media (max-width: 500px) {
