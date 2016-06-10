@@ -52,8 +52,8 @@ var ScrollModule = (function() {
          $prezTxt.css("font-size", prezTxtWidth / 15);
 
          //scroll init to top
-         // window.scrollTo(0, 0);
-         // $("html, body").scrollTop(0);
+         window.scrollTo(0, 0);
+         $("html, body").scrollTop(0);
 
       },
 
