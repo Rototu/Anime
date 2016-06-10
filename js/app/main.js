@@ -24,9 +24,6 @@ var MainModule = (function() {
          $("#mySite").css("opacity", 0);
          $(window).enllax();
 
-         //disable scroll while loading screen is active
-         $("body").css("overflow-x", "hidden");
-
          //set audio volume
          $("#audio").prop("volume", 0.01);
 
