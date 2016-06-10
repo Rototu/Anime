@@ -53,7 +53,7 @@ var ScrollModule = (function() {
 
          //scroll init to top
          window.scrollTo(0, 0);
-         // $("html, body").scrollTop(0);
+         $("html, body").scrollTop(0);
 
       },
 
