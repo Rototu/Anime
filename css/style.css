@@ -5,6 +5,7 @@
 html{
    margin: 0;
    width: 100vw;
+   overflow-x: hidden;
 }
 
 body{
@@ -15,6 +16,7 @@ body{
    left: 0;
    font-family: 'Roboto', sans-serif;
    overflow-x: hidden;
+   overflow-y: scroll;
    width: 100%;
 }
 
