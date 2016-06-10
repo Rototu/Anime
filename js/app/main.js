@@ -30,9 +30,6 @@ var MainModule = (function() {
          //set audio volume
          $("#audio").prop("volume", 0.01);
 
-         //set scroll scrollSpeed
-         jQuery.scrollSpeed( $(window).height() / 4, 1000, 'linear' );
-
          //loadingBar init values
          imgNumber = $("img").length;
          console.log("number of images to be loaded: " + imgNumber);
@@ -112,6 +109,8 @@ var MainModule = (function() {
                setTimeout(function() {
                   $grid.masonry('layout');
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
+                  //set scroll scrollSpeed
+                  jQuery.scrollSpeed( $(window).height() / 4, 1000, 'linear' );
                },500);
 
             });
