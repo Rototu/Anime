@@ -102,12 +102,12 @@ var MainModule = (function() {
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
-               $("body").css("overflow-y", "scroll");
+               // $("body").css("overflow-y", "scroll");
                setTimeout(function() {
                   $grid.masonry('layout');
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                   //set scroll scrollSpeed
-                  jQuery.scrollSpeed( $(window).height() / 4, 500, 'linear' );
+                  jQuery.scrollSpeed( $(window).height() / 2, 1000, 'linear' );
                },500);
 
             });
