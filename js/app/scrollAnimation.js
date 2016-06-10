@@ -175,7 +175,7 @@ var ScrollModule = (function() {
                var scale = 0.75 + 0.25 * (relativeTopPos / windowHeight - 1);
                $prezTxt.css({
                   transform: "translate3d( 0, 0, 0) " + "scale(" + scale + ")",
-                  right: "10vw"
+                  right: "5vw"
                });
                // $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
                // prezTxtWidth = $prezTxt.width();
