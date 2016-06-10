@@ -17,6 +17,11 @@ var MainModule = (function() {
 
          //activate parallax and hide elements
          $("#mySite").css("opacity", 0);
+         $(window).enllax({
+            type: 'background',
+            ratio: 0.15,
+            direction: 'vertical'
+         });
 
          //disable scroll while loading screen is active
          $("body").css("overflow-x", "hidden");
