@@ -110,7 +110,7 @@ var MainModule = (function() {
                   $grid.masonry('layout');
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                   //set scroll scrollSpeed
-                  // jQuery.scrollSpeed( 300, 1000, 'linear' );
+                  jQuery.scrollSpeed( $(window).height() / 4, 1000, 'linear' );
                },500);
 
             });
