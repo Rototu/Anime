@@ -1,26 +1,26 @@
 //scrollTimeout for scroll event
-(function($) {
-   var uniqueCntr = 0;
-   $.fn.scrolled = function (waitTime, fn) {
-      if (typeof waitTime === "function") {
-         fn = waitTime;
-         waitTime = 10;
-      }
-      var tag = "scrollTimer" + uniqueCntr++;
-      this.scroll(function () {
-         var self = $(this);
-         var timer = self.data(tag);
-         if (timer) {
-            clearTimeout(timer);
-         }
-         timer = setTimeout(function () {
-            self.removeData(tag);
-            fn.call(self[0]);
-         }, waitTime);
-         self.data(tag, timer);
-      });
-   }
-})(jQuery);
+// (function($) {
+//    var uniqueCntr = 0;
+//    $.fn.scrolled = function (waitTime, fn) {
+//       if (typeof waitTime === "function") {
+//          fn = waitTime;
+//          waitTime = 10;
+//       }
+//       var tag = "scrollTimer" + uniqueCntr++;
+//       this.scroll(function () {
+//          var self = $(this);
+//          var timer = self.data(tag);
+//          if (timer) {
+//             clearTimeout(timer);
+//          }
+//          timer = setTimeout(function () {
+//             self.removeData(tag);
+//             fn.call(self[0]);
+//          }, waitTime);
+//          self.data(tag, timer);
+//       });
+//    }
+// })(jQuery);
 
 //scroll animation controller
 var ScrollModule = (function() {
@@ -53,7 +53,7 @@ var ScrollModule = (function() {
 
          //scroll init to top
          window.scrollTo(0, 0);
-         $("html, body").scrollTop(0);
+         // $("html, body").scrollTop(0);
 
       },
 
