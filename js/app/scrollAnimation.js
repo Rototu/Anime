@@ -174,7 +174,7 @@ var ScrollModule = (function() {
                $prezTxt.addClass("affix").removeClass("bottomSticky");
                var scale = relativeTopPos / windowHeight;
                $prezTxt.css({
-                  transform: "scale(" + scale + ")"
+                  transform: "perspective(1px) " + "scale(" + scale + ")"
                });
                // $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
                // prezTxtWidth = $prezTxt.width();
