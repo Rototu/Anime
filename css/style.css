@@ -167,7 +167,7 @@ body::-webkit-scrollbar{
    position: absolute;
    width: 40vw;
    top: 40vh;
-   right: 10vw;
+   right: 5vw;
    font-weight: 900;
    transform: translate3d(0,0,0) scale(0.75);
    transform-origin: center center;
@@ -175,13 +175,13 @@ body::-webkit-scrollbar{
 
 #prezentareTxt.affix{
    position: fixed;
-   right: 10vw;
+   right: 5vw;
    top: 40vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
-   right: 10vw;
+   right: 5vw;
    top: 140vh;
 }
 
