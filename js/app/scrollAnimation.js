@@ -142,10 +142,10 @@ var ScrollModule = (function() {
                 'end': 'parent',
                 'fn': function($el,pcnt) {
                     var $img = $('.grid-item');
-                    var point = Math.floor(($img.length+1) * pcnt);
+                    var point = Math.floor(($img.length + 1) * pcnt);
                     $img.each(function(i,el) {
                         var $myEl = $(el);
-                        if (i < point - 10) {
+                        if (i < point - ($img.length + 1) / 3) {
                             $myEl.css({opacity: 1});
                         } else {
                             $myEl.css({opacity: 0});
