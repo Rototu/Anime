@@ -180,7 +180,7 @@ body::-webkit-scrollbar{
 
 #prezentareTxt.bottomSticky{
    position: absolute;
-   right: 10vw;
+   right: 15vw;
    top: 140vh;
 }
 
