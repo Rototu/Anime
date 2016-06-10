@@ -1,11 +1,11 @@
 * {
    box-sizing: border-box;
-   overflow-x: hidden;
 }
 
 html{
    margin: 0;
    width: 100%;
+   overflow-x: hidden;
 }
 
 body{
@@ -16,6 +16,7 @@ body{
    left: 0;
    font-family: 'Roboto', sans-serif;
    width: 100%;
+   overflow-x: hidden;
 }
 
 .noselect{
