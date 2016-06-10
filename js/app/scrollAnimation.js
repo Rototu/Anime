@@ -32,7 +32,8 @@ var ScrollModule = (function() {
    var relativeTopPos;
    var i = 1;
    var $prezTxt = $("#prezentareTxt");
-   var prezTxtWidth;
+   var prezTxtWidth = $prezTxt.width();
+   var prezTxtHeight = $prezTxt.height();
 
    return {
 
@@ -171,9 +172,13 @@ var ScrollModule = (function() {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
                $prezTxt.addClass("affix").removeClass("bottomSticky");
-               $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
-               prezTxtWidth = $prezTxt.width();
-               $prezTxt.css("font-size", prezTxtWidth / 15);
+               var scale = (relativeTopPos - windowHeight) / windowHeight;
+               $prezTxt.css({
+                  transform: "scale(" + scale + ")"
+               });
+               // $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
+               // prezTxtWidth = $prezTxt.width();
+               // $prezTxt.css("font-size", prezTxtWidth / 15);
             }
             if(relativeTopPos >= 2 * windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
