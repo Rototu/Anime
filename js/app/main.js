@@ -9,7 +9,10 @@ var MainModule = (function() {
       timenav_height_percentage: 15,
       language: 'ro'
    };
-   var scrollTopInterval;
+   var scrollTopInterval = setInterval(function() {
+      window.scrollTo(0, 0);
+      $("html, body").scrollTop(0);
+   },10);
 
    return {
 
@@ -47,12 +50,6 @@ var MainModule = (function() {
          timeline = new TL.Timeline('timeline-embed',
          'https://docs.google.com/spreadsheets/d/16GQkR4ugEoxGKNvxdJY732Zs4OUD5bIx5SDh0rp3yFc/pubhtml',
          timelineOptions);
-         
-         //make sure scroll is top
-         scrollTopInterval = setInterval(function() {
-            window.scrollTo(0, 0);
-            $("html, body").scrollTop(0);
-         },10);
 
       },
 
