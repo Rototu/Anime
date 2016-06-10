@@ -4,8 +4,7 @@
 
 html{
    margin: 0;
-   width: 100vw;
-   overflow-x: hidden;
+   width: 100%;
 }
 
 body{
@@ -16,7 +15,6 @@ body{
    left: 0;
    font-family: 'Roboto', sans-serif;
    width: 100%;
-   overflow-x: hidden;
 }
 
 .noselect{
