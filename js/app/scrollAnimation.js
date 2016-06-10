@@ -172,7 +172,7 @@ var ScrollModule = (function() {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
                $prezTxt.addClass("affix").removeClass("bottomSticky");
-               var scale = (relativeTopPos - windowHeight) / windowHeight;
+               var scale = relativeTopPos / windowHeight;
                $prezTxt.css({
                   transform: "scale(" + scale + ")"
                });
