@@ -9,6 +9,7 @@ var MainModule = (function() {
       timenav_height_percentage: 15,
       language: 'ro'
    };
+   var scrollTopInterval;
 
    return {
 
@@ -46,6 +47,12 @@ var MainModule = (function() {
          timeline = new TL.Timeline('timeline-embed',
          'https://docs.google.com/spreadsheets/d/16GQkR4ugEoxGKNvxdJY732Zs4OUD5bIx5SDh0rp3yFc/pubhtml',
          timelineOptions);
+         
+         //make sure scroll is top
+         scrollTopInterval = setInterval(function() {
+            window.scrollTo(0, 0);
+            $("html, body").scrollTop(0);
+         },10);
 
       },
 
@@ -88,6 +95,9 @@ var MainModule = (function() {
          $(window).on('unload', function() {
             $(window).scrollTop(0);
          });
+         $(window).on('beforeunload', function() {
+            $(window).scrollTop(0);
+         });
 
       },
 
@@ -102,12 +112,13 @@ var MainModule = (function() {
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
-               // $("body").css("overflow-y", "scroll");
+               // $("html").css("overflow-y", "scroll");
                setTimeout(function() {
                   $grid.masonry('layout');
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                   //set scroll scrollSpeed
                   jQuery.scrollSpeed( $(window).height() / 2, 1000, 'linear' );
+                  clearInterval(scrollTopInterval);
                },500);
 
             });
