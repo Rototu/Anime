@@ -34,6 +34,8 @@ var ScrollModule = (function() {
    var $prezTxt = $("#prezentareTxt");
    var prezTxtWidth = $prezTxt.width();
    var prezTxtHeight = $prezTxt.height();
+   var imgGridList = $(".grid-item");
+   var section = [];
 
    return {
 
@@ -44,10 +46,14 @@ var ScrollModule = (function() {
          $("#menu1").css("color", "rgb(15,15,15)");
          blueTweenWidth = $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"));
          $blueTween.width(blueTweenWidth);
-         
+
          //set parallax font size
          prezTxtWidth = $prezTxt.width();
          $prezTxt.css("font-size", prezTxtWidth / 15);
+
+         //scroll init to top
+         window.scrollTo(0, 0);
+         $("html, body").scrollTop(0);
 
       },
 
@@ -93,28 +99,27 @@ var ScrollModule = (function() {
          });
 
          //buttonScroll function
-         $("#scrollUp").click(function() {
-            var mySect = Math.floor((relativeTopPos + 10) / windowHeight);
-            console.log(mySect); 
-            var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
-            if((relativeTopPos + 10) / windowHeight >= 1.1 && (relativeTopPos + 10) / windowHeight < 3) scrollValue = $(window).height();
-            else if(mySect == 1) scrollValue = 0;
-            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
-         });
-         $("#scrollDown").click(function() {
-            var mySect = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight ); 
-            console.log(mySect); 
-            var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
-            if(mySect == 0) scrollValue = 2 * $(window).height() - $("#menu").height();
-            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
-         });
+         // $("#scrollUp").click(function() {
+         //    var mySect = Math.floor((relativeTopPos + 10) / windowHeight);
+         //    console.log(mySect);
+         //    var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
+         //    if((relativeTopPos + 10) / windowHeight >= 1.1 && (relativeTopPos + 10) / windowHeight < 3) scrollValue = $(window).height();
+         //    else if(mySect == 1) scrollValue = 0;
+         //    $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+         // });
+         // $("#scrollDown").click(function() {
+         //    var mySect = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
+         //    console.log(mySect);
+         //    var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
+         //    if(mySect == 0) scrollValue = 2 * $(window).height() - $("#menu").height();
+         //    $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+         // });
 
          //menuSelector clicked move to page
          $(".menuSelector").click(function() {
             var id = this.id;
             var mySect = id.substr(id.length - 1);
-            var scrollValue = $(".prez" + mySect).position().top - $("#menu").height();
-            if( mySect == 1 ) scrollValue = windowHeight;
+            var scrollValue = section[mySect];
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
          });
 
@@ -124,10 +129,33 @@ var ScrollModule = (function() {
       animations: function() {
 
 
-         //on window scroll
+         //init vars
+         var prezTxtTop;
          var menuPos = $("#menu").position().top;
          var j = 1;
 
+         //jScrollability
+         $.jScrollability([
+            {
+                'selector': '.grid',
+                'start': 'parent',
+                'end': 'parent',
+                'fn': function($el,pcnt) {
+                    var $img = $('.grid-item');
+                    var point = Math.floor(($img.length+1) * pcnt);
+                    $img.each(function(i,el) {
+                        var $myEl = $(el);
+                        if (i < point - 10) {
+                            $myEl.css({opacity: 1});
+                        } else {
+                            $myEl.css({opacity: 0});
+                        }
+                    });
+                }
+            }
+        ]);
+
+         //window scroll handler
          $(window).scroll(function() {
             scrollAnimation();
          });
@@ -137,12 +165,9 @@ var ScrollModule = (function() {
             //get props
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
-            if(relativeTopPos < 3 * windowHeight - $("#menu").height()) {
-               i = 1;
-            }
-            else if(relativeTopPos < 4 * windowHeight - $("#menu").height()) {
-               i = 2;
-            }
+            if(relativeTopPos >= section[1]) i = 1;
+            if(relativeTopPos >= section[2]) i = 2;
+            if(relativeTopPos >= section[3]) i = 3;
 
             //set selected menu button
             if(i == 0) i=1;
@@ -167,24 +192,24 @@ var ScrollModule = (function() {
                $prezTxt.removeClass("affix");
                $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
+               prezTxtTop = $prezTxt.css("top");
             }
             if(relativeTopPos >= windowHeight && relativeTopPos < 2 * windowHeight) {
                $("#menu").addClass("affix").css("top", 0);
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
                $prezTxt.addClass("affix").removeClass("bottomSticky");
-               var scale = 0.75 + 0.25 * (relativeTopPos / windowHeight - 1);
+               var scale = 0.705 + 0.25 * (relativeTopPos / windowHeight - 1);
                $prezTxt.css({
-                  transform: "translate3d( 0, 0, 0) " + "scale(" + scale + ")",
-                  right: "5vw"
+                  transform: "scale(" + scale + ")",
+                  right: "50px"
                });
-               // $prezTxt.css("width", (30 + 10 * (relativeTopPos - windowHeight) / windowHeight) + "vw");
-               // prezTxtWidth = $prezTxt.width();
-               // $prezTxt.css("font-size", prezTxtWidth / 15);
             }
             if(relativeTopPos >= 2 * windowHeight) {
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
                $prezTxt.removeClass("affix").addClass("bottomSticky");
             }
+
+            //debug
 
          }
 
@@ -197,6 +222,8 @@ var ScrollModule = (function() {
          var windowHeight = $(window).height();
 
          //functions
+         ScrollModule.getSectionPos();
+         $grid.masonry('layout');
          if(ii != blueTweenOffset) {
             blueTweenOffset =  ii;
 
@@ -212,6 +239,21 @@ var ScrollModule = (function() {
 
             console.log("menu resized");
          }
+      },
+
+      getSectionPos: function() {
+
+         setTimeout(function() {
+            //push section heights in var;
+            section[0] = 0;
+            $(".section").each(function(i, el) {
+               var sectionPos = $(el).position().top - $("#menu").height();
+               if( i == 0 ) sectionPos += $("#menu").height();
+               section[i+1] = sectionPos;
+            });
+            console.log(section);
+         },5000)
+
       }
 
    };
@@ -225,4 +267,7 @@ $(document).on("ready", function() {
    $(window).resize(function() {
       ScrollModule.resizeElements();
    });
+   $(window).on("load", function() {
+      ScrollModule.getSectionPos();
+   })
 });

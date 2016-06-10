@@ -4,6 +4,11 @@ var MainModule = (function() {
    var imgNumber;
    var imgCounter = 0;
    var loadingBarWidth;
+   var timelineOptions = {
+      scale_factor: 1.5,
+      timenav_height_percentage: 15,
+      language: 'ro'
+   };
 
    return {
 
@@ -34,6 +39,19 @@ var MainModule = (function() {
 
          //disable image drag
          $('img').on('dragstart', function(event) { event.preventDefault(); });
+
+         //init image grid
+         $grid = $('.grid').masonry({
+            itemSelector : '.grid-item',
+            percentPosition : true,
+            columnWidth : '.grid-sizer',
+            transitionDuration : 0,
+         });
+
+         //init timeline
+         timeline = new TL.Timeline('timeline-embed',
+         'https://docs.google.com/spreadsheets/d/16GQkR4ugEoxGKNvxdJY732Zs4OUD5bIx5SDh0rp3yFc/pubhtml',
+         timelineOptions);
 
       },
 
@@ -66,9 +84,15 @@ var MainModule = (function() {
             });
          });
 
+         // resize loading bar
          $(window).resize(function() {
             loadingBarWidth = $("#loadingBar").width();
             $("#loadedPercentage").stop().css("width", loadingBarWidth * imgCounter/imgNumber + 1);
+         });
+
+         // scroll to top before exiting page
+         $(window).on('unload', function() {
+            $(window).scrollTop(0);
          });
 
       },
@@ -81,12 +105,12 @@ var MainModule = (function() {
 
          //delete setTimeout after further development !!!
          setTimeout(function() {
-            $("html, body").stop().animate({scrollTop: 0, scrollLeft: 0}, {queue: false, duration: 0, delay: 0, easing: "easeInOutCubic"});
             $("#loadingScreen").fadeOut(500, function() {
 
                //enable scroll
                $("body").css("overflow-y", "scroll");
                setTimeout(function() {
+                  $grid.masonry('layout');
                   move("#mySite").ease("linear").set("opacity", 1).duration(3000).end();
                },500);
 

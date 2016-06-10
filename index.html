@@ -10,8 +10,9 @@
    <link rel="stylesheet" href="css/style.css" />
    <link rel="stylesheet" href="css/animeParallax.css" />
    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,latin-ext'
-   rel='stylesheet' type='text/css'>
-   <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+   rel='stylesheet' type='text/css' />
+   <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+   <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css" />
 
    <link rel="icon" href="img/favicon.gif">
 
@@ -40,15 +41,15 @@
       <div id="menu">
          <section id="menuElements">
             <div class="menuSelector" id="menu1">PREZENTARE</div>
-            <div class="menuSelector" id="menu2">ISTORIC</div>
-            <div class="menuSelector" id="menu3">IMPACT</div>
-            <div class="menuSelector" id="menu4">RECOMANDĂRI</div>
+            <div class="menuSelector" id="menu2">RECOMANDĂRI</div>
+            <div class="menuSelector" id="menu3">ISTORIC</div>
+            <div class="menuSelector" id="menu4">IMPACT</div>
             <div class="menuSelector" id="menu5">INTERACTIV</div>
          </section>
-         <div id="nav">
+         <!-- <div id="nav">
             <i class="fa fa-arrow-up" aria-hidden="true" id="scrollUp"></i>
             <i class="fa fa-arrow-down" aria-hidden="true" id="scrollDown"></i>
-         </div>
+         </div> -->
          <div id="menuBar">
             <div id="blueTween"></div>
          </div>
@@ -83,18 +84,332 @@
 
       <!-- prezentare -->
       <div class="section prez1" id="prezentare" data-enllax-ratio="0.9">
+         <div id="menuFill"></div>
          <img src="img/parallax/shizuo.png" id="prezentareImg"/>
          <div id="prezentareTxt">
-             Te întrebi ce sunt anime-urile? Îți spun eu! <br/>
-             Acest termen japonez provine din cuvântul englez "animation" <br/>
-             și are semnificația de animații japoneze. <br/>
-             Dacă vrei să aflii mai multe dă click aici! 
+            Te întrebi ce sunt anime-urile? Îți spun eu! <br/>
+            Acest termen japonez provine din cuvântul englez "animation" <br/>
+            și are semnificația de animații japoneze. <br/>
+            Dacă vrei să aflii mai multe dă click aici!
          </div>
       </div>
 
       <!-- istoric -->
-      <div class="section prez2" id="istoric" style="background-color: black">
+      <div class="section prez2" id="recomandari" style="background-color: black">
 
+         <div class="grid">
+
+            <div class="grid-sizer"></div>
+
+            <!-- 5 -->
+
+            <div class="grid-item grid-item--width6">
+               <a href="http://myanimelist.net/anime/19/Monster">
+                  <img src="img/list/monster.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width6">
+               <a href="http://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood">
+                  <img src="img/list/fullmetal.png"/>
+               </a>
+            </div>
+
+            <!-- 4 -->
+
+            <div class="grid-item grid-item--width6">
+               <a href="http://myanimelist.net/anime/164/Mononoke_Hime">
+                  <img src="img/list/mononoke.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width6">
+               <a href="http://myanimelist.net/anime/457/Mushishi">
+                  <img src="img/list/mushishi.png"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width6">
+               <a href="http://myanimelist.net/anime/10087/Fate_Zero">
+                  <img src="img/list/fatezero.png"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/30/Neon_Genesis_Evangelion">
+                  <img src="img/list/neongenesiseva.jpg"/>
+               </a>
+            </div>
+
+            <!-- 3 -->
+
+
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/263/Hajime_no_Ippo">
+                  <img src="img/list/hajimenoippo.png"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/7193/Aoi_Bungaku_Series">
+                  <img src="img/list/aoibungaku.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/269/Bleach">
+                  <img src="img/list/bleach.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/27775/Plastic_Memories">
+                  <img src="img/list/plasticmemories.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width5">
+               <a href="http://myanimelist.net/anime/23273/Shigatsu_wa_Kimi_no_Uso">
+                  <img src="img/list/shigatsu.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width5">
+               <a href="http://myanimelist.net/anime/31043/Boku_dake_ga_Inai_Machi">
+                  <img src="img/list/erased.png"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width5">
+               <a href="http://myanimelist.net/anime/9253/Steins_Gate">
+                  <img src="img/list/steinsgate.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/437/Perfect_Blue">
+                  <img src="img/list/perfectblue.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/759/Tokyo_Godfathers">
+                  <img src="img/list/tokyogodfathers.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/1/Cowboy_Bebop">
+                  <img src="img/list/bebop.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/6114/Rainbow__Nisha_Rokubou_no_Shichinin">
+                  <img src="img/list/rainbow.jpg"/>
+               </a>
+            </div>
+
+            <!-- 2 -->
+
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/16498/Shingeki_no_Kyojin">
+                  <img src="img/list/attacktitan.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width3">
+               <a href="http://myanimelist.net/anime/1535/Death_Note">
+                  <img src="img/list/desunoto.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/22297/Fate_stay_night__Unlimited_Blade_Works">
+                  <img src="img/list/unlimitedbladeworks.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/28977/Gintama°">
+                  <img src="img/list/gintama.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width3">
+               <a href="http://myanimelist.net/anime/43/Ghost_in_the_Shell">
+                  <img src="img/list/ghostintheshell.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width3">
+               <a href="http://myanimelist.net/anime/1943/Paprika">
+                  <img src="img/list/paprika.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width3">
+               <a href="http://myanimelist.net/anime/199/Sen_to_Chihiro_no_Kamikakushi">
+                  <img src="img/list/spiriritedaway.jpg"/>
+               </a>
+            </div>
+
+            <!-- 1 -->
+
+            <div class="grid-item grid-item--width4">
+               <a href="http://myanimelist.net/anime/1735/Naruto__Shippuuden">
+                  <img src="img/list/naruto.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/6702/Fairy_Tail">
+                  <img src="img/list/fairytail.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/11061/Hunter_x_Hunter_2011">
+                  <img src="img/list/hunterxhunter.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/30276/One_Punch_Man">
+                  <img src="img/list/opman.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/1575/Code_Geass__Hangyaku_no_Lelouch">
+                  <img src="img/list/codegeass.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/9756/Mahou_Shoujo_Madoka★Magica">
+                  <img src="img/list/madokamagica.jpg"/>
+               </a>
+            </div>
+
+            <!-- 0 -->
+
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/45/Rurouni_Kenshin__Meiji_Kenkaku_Romantan">
+                  <img src="img/list/rurounikenshin.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/14719/JoJo_no_Kimyou_na_Bouken_TV">
+                  <img src="img/list/jojos.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/6895/Hakuouk">
+                  <img src="img/list/hakuoki.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/26243/Owari_no_Seraph">
+                  <img src="img/list/owarinoseraph.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/6746/Durarara">
+                  <img src="img/list/durarara.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/2251/Baccano">
+                  <img src="img/list/baccano.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/2001/Tengen_Toppa_Gurren_Lagann">
+                  <img src="img/list/GurrenLagann.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/387/Haibane_Renmei">
+                  <img src="img/list/haibanerenmei.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/9289/Hanasaku_Iroha">
+                  <img src="img/list/hanasakuiroha.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/6594/Katanagatari">
+                  <img src="img/list/katanagatari.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/13601/Psycho-Pass">
+                  <img src="img/list/psycho-pass.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/160/Ima_Soko_ni_Iru_Boku">
+                  <img src="img/list/now-and-then-here-and-there.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/22535/Kiseijuu__Sei_no_Kakuritsu">
+                  <img src="img/list/parasyte.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item">
+               <a href="http://myanimelist.net/anime/329/Planetes">
+                  <img src="img/list/planetes.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/44/Rurouni_Kenshin__Meiji_Kenkaku_Romantan_-_Tsuiokuhen">
+                  <img src="img/list/garden.gif"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/339/Serial_Experiments_Lain">
+                  <img src="img/list/serialexperimentslain.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/13125/Shinsekai_yori">
+                  <img src="img/list/shinsekaiyori.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/26/Texhnolyze">
+                  <img src="img/list/Texhnolyze.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/15809/Hataraku_Maou-sama">
+                  <img src="img/list/thedevilisaparttimer.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/6211/Tokyo_Magnitude_80">
+                  <img src="img/list/tokyomagnitude80.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/4224/Toradora">
+                  <img src="img/list/toradora!.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/10162/Usagi_Drop">
+                  <img src="img/list/usagidrop.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/392/Yuu☆Yuu☆Hakusho">
+                  <img src="img/list/yuyu.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/523/Tonari_no_Totoro">
+                  <img src="img/list/totoro.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/28623/Koutetsujou_no_Kabaneri">
+                  <img src="img/list/kabaneru.png"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/11617/High_School_DxD">
+                  <img src="img/list/dxd.jpg"/>
+               </a>
+            </div>
+            <div class="grid-item grid-item--width2">
+               <a href="http://myanimelist.net/anime/9989/Ano_Hi_Mita_Hana_no_Namae_wo_Bokutachi_wa_Mada_Shiranai">
+                  <img src="img/list/anohana.jpg"/>
+               </a>
+            </div>
+
+         </div>
+      </div>
+
+      <div class="section prez3" id="istoric">
+         <div id='timeline-embed'></div>
       </div>
 
    </section>
@@ -108,6 +423,7 @@
    <script src="js/vendor/move.min.js"></script>
    <script src="js/vendor/masonry.pkgd.min.js"></script>
    <script src="js/vendor/imagesloaded.pkgd.min.js"></script>
+   <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 
    <!-- page scripts  -->
    <script src="js/app/main.js"></script>
