@@ -145,7 +145,7 @@ var ScrollModule = (function() {
                     var point = Math.floor(($img.length + 1) * pcnt);
                     $img.each(function(i,el) {
                         var $myEl = $(el);
-                        if (i < point - ($img.length + 1) / 3) {
+                        if (i < point - ($img.length + 1) / 4) {
                             $myEl.css({opacity: 1});
                         } else {
                             $myEl.css({opacity: 0});
