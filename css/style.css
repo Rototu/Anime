@@ -76,6 +76,12 @@ body::-webkit-scrollbar{
    height: 200vh;
 }
 
+#prezentare{
+   background: white url("../img/parallax/snowy-mountain-landscape-wallpaper-2560x1600.jpg");
+   background-size: cover;
+   background-position: center;
+}
+
 #menu{
    display: block;
    position: absolute;
