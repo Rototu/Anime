@@ -33,7 +33,7 @@ body{
 #mySite{
    background-color: white;
    overflow: hidden;
-   width: 100%;
+   width: 100vw;
 }
 
 #loadingBar{
