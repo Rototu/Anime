@@ -19,7 +19,7 @@ var MainModule = (function() {
          $("#mySite").css("opacity", 0);
          $(window).enllax({
             type: 'background',
-            ratio: 0.15,
+            ratio: 1,
             direction: 'vertical'
          });
 
