@@ -162,18 +162,19 @@ body::-webkit-scrollbar{
 }
 
 #prezentareTxt{
+   -webkit-font-smoothing: antialiased;
    text-align: center;
    position: absolute;
    width: 30vw;
    top: 40vh;
-   right: 10vw;
+   right: 15vw;
    font-weight: 900;
    transform-origin: center center;
 }
 
 #prezentareTxt.affix{
    position: fixed;
-   right: 10vw;
+   right: 15vw;
    top: 40vh;
 }
 
