@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>mytimeline</title><meta name="viewport" content="target-densitydpi=device-dpi,user-scalable=1,minimum-scale=1,maximum-scale=2.5,initial-scale=1,width=device-width"><link href="mytimeline_files/325126404-waffle_k_ltr.css" type="text/css" rel="stylesheet"><style type="text/css">
+        html { overflow: visible; }
+        #sheets-viewport { overflow: auto; }
+        #sheets-viewport.widget-viewport { overflow: hidden; }
+        .grid-container { overflow: visible; background: white;}
+        .grid-table-container { overflow: visible; }
+        #top-bar {
+          background: url("//ssl.gstatic.com/docs/spreadsheets/publishheader.png") repeat-x bottom;
+          margin: 0;
+          overflow: hidden;
+        }
+        #top-bar {
+          border-bottom: 1px solid #ccc;
+          padding: 6px 6px 0;
+        }
+        #doc-title { padding-bottom: 5px; }
+        #doc-title .name { font-size: 15px; }
+        #sheet-menu {
+          font-size: 13px;
+          margin: 6px 0 0;
+          padding: 0 0 5px;
+        }
+        #sheet-menu li {
+          display: inline;
+          list-style-type: none;
+          margin: 0;
+          padding: 5px 8px;
+        }
+        #sheet-menu li.active {
+          background-color: #fff;
+          font-weight: bold;
+          border: 1px solid #999;
+        }
+        #top-bar #sheet-menu li.active {
+          border-bottom: 0;
+        }
+        #sheet-menu a, #sheet-menu a:visited { color: #07c; }
+        #footer {
+          background: #f0f0f0;
+          border-top: 1px #ccc solid;
+          border-bottom: 1px #ccc solid;
+          font-size: 13;
+          padding: 10px 10px;
+        }
+        .dash {
+          padding: 0 6px;
+        }
+        .ritz .waffle a { color: inherit; }.ritz .waffle .s6{text-align:left;color:#000000;background-color:#ffffff;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s10{text-align:left;text-decoration:underline;color:#1155cc;background-color:#f3f3f3;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s2{text-align:center;font-weight:bold;color:#ffffff;background-color:#999999;font-family:'Times New Roman';font-size:11pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s7{text-align:left;color:#1155cc;background-color:#ffffff;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s1{text-align:center;font-weight:bold;color:#ffffff;background-color:#666666;font-family:'Times New Roman';font-size:11pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s8{text-align:left;text-decoration:underline;color:#1155cc;background-color:#ffffff;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s4{text-align:left;color:#1155cc;background-color:#dae5f3;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s3{text-align:left;color:#000000;background-color:#dae5f3;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s5{text-align:left;color:#000000;background-color:#f3f3f3;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s9{text-align:left;color:#1155cc;background-color:#f3f3f3;font-family:'Times New Roman';font-size:10pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s0{text-align:center;font-weight:bold;color:#ffffff;background-color:#434343;font-family:'Times New Roman';font-size:11pt;vertical-align:bottom;white-space:normal;overflow:hidden;direction:ltr;padding:0px 3px 0px 3px;}</style><script type="text/javascript">
+        var activeSheetId;
+
+        function switchToSheet(id) {
+          if (document.getElementById('sheet-menu')) {
+            document.getElementById('sheet-button-' + activeSheetId)
+                .className = '';
+            document.getElementById('sheet-button-' + id).className = 'active';
+          }
+
+          document.getElementById(activeSheetId).style.display = 'none';
+          document.getElementById(id).style.display = '';
+          activeSheetId = id;
+
+          // posObjs() is defined in embeddedObjectJs (see EmbeddedObjectHtmlBuilder.java)
+          posObjs();
+          return false;
+        }
+        
+        function init() {
+        var optPageSwitcher;
+        
+        function resize() {
+          var optMobileWebHeader = document.getElementById('docs-ml-header-id');
+          var optTopBar = document.getElementById('top-bar');
+          var optFooter = document.getElementById('footer');
+          var sheetsViewport = document.getElementById('sheets-viewport');
+
+          if (optMobileWebHeader) {
+            sheetsViewport.style.marginTop = optMobileWebHeader.offsetHeight +
+                (optTopBar ? optTopBar.offsetHeight : 0) + 'px';
+          }
+          var adjustedHeight = window.innerHeight -
+              (optTopBar ? optTopBar.offsetHeight : 0) -
+              (optFooter ? optFooter.offsetHeight : 0);
+          var adjustedWidth = window.innerWidth;
+          sheetsViewport.style.width = (adjustedWidth + 'px');
+          sheetsViewport.style.height = (adjustedHeight + 'px');
+          if (optPageSwitcher) {
+            optPageSwitcher.resize(adjustedWidth, adjustedHeight);
+          }
+        }
+        resize();
+        window.onresize = resize;
+        }
+        </script><script>_docs_flag_initialData={"docs-mwid":true,"docs-smheo":true,"info_params":{"token":"AC4w5VhJa13xnZlvlJV3Aw87PQ0Ts1CJ9g:1465677609394"},"ilcm":{"eui":"ADFN-cs8aqrAtLIGpD4eFyuoTh2wFOvSMjNJkr0RZ59F8PAdZBbFGhh3IkdpwPaypHZUaub2yuxV","je":1,"sstu":1465677609413000,"si":"CIjTjsrqoM0CFdCFHwodRzgMIA","ei":[5700127,5700058,5700019,5700080,5700072,5700028,5700016,5700042]},"drive_url":"//drive.google.com?authuser\u003d0\u0026usp\u003dsheets_web","docs-sup":"/spreadsheets"}; _docs_flag_cek= null ;</script></head><body onload="init()"><div id="top-bar"><div id="doc-title"><span class="name">mytimeline : od1</span></div></div><div style="width: 1920px; height: 872px;" id="sheets-viewport"><div id="0" style="position: relative;" dir="ltr"><div class="ritz grid-container" dir="ltr"><table class="waffle no-grid" cellpadding="0" cellspacing="0"><thead><tr><th class="row-header freezebar-vertical-handle header-shim row-header-shim"></th><th id="0C0" style="width:130px" class="header-shim"></th><th id="0C1" style="width:135px" class="header-shim"></th><th id="0C2" style="width:153px" class="header-shim"></th><th id="0C3" style="width:222px" class="header-shim"></th><th id="0C4" style="width:423px" class="header-shim"></th><th id="0C5" style="width:120px" class="header-shim"></th><th id="0C6" style="width:173px" class="header-shim"></th><th id="0C7" style="width:120px" class="header-shim"></th><th id="0C8" style="width:120px" class="header-shim"></th><th id="0C9" style="width:120px" class="header-shim"></th></tr></thead><tbody><tr style="height:41px;"><th id="0R0" style="height: 41px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 41px;">1</div></th><td class="s0" dir="ltr">Start Date</td><td class="s0" dir="ltr">End Date</td><td class="s1" dir="ltr">Headline</td><td class="s1" dir="ltr">Text</td><td class="s2" dir="ltr">Media</td><td class="s2" dir="ltr">Media Credit</td><td class="s2" dir="ltr">Media Caption</td><td class="s2" dir="ltr">Media Thumbnail</td><td class="s0" dir="ltr">Type</td><td class="s0" dir="ltr">Tag</td></tr><tr><th style="height:3px" class="freezebar-cell freezebar-horizontal-handle row-header-shim"></th><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td><td class="freezebar-cell"></td></tr><tr style="height:16px;"><th id="0R1" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">2</div></th><td class="s3" dir="ltr">1/1/1900</td><td class="s3"></td><td class="s3" dir="ltr">Istoria animațiilor japoneze</td><td class="s3" dir="ltr">Anime-urile
+ sunt unele dintre cele mai populare forme de divertisment din lume deși
+ majoritatea sunt produse pentru audiența japoneză. Istoria lor a 
+început în prima parte a secolului XX, prima generație de animatori 
+fiind alcătuită din  Ōten Shimokawa, Jun'ichi Kōuchi și Seitaro 
+Kitayama.</td><td class="s4" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://trapelachristine.files.wordpress.com/2011/08/anime1.jpg&amp;sa=D&amp;ust=1465681209421000&amp;usg=AFQjCNHjJENZKwbaPw5mJhLafWMqQ1BCng">https://trapelachristine.files.wordpress.com/2011/08/anime1.jpg</a></td><td class="s3" dir="ltr">wordpress: Trapella Christine</td><td class="s3" dir="ltr">Caractere din anime-uri populare</td><td class="s3" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://trapelachristine.files.wordpress.com/2011/08/anime1.jpg&amp;sa=D&amp;ust=1465681209421000&amp;usg=AFQjCNHjJENZKwbaPw5mJhLafWMqQ1BCng">https://trapelachristine.files.wordpress.com/2011/08/anime1.jpg</a></td><td class="s3" dir="ltr">title</td><td class="s5"></td></tr><tr style="height:16px;"><th id="0R2" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">3</div></th><td class="s6" dir="ltr">1907</td><td class="s6" dir="ltr">1911</td><td class="s6" dir="ltr">Fragmentul Matsumoto</td><td class="s6" dir="ltr">Undeva
+ între anii 1907-1911 se speculează că ar fi fost produsă prima animație
+ japoneză, autorul ei fiind anonim. A fost descoperită într-un proiector
+ dintr-o casă din Kyoto în anul 2005. În total cadrele alcătuiesc o 
+secvență de trei secunde în care un caracter se întoarce către ecran și 
+salută cu pălăria.</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://youtu.be/zBXS9c9eEfE&amp;sa=D&amp;ust=1465681209421000&amp;usg=AFQjCNHw0aLILtCewJpaxvTZ_Y3CDVJFjA">https://youtu.be/zBXS9c9eEfE</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">Cadru din animație</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://upload.wikimedia.org/wikipedia/commons/5/54/Katsud%25C5%258D_Shashin.jpg&amp;sa=D&amp;ust=1465681209421000&amp;usg=AFQjCNFgZ1DMksovvcUkI_EWpz5v5j5Jcw">https://upload.wikimedia.org/wikipedia/commons/5/54/Katsud%C5%8D_Shashin.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R3" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">4</div></th><td class="s5" dir="ltr">1917</td><td class="s5" dir="ltr"></td><td class="s5" dir="ltr">Ōten Shimokawa</td><td class="s5" dir="ltr">Ōten
+ Shimokawa a fost un animator de materiale politice, lucrând pentru 
+revista Tokyo Puck. A fost angajat de către Tenkatsu pentru a le produce
+ o animație. Datorită unor motive medicale, a reușit să facă doar cinci 
+filme animate, incluzând Imokawa Mukuzo Genkanban no Maki în 1917, 
+producție ce este considerată ca fiind prima animație japoneză 
+profesionistă.</td><td class="s5" dir="ltr">http://userscontent2.emaze.com/images/62d97b14-0fc2-42d2-9329-d78f104defc6/039af4e9-3412-4110-b206-628af4700c01.jpg </td><td class="s9" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://emaze.com&amp;sa=D&amp;ust=1465681209422000&amp;usg=AFQjCNF0PFXwnF2w9Pbw_x1OY73J3-RNIg">emaze.com</a></td><td class="s5" dir="ltr">Ōten Shimokawa</td><td class="s10" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://userscontent2.emaze.com/images/62d97b14-0fc2-42d2-9329-d78f104defc6/039af4e9-3412-4110-b206-628af4700c01.jpg&amp;sa=D&amp;ust=1465681209422000&amp;usg=AFQjCNGuv_eDL_yLjN5U30RdMqDQXB8TUA">http://userscontent2.emaze.com/images/62d97b14-0fc2-42d2-9329-d78f104defc6/039af4e9-3412-4110-b206-628af4700c01.jpg</a></td><td class="s5"></td><td class="s5"></td></tr><tr style="height:16px;"><th id="0R4" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">5</div></th><td class="s6" dir="ltr">1918</td><td class="s6" dir="ltr"></td><td class="s6" dir="ltr">Jun'ichi Kōuchi</td><td class="s6" dir="ltr">Jun'ichi
+ Kōuchi a fost un alt animator proeminent al perioadei. Era un 
+caricaturist și pictor, specializat pe pictura cu acuarele. În 1912 a 
+intrat și el sfera animatorilor și a fost angajat să animeze de către 
+Kobayashi Shokai în 1916. El e văzut ca să cel mai avansat animator al 
+anilor 1910 din punct de vedere tehnic. Lucrările sale cuprind 
+cincisprezece filme animate.</td><td class="s6" dir="ltr">https://brandondavison.files.wordpress.com/2014/10/shimpei_gotc58d.jpg</td><td class="s6" dir="ltr">brandondavision</td><td class="s6" dir="ltr">Jun'ichi Kōuchi</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://brandondavison.files.wordpress.com/2014/10/shimpei_gotc58d.jpg&amp;sa=D&amp;ust=1465681209422000&amp;usg=AFQjCNHfSevYdgKgylpVjcqu_0cWLUvBeA">https://brandondavison.files.wordpress.com/2014/10/shimpei_gotc58d.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R5" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">6</div></th><td class="s5" dir="ltr">9/1/1939</td><td class="s5" dir="ltr">8/14/1945</td><td class="s5" dir="ltr">Al Doilea Război Mondial</td><td class="s5" dir="ltr">În
+ perioada celui de al Doilea Război Mondial au fost produse mai multe 
+filme animate de propagandă precum Momotarō no Umiwashi (1943) şi 
+Momotarō: Umi no Shinpei (1945), ultimul menţionat fiind şi primul film 
+de lung metraj anime. Titlul său tradus este "Momotarou: Războinicii zei
+ ai mărilor", fiind un film de propagandă realizat la comanda 
+Minsterului Marinei Japoniei cu durata de 74 de minute.</td><td class="s9" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://38.media.tumblr.com/f9a7f2c8f1228028f21f0653d9a0dd18/tumblr_noawxpQ4z41tvyli9o7_500.gif&amp;sa=D&amp;ust=1465681209422000&amp;usg=AFQjCNHXnoOaS-F4cKUtBdxM5tY8IDaZZQ">http://38.media.tumblr.com/f9a7f2c8f1228028f21f0653d9a0dd18/tumblr_noawxpQ4z41tvyli9o7_500.gif</a></td><td class="s5" dir="ltr">tumblr</td><td class="s5" dir="ltr">Momotarō: Umi no Shinpei</td><td class="s9" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://38.media.tumblr.com/f9a7f2c8f1228028f21f0653d9a0dd18/tumblr_noawxpQ4z41tvyli9o7_500.gif&amp;sa=D&amp;ust=1465681209422000&amp;usg=AFQjCNHXnoOaS-F4cKUtBdxM5tY8IDaZZQ">http://38.media.tumblr.com/f9a7f2c8f1228028f21f0653d9a0dd18/tumblr_noawxpQ4z41tvyli9o7_500.gif</a></td><td class="s5"></td><td class="s5"></td></tr><tr style="height:16px;"><th id="0R6" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">7</div></th><td class="s6" dir="ltr">1958</td><td class="s6" dir="ltr">1958</td><td class="s6" dir="ltr">Primul anime de lung metraj color</td><td class="s6" dir="ltr">Povestea
+ Şarpelui Alb (白蛇伝 Hakujaden) este o adaptare a unei legende chineze, 
+alegerea unei astfel de teme având scopul reconcilierii cu vecinii din 
+vest ai Japoniei. Dat fiind contextul istoric, acest film a împins 
+tehnologia de animaţie japoneză la limitele ei. Acesta a fost un proiect
+ de scară largă, implicând un total de 13.590 de angajaţi. Surprinzător 
+au fost necesare doar opt luni pentru realizarea filmului. </td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DzXVh5osRfBk&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNFqL1EYLZNGCdQxsWam1RDyuyAOEw">https://www.youtube.com/watch?v=zXVh5osRfBk</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">白蛇伝 Hakujaden</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://cdn.myanimelist.net/images/anime/9/13139.jpg&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNGvrknHKGsts_UxtNyIh_6WtT9YuQ">http://cdn.myanimelist.net/images/anime/9/13139.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R7" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">8</div></th><td class="s5" dir="ltr">1/1/1963</td><td class="s5" dir="ltr">12/31/1966</td><td class="s5" dir="ltr">Primul serial anime: Astro Boy</td><td class="s5" dir="ltr">Astro
+ Boy (鉄腕アトム) a fost lansat de anul nou şi este considerat ca fiind 
+primul serial animat japonez cunoscut care a întruchipat o estetică nouă
+  ce mai târziu a devenit familiară în întreaga lume sub numele de 
+anime.</td><td class="s9" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://goodcomics.comicbookresources.com/wp-content/uploads/2007/07/astro_boy5.gif&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNH8fw5Ij3Sw8BNG4zRFAsUC5E2uDA">http://goodcomics.comicbookresources.com/wp-content/uploads/2007/07/astro_boy5.gif</a></td><td class="s10" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://goodcomics.comicbookresources.com&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNG8fbvlYdTKpcKvXD4jwqs-nEY3HA">goodcomics.comicbookresources.com</a></td><td class="s5" dir="ltr">Astro Boy</td><td class="s10" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://static.giantbomb.com/uploads/original/11/115901/1795587-astrogba_3.png&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNEMC8VP3f0jt74nkvxPkHHWJk_lNA">http://static.giantbomb.com/uploads/original/11/115901/1795587-astrogba_3.png</a></td><td class="s5"></td><td class="s5"></td></tr><tr style="height:16px;"><th id="0R8" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">9</div></th><td class="s6" dir="ltr">1948</td><td class="s6" dir="ltr">1948</td><td class="s6" dir="ltr">Toei Animation</td><td class="s6" dir="ltr">Acesta
+ este studio-ul de animaţie japonez care în momentul prezent deţine 
+drepturi pentru canalul Animax ce este difuzat şi în România. Hayao 
+Miyazaki şi Isao Takahata, unii dintre cei mai renumiţi directori 
+actuali de anime şi fondatorii Ghibli Studio, şi-au început cariera la 
+Toei Animation.</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://vignette2.wikia.nocookie.net/dragonball/images/c/c6/ToeiAnimationRedlogo.png/revision/latest?cb%3D20130225122457&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNGtHafzsUp8dE3KgqAHGFgBzaPSNA">http://vignette2.wikia.nocookie.net/dragonball/images/c/c6/ToeiAnimationRedlogo.png/revision/latest?cb=20130225122457</a></td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://nocookie.net&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNGF9W0ZWzpdTWgvkTPtVNMm3JNA8Q">nocookie.net</a></td><td class="s6" dir="ltr">Sigla studio-ului Toei Animation </td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Toei_Animation_logo.svg/1280px-Toei_Animation_logo.svg.png&amp;sa=D&amp;ust=1465681209423000&amp;usg=AFQjCNG9BAXJ_9Nbqp64GEMqWyZFBwOtEA">https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Toei_Animation_logo.svg/1280px-Toei_Animation_logo.svg.png</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R9" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">10</div></th><td class="s6" dir="ltr">6/15/1985</td><td class="s6" dir="ltr">8/3/2014</td><td class="s6" dir="ltr">Studio Ghibli</td><td class="s6" dir="ltr">Fondat
+ în 1985, studio-ul este condus de către directorii de imagine Hayao 
+Miyazaki şi Isao Takahata ce aveau la înfiinţarea studio-ului deja o 
+carieră de succes în domenium filmelor animate japoneze. Miyazaki a fost
+ directorul principal al filmelor anime lansate de către studio, 
+Takahata fiind mai puţin cunoscut dar cu realizări la fel de importante 
+("Grave of the Fireflies" de exemplu). Opt dintre filmele produse de 
+către Studio Ghibli se află printre cele 15 filme anime cu cele mai mari
+ încasări realizate în Japonia. Producţia studio-ului Spirited Away 
+(2001) ocupă primul loc pe lista precizată anterior şi este primul anime
+ din istorie ce a primit un premiu Oscar, în Japonia încasările acestui 
+film animat întrecându-le pe cele ale filmului Titanic.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://satinahall.files.wordpress.com/2015/04/6jqnlgx1.jpg&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNGC7ORgxvRKeikm3M1GjWBZxA3mDA">https://satinahall.files.wordpress.com/2015/04/6jqnlgx1.jpg</a></td><td class="s6" dir="ltr">SatinaHall</td><td class="s6" dir="ltr">Imagine ce combină elementele celor mai populare animaţii ale studioului</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://satinahall.files.wordpress.com/2015/04/6jqnlgx1.jpg&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNGC7ORgxvRKeikm3M1GjWBZxA3mDA">https://satinahall.files.wordpress.com/2015/04/6jqnlgx1.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R10" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">11</div></th><td class="s6" dir="ltr">1/5/1941</td><td class="s6" dir="ltr"></td><td class="s6" dir="ltr">Hayao Miyazaki</td><td class="s6" dir="ltr">Uneori
+ acest mare director a fost denumit de către critici şi fani "The 
+Japanese Walt Disney", datorită numărului mare de capodopere realizate 
+în domeniul animaţiei. De-a lungul carierei sale de 40 de ani, Miyazako a
+ creat filme precum "Castle in the Sky", "Howl's Moving Castle" şi 
+"Spirited Away", toate titluri de renume în lumea filmelor animate. Deşi
+ animaţiile sale par destinate copiilor, scopul său a fost să facă filme
+ cu rolul de ajuta lumea în general să înţeleagă condiţia umană.</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://i.kinja-img.com/gawker-media/image/upload/qkhol6c6ru0qdgr1tdqy.gif&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNG_dCg77aFYLfUZ1kTDilwZ7cdANw">http://i.kinja-img.com/gawker-media/image/upload/qkhol6c6ru0qdgr1tdqy.gif</a></td><td class="s6" dir="ltr">kinja-img</td><td class="s6" dir="ltr">Miyazaki</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://i.kinja-img.com/gawker-media/image/upload/qkhol6c6ru0qdgr1tdqy.gif&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNG_dCg77aFYLfUZ1kTDilwZ7cdANw">http://i.kinja-img.com/gawker-media/image/upload/qkhol6c6ru0qdgr1tdqy.gif</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R11" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">12</div></th><td class="s6" dir="ltr">3/6/1981</td><td class="s6" dir="ltr">2/26/1982</td><td class="s6" dir="ltr">Hello! Sandybell</td><td class="s6" dir="ltr">Unul
+ dintre cele mai populare seriale anime din secolul trecut în România, 
+acesta a fost realizat de către Toei Animation. E unul dintre puţinele 
+desene televizate în timpul epocii comuniste. Sandy Bell a devenit 
+pentru mulţi un model despre cum ar trebui să fie fata de vis şi, 
+probabil, dacă acum ar revedea filmul, despre cum ar trebui să fie fiica
+ de vis. Deşi eticheta „Sandy Bell” a fost folosită pentru a eticheta 
+peiorativ unele tinere cu capul în nori sau socotite prea idealiste, în 
+realitate apelativul poate fi considerat un veritabil compliment, 
+deoarece Sandy a fost un reper moral în acea vreme. </td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://upload.wikimedia.org/wikipedia/en/d/d8/Sandybell.jpg&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNEhRurc1_LnHQ86oQXHvLpmd-5ofA">https://upload.wikimedia.org/wikipedia/en/d/d8/Sandybell.jpg</a></td><td class="s6" dir="ltr">WikiMedia</td><td class="s6" dir="ltr">Sandybell şi Oliver(căţelul)</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://i21.photobucket.com/albums/b287/VampireNaomi/sandybell.png&amp;sa=D&amp;ust=1465681209424000&amp;usg=AFQjCNHWiBXJ3ErI9Us_tzhj8NR-DK9nhA">http://i21.photobucket.com/albums/b287/VampireNaomi/sandybell.png</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R12" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">13</div></th><td class="s6" dir="ltr">7/20/2001</td><td class="s6" dir="ltr"></td><td class="s6" dir="ltr">Spirited Away</td><td class="s6" dir="ltr">Filmul
+ a fost lansat în anul 2001, fiind regizat de către Hayao Miyazaki de la
+ Ghibli Studio în parteneriat cu Walt Disney Pictures care au realizat 
+dublarea în engleză. Animaţia a devenit cel mai de succes film japonez 
+din istorie, încasările globale fiind de aproximativ 289 de milioane de 
+dolari. De asemenea a câştigat premiul Oscar la cea de-a 75-a ediție a 
+Premiilor Academiei Americane de Film şi Ursul de aur în 2002 la 
+Festivalul Internaţional de Film de la Berlin. Acest film a fost cel mai
+ popular desen japonez pe site-ul IMDB, fiind întrecut doar în anul 2016
+ de către serialul anime "One Punch Man".</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DByXuk9QqQkk&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNHBEfZDirstrACQuN0qJJpPb1JAzQ">https://www.youtube.com/watch?v=ByXuk9QqQkk</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">Trailer-ul pentru Spirited Away</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://veewords.com/wp-content/uploads/2013/06/Spirited_Away_Wallpaper_by_behruz.jpg&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNE8PC0STO2qGOGj1XWgiqf5AhGI7A">http://veewords.com/wp-content/uploads/2013/06/Spirited_Away_Wallpaper_by_behruz.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R13" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">14</div></th><td class="s6" dir="ltr">1/6/1974</td><td class="s6" dir="ltr">12/29/1974</td><td class="s6" dir="ltr">Heidi, fetiţa munţilor</td><td class="s6" dir="ltr">Heidi
+ (Heidi, Girl of the Alps アルプスの少女ハイジ Arupusu no Shōjo Haiji) este un 
+serial  anime foarte cunoscut realizat de către Isao Takahata şi Hayao 
+Miyazaki, fiind o adaptare după cartea "Heidi, fetiţa munţilor" scrisă 
+de către Johanna Spyri. Serialul anime este renumit în întreaga lume ca 
+fiind una dintre cele mai bune adaptări animate ale cărţii.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://www.wallpaperawesome.com/wallpapers-awesome/wallpapers-cartoons-comics-awesome/wallpaper-heidi-cartoons.jpg&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNHEkaMX12hI6FVEBA2N2NV3KB_tTQ">http://www.wallpaperawesome.com/wallpapers-awesome/wallpapers-cartoons-comics-awesome/wallpaper-heidi-cartoons.jpg</a></td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://wallpaperawesome.com&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNGRVK1QBwUMNVBFjB2q09h6ny88UQ">wallpaperawesome.com</a></td><td class="s6" dir="ltr">Personajele din serialul anime</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://makikoitoh.com/images/heidi-closeup.jpg&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNHDIHF1GbA5n-GhUCbOx_IijTe9Yw">http://makikoitoh.com/images/heidi-closeup.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R14" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">15</div></th><td class="s6" dir="ltr">10/4/1995</td><td class="s6" dir="ltr">3/27/1996</td><td class="s6" dir="ltr">Neon Genesis Evangelion</td><td class="s6" dir="ltr">Neon
+ Genesis Evangelion este unul dintre cele mai apreciate seriale animate 
+japoneze, acesta având un rol important în popularizarea anime-urilor 
+prin expunerea unor teme ce au lansat multe discuţii ce ţin până în ziua
+ de astăzi asupra temelor sale şi modul de prezentare folosit. Acest 
+serial a împins la limită normele acceptabilului ale difuzării scenelor 
+violente şi mature în televiziunile japoneze, forţându-le să îşi schimbe
+ regulile de cenzură datorită unor scandaluri create. Datorită 
+popularităţii dobândite a apărut o perioadă ce a durat ani buni în care 
+s-a văzut influenţa temelor serialului asupra altor animaţii japoneze, 
+astfel luând naştere era "post-evangelion" ce avea la bază animaţii 
+mecha (cu roboţi aproape umani foarte mari) combinate cu o poveste 
+construită pe probleme religioase sau alte subiecte dificile. </td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DwaO6w7AJAVc&amp;sa=D&amp;ust=1465681209425000&amp;usg=AFQjCNH-ve1DgFy1ksRcL7QT4VldjTKnpQ">https://www.youtube.com/watch?v=waO6w7AJAVc</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">Trailer-ul pentru Spirited Away</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://4.bp.blogspot.com/-n30UC-X7zM0/VWputvfHDbI/AAAAAAAAAFQ/GQRwKBYAmd0/s1600/Neon-Genesis-Evangelion-Movie-High-Definition-Wallpaper-wcytv-Free.jpeg&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNFKxW_-U34BWjWTvDRokFfXCiqMCA">http://4.bp.blogspot.com/-n30UC-X7zM0/VWputvfHDbI/AAAAAAAAAFQ/GQRwKBYAmd0/s1600/Neon-Genesis-Evangelion-Movie-High-Definition-Wallpaper-wcytv-Free.jpeg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R15" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">16</div></th><td class="s6" dir="ltr">11/18/1995</td><td class="s6" dir="ltr"></td><td class="s6" dir="ltr">Ghost in the Shell</td><td class="s6" dir="ltr">Acest
+ film animat a fost unul dintre cele mai renumite ale deceniului, 
+popularizând global filmele SF. Succesul său a făcut ca Ghost in the 
+Shell sa fie unul dintre principalele surse de inspiraţie ale trilogiei 
+The Matrix. Până astăzi a rămas renumit pentru modul de tratare al temei
+ SF în care tehnologia înlocuieşte puterea omului. Personajul principal 
+este foarte bine construit fiind în acelaşi timp ultra feminin cât şi 
+non-feminin.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://theworldcinemablog.files.wordpress.com/2014/01/ghost_in_the_shell_ukquad.jpg&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNFlzz81eKr-BCmqEBjGFH-Xcsz49Q">https://theworldcinemablog.files.wordpress.com/2014/01/ghost_in_the_shell_ukquad.jpg</a></td><td class="s6" dir="ltr">The World Cinema Blog</td><td class="s6" dir="ltr">Afisul filmului</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://theworldcinemablog.files.wordpress.com/2014/01/ghost_in_the_shell_ukquad.jpg&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNFlzz81eKr-BCmqEBjGFH-Xcsz49Q">https://theworldcinemablog.files.wordpress.com/2014/01/ghost_in_the_shell_ukquad.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R16" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">17</div></th><td class="s6" dir="ltr">9/18/1997</td><td class="s6" dir="ltr">6/18/1998</td><td class="s6" dir="ltr">Cowboy Bebop</td><td class="s6" dir="ltr">Cowboy
+ Bebop (カウボーイビバップ Kaubōi Bibappu) este un serial anime din 1998 difuzat 
+de-a lungul a 26 de episoade ce analizează problema existenţialismului 
+într-un cronotop fixat în anul 2071. Datorită schimbărilor regulilor de 
+cenzură, făcute în urma disputelor despre Neon Genesis Evangelion, doar 
+jumătate dintre episoade au putut fi difuzate iniţial în Japonia. Totuţi
+ acest fapt nu a oprit serialul să devină unul dintre cele mai lăudate 
+seriale anime, în special în America, fiind considerat ca unul dintre 
+cele mai bune porţi pentru necunoscători în lumea anime.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://i2.listal.com/image/62731/600full-cowboy-bebop-poster.jpg&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNF6ByqPeAV9OsYFSGYXeYk-kryeqw">http://i2.listal.com/image/62731/600full-cowboy-bebop-poster.jpg</a></td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://listal.com&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNFWNHVZ-E6Epa5-64iELk-Pt2Qkjw">listal.com</a></td><td class="s6" dir="ltr">Afisul filmului</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://stuffpoint.com/cowboy-bebop/image/463375-cowboy-bebop-cowboy-bebop-poster.jpg&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNHBstLFaArxCKZuiuZC0m4UoEFZ3Q">http://stuffpoint.com/cowboy-bebop/image/463375-cowboy-bebop-cowboy-bebop-poster.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R17" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">18</div></th><td class="s6" dir="ltr">10/3/2006</td><td class="s6" dir="ltr">6/26/2007</td><td class="s6" dir="ltr">Death Note</td><td class="s6" dir="ltr">Fiind
+ realizat dupa manga-ul cu acelaşi nume, serialul analizează schimbarea 
+de caracter a unui licean Light Yagami ce găseşte accidental un carneţel
+ ce îi dă puterea să omoare orice persoană al cărui nume şi chip le 
+cunoaşte. Modul de reprezentare al puterii corupţiei mentale ce un 
+astfel de obiect îl poate avea asupra cuiva este unul dintre motivele 
+principale pentru care anime-ul a devenit foarte popular, celălalt motiv
+ fiind bătălia mentală tactică foarte bine concepută dintre licean şi un
+ alt tânăr foarte inteligent ce încerca să îi afle identitatea pentru 
+a-l opri.  Datorită atenţiei la detalii din povestea serialului, acesta a
+ câştigat numeroase premii şi un prestigiu imens atât între fanii anime 
+cât şi a criticilor de filme în general.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DtJZtOrm-WPk&amp;sa=D&amp;ust=1465681209426000&amp;usg=AFQjCNE9QuWR0TyU2WJqYPD537ZJWPln1Q">https://www.youtube.com/watch?v=tJZtOrm-WPk</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">Trailer<br></td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://i2.kym-cdn.com/entries/icons/original/000/008/610/Death_Note.jpg&amp;sa=D&amp;ust=1465681209427000&amp;usg=AFQjCNE8DNQK2Y2WkflA5hg64aoMPr5DKg">http://i2.kym-cdn.com/entries/icons/original/000/008/610/Death_Note.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R18" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">19</div></th><td class="s6" dir="ltr">4/5/2009</td><td class="s6" dir="ltr">7/4/2010</td><td class="s6" dir="ltr">Full Metal Alchemist: Brotherhood</td><td class="s6" dir="ltr">Între
+ fanii anime există diverse dispute asupra calităţii unor seriale 
+japoneze animate populare, mai întotdeauna apărând certuri legate de 
+superioritatea unui serial sau film faţă de altul. Dacă ar fi însă o 
+animaţie de genul asupra căreia toţi să cadă de acord că este o operă de
+ artă şi o realizare cu adevărat unică ce va fi foarte greu de întrecut 
+ca şi calitate a poveştii şi animaţiei, aceasta animaţie va fi anime-ul 
+Fullmetal Alchemist: Brotherhood. Fiind o adaptare a celei mai vândute 
+colecţii de manga, e destul de uşor observabil motivul pentru care a 
+dobândit această supremaţie faţă de alte seriale si filme anime. 
+Dezbătând teme filozofice adânci, cumva acest serial reuşeşte şi să îşi 
+păstreze un aer inocent şi jovial pe parcursul său, acţiunea şi comedia 
+fiind combinate într-o armonie aproape perfectă cu teme romantice, 
+filozofice şi etice. Îmbinând cu tact umorul, drama şi acţiunea, 
+anime-ul a reuşit să farmece aproape în totalitate fanii anime şi nu 
+numai. </td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://i.ytimg.com/vi/OETYq40u9ec/maxresdefault.jpg&amp;sa=D&amp;ust=1465681209427000&amp;usg=AFQjCNHj6ohA0m1V7k7amvhnBah6VR-0aw">https://i.ytimg.com/vi/OETYq40u9ec/maxresdefault.jpg</a></td><td class="s6" dir="ltr">YouTube</td><td class="s6" dir="ltr">Toate
+ personajele importante. De menţionat e faptul că majoritatea lor 
+evoluează ca şi caracter pe parcursul serialului, procesul de maturizare
+ fiind puternic vizibil.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://vignette3.wikia.nocookie.net/toonami/images/4/4f/Qyzm02.jpg/revision/latest?cb%3D20130102093559&amp;sa=D&amp;ust=1465681209427000&amp;usg=AFQjCNHPXqKIeLaWlt_rlGkDvFJ-uxfX1g">http://vignette3.wikia.nocookie.net/toonami/images/4/4f/Qyzm02.jpg/revision/latest?cb=20130102093559</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R19" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">20</div></th><td class="s6" dir="ltr">10/5/2015</td><td class="s6" dir="ltr">12/21/2015</td><td class="s6" dir="ltr">One Punch Man</td><td class="s6" dir="ltr">Acest
+ anime şi-a început viaţa într-un mod straniu pe internet. Un autor 
+anonim s-a hotărât să îşi publice pe un site ceea ce făcuse în timpul 
+său liber. În foarte scurt timp benzile sale desenate au devenit enorm 
+de populare, întrecând 7.9 milioane de vizualizări în 2012, fapt ce a 
+dus la refacerea sub forma unui manga de o calitate grafică mult mai 
+mare în acelaşi an. Popularitatea pe care a dobândit-o a dus la crearea 
+unui serial anime ce a devenit rapid unul dintre cele mai cunoscute, 
+ajungând să ocupe locul întâi pe IMDB la categoria seriale, categorie ce
+ include atât serialele animate cât şi cele filmate. Îmbinarea reuşită 
+dintre estetic, acţiune şi comedie a făcut acest anime accesibil pentru 
+toată lumea, indiferent de vârstă sau preferinţe, astfel căpătându-şi 
+renumele actual.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://static1.techinsider.io/image/5644f3b22491f990008b4ac9-1920-1080/onepunchman_forreal.jpg&amp;sa=D&amp;ust=1465681209427000&amp;usg=AFQjCNElBKTZQBiOhskuQXThSKBj3SewFA">http://static1.techinsider.io/image/5644f3b22491f990008b4ac9-1920-1080/onepunchman_forreal.jpg</a></td><td class="s6" dir="ltr">TechInsider</td><td class="s6" dir="ltr">Saitama, personajul principal al serialului</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://cdn-9chat-fun.9cache.com/media/photo/a3xprbRK3_240w_v1.jpg&amp;sa=D&amp;ust=1465681209427000&amp;usg=AFQjCNGP_RTsNaAmZCkwkzZ935jyaSHpzg">http://cdn-9chat-fun.9cache.com/media/photo/a3xprbRK3_240w_v1.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R20" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">21</div></th><td class="s6" dir="ltr">10/12/1963</td><td class="s6" dir="ltr">8/24/2010</td><td class="s6" dir="ltr">Satoshi Kon</td><td class="s6" dir="ltr">Satoshi
+ Kon a fost un director de imagine japonez, animator şi artist manga. 
+Deşi nu are foarte multe filme animate regizate, cele pe care a reuşit 
+să le producă sunt considerate a fi nişte capodopere, inspirând filme 
+moderne precum "Inception". <br>Un critic îl descrie foarte bine prin 
+următoarele cuvinte: "Satoshi kun a folosit mediul animaţiei realizate 
+manual pentru a explora categoriile sociale stigmatizate şi psihicul 
+uman, aruncând o lumină asupa complexităţii noastre umane într-un mod ce
+ ar fi dat greş într-un film real cu actori. O mare parte a animaţiei 
+sale a fost curajoasă, directă, intensă şi uneori chiar de coşmar. Kon 
+nu a evitat atingerea subiectelor mature sau a elementor mai sensibile 
+pentru cinematografie în lucrările sale, astfel filmele sale vor ocupa 
+întotdeauna un teren de mijloc fascinant între desenele animate şi lumea
+ reală aşa cum o cunoaştem noi."</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://viewerscommentary.files.wordpress.com/2013/10/perfect-blue-mima-kirigoe.jpg&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNHj8emn0eHWMPdlcLupSpmjtDbFCA">https://viewerscommentary.files.wordpress.com/2013/10/perfect-blue-mima-kirigoe.jpg</a></td><td class="s6" dir="ltr">Viewers Commentary</td><td class="s6" dir="ltr">Scenă
+ din "Perfect Blue", animaţie ce întră în interiorul psihicului al unei 
+persoane cu personalitate dublă expunând războiul mental din interiorul 
+ei.</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://www.deculture.es/wp-content/uploads/2014/07/satoshi-kon.jpg&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNGUdqvDWKb5g8QyZf-kJDaqyhaNDQ">http://www.deculture.es/wp-content/uploads/2014/07/satoshi-kon.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R21" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">22</div></th><td class="s6" dir="ltr">10/10/1992</td><td class="s6" dir="ltr">1/7/1995</td><td class="s6" dir="ltr">Yu Yu Hakusho</td><td class="s6" dir="ltr">Serialul
+ anime Yu Yu Hakusho a fost votat ca şi cel mai bun anime al anilor 1994
+ şi 1995. În 1993 a fost al doilea după Sailor Moon. Succesul său s-a 
+datorat faptului că se adresa unei audienţe largi şi faptului că a fost 
+televizat pe Cartoon Network în America de Nord. Conform criticilor 
+acest serial este unul dintre cele mai bune atât din punct de vedere al 
+acţiunii cât şi al comediei. În multe sondaje de opinii, inclusiv cele 
+mai recente, Yu Yu Hakusho se clasează des în primele 50 de titluri ca 
+şi popularitate.</td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://static.zerochan.net/Yu.Yu.Hakusho.full.851942.jpg&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNH6kN5xuaFnjaylo1MQTMXy8nnXag">http://static.zerochan.net/Yu.Yu.Hakusho.full.851942.jpg</a></td><td class="s6" dir="ltr">Zerochan</td><td class="s6" dir="ltr">Caracterele principale</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://static.zerochan.net/Yu.Yu.Hakusho.full.851942.jpg&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNH6kN5xuaFnjaylo1MQTMXy8nnXag">http://static.zerochan.net/Yu.Yu.Hakusho.full.851942.jpg</a></td><td class="s6"></td><td class="s6"></td></tr><tr style="height:16px;"><th id="0R22" style="height: 16px;" class="row-headers-background row-header-shim"><div class="row-header-wrapper" style="line-height: 16px;">23</div></th><td class="s6" dir="ltr">8/6/1945</td><td class="s6" dir="ltr">8/9/1945</td><td class="s6" dir="ltr">Bombele atomice</td><td class="s6" dir="ltr">La
+ finalul anime-ului distopic Akira, o masă albă luminoasă învăluie 
+Tokyo-ul. În cele din urmă, vânturile ei învolburate cuprind metropola, 
+înghiţind-o total şi lăsând doar un schelet de oraş în urma sa.<br>Bombele
+ atomice lansate asupra oraşelor Hiroshima şi Nagasaky, împreună cu 
+bombardamentele din Tokyo, au fost nişte experienţe traumatice pentru 
+poporul japonez. Nu e de mirare că timp de ani întregi devastarea a 
+rămas în prim-planul conştiinţei lor, acest lucru manifestându-se în 
+literatura, muzica şi artele acelei perioade.<br>Finalul din Akira este 
+doar un exemplu de imagini apocaliptice în anime-uri si manga. Un număr 
+mare dintre ele sunt pline de referinţe la bombele atomice, ce apar sub 
+diverse forme, simbolice şi literale.<br>Tragedia bombardamentelor se 
+resimte până în momentul prezent, 70 de ani după eveniment, în 
+tematicile abordate de către animatorii japonezi.<br>Un titlu reprezentativ, apreciat de critici, este "Grave of the Fireflies". </td><td class="s7" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DeyDl_cOWBCE&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNGAGdYjKo8xSMDMJNWJ7D3RRNrRTQ">https://www.youtube.com/watch?v=eyDl_cOWBCE</a></td><td class="s6" dir="ltr">Akira</td><td class="s6" dir="ltr">Scena bombei atomice</td><td class="s8" dir="ltr"><a target="_blank" rel="noreferrer" href="https://www.google.com/url?q=http://static.wixstatic.com/media/9b146c_7035edaf71a542f78f571fa094b2d1e8.jpg&amp;sa=D&amp;ust=1465681209428000&amp;usg=AFQjCNH7liH1Lzw-9mdflJAQgWiqCRGhxw">http://static.wixstatic.com/media/9b146c_7035edaf71a542f78f571fa094b2d1e8.jpg</a></td><td class="s6"></td><td class="s6"></td></tr></tbody></table></div></div></div><div id="footer"><span>Published by <a target="_blank" title="Learn more about Google Sheets" href="https://docs.google.com/spreadsheets/?authuser=0&amp;usp=sheets_web">Google Sheets</a></span><span class="dash">–</span><a href="https://docs.google.com/abuse?id=16GQkR4ugEoxGKNvxdJY732Zs4OUD5bIx5SDh0rp3yFc">Report Abuse</a><span class="dash">–</span><span>Updated automatically every 5 minutes</span></div>
+<script type="text/javascript">
+function posObj(sheet, id, row, col, x, y) {
+  var rtl = false;
+  var sheetElement = document.getElementById(sheet);
+  if (!sheetElement) {
+    sheetElement = document.getElementById(sheet + '-grid-container');
+  }
+  if (sheetElement) {
+    rtl = sheetElement.getAttribute('dir') == 'rtl';
+  }
+  var r = document.getElementById(sheet+'R'+row);
+  var c = document.getElementById(sheet+'C'+col);
+  if (r && c) {
+    var objElement = document.getElementById(id);
+    var s = objElement.style;
+    var t = y;
+    while (r && r != sheetElement) {
+      t += r.offsetTop;
+      r = r.offsetParent;
+    }
+    var offsetX = x;
+    while (c && c != sheetElement) {
+      offsetX += c.offsetLeft;
+      c = c.offsetParent;
+    }
+    if (rtl) {
+      offsetX -= objElement.offsetWidth;
+    }
+    s.left = offsetX + 'px';
+    s.top = t + 'px';
+    s.display = 'block';
+    s.border = '1px solid #000000';
+  }
+};
+function posObjs() {
+};
+posObjs();</script>
+<script type="text/javascript">activeSheetId = '0'; switchToSheet('0');</script></body></html>

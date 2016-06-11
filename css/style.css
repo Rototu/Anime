@@ -77,7 +77,7 @@ body{
 }
 
 #prezentare{
-   background: white url("../img/parallax/snowy-mountain-landscape-wallpaper-2560x1600.jpg");
+   background: white url("../img/parallax/mountains.jpg");
    background-size: cover;
    background-position: center;
    height: 200vh;
@@ -176,7 +176,7 @@ body{
    text-align: center;
    position: absolute;
    width: 40vw;
-   top: 35vh;
+   top: 30vh;
    right: 50px;
    font-weight: 700;
    transform: scale(0.7);
@@ -187,13 +187,13 @@ body{
 #prezentareTxt.affix{
    position: fixed;
    right: 50px;
-   top: 35vh;
+   top: 30vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
    right: 50px;
-   top: 135vh;
+   top: 130vh;
 }
 
 .grid {
@@ -256,7 +256,29 @@ body{
    margin: 15px;
    width: calc(100% - 30px);
    height: calc(100vh - 80px);
-   background-color: rgb(200, 200, 200);
+   opacity: 0;
+}
+
+.tl-text-content p{
+   font-size: 2.2vh !important;
+   line-height: 2.4vh !important;
+   font-weight: 100 !important;
+}
+
+h3.tl-headline-date{
+   font-size: 2vh !important;
+   line-height: 2vh !important;
+   font-weight: 700 !important;
+}
+
+div.tl-slide-content, div.tl-slide-scrollable-container, div.tl-slide-content-container{
+   min-width: 100% !important;
+}
+
+#istoric{
+   background: white url("../img/parallax/history.jpg");
+   background-size: cover;
+   background-position: center;
 }
 
 @media (max-width: 500px) {

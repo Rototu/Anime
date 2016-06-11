@@ -1,4 +1,4 @@
-//scrollTimeout for scroll event
+// //  scroll function optimization
 // (function($) {
 //    var uniqueCntr = 0;
 //    $.fn.scrolled = function (waitTime, fn) {
@@ -22,229 +22,290 @@
 //    }
 // })(jQuery);
 
-//scroll animation controller
+// scroll animation controller
 var ScrollModule = (function() {
 
+   //  menu slider vars
    var $blueTween = $("#blueTween");
    var blueTweenWidth;
    var blueTweenOffset;
+
+   //  scroll and window wars
    var windowHeight;
    var relativeTopPos;
+   var section = [];
    var i = 1;
+   var j = 1;
+
+   // parallax vars
    var $prezTxt = $("#prezentareTxt");
    var prezTxtWidth = $prezTxt.width();
    var prezTxtHeight = $prezTxt.height();
    var imgGridList = $(".grid-item");
-   var section = [];
 
    return {
 
-      //initialize scroll scripts
+      // initialize scroll scripts
       init: function() {
 
-         //select first menuElement
+         // select first menuElement
          $("#menu1").css("color", "rgb(15,15,15)");
          blueTweenWidth = $("#menu1").width() + 2 * parseInt($("#menu1").css("padding-left"));
          $blueTween.width(blueTweenWidth);
 
-         //set parallax font size
+         // set parallax font size
          prezTxtWidth = $prezTxt.width();
          $prezTxt.css("font-size", prezTxtWidth / 15);
 
-         //scroll init to top
+         // scroll init to top
          window.scrollTo(0, 0);
          $("html, body").scrollTop(0);
 
       },
 
-      //assign controllers/handlers for main elements
+      // assign controllers/handlers for main elements
       bindHandlers: function() {
 
-         //on menuHover
+         // mouseover event handler for menu elements
          $(".menuSelector").on({
+
+            // on mouseenter temporal select
             mouseenter: function() {
 
-               //set to init state
+               // set to init state
                $(".menuSelector").css("color", "rgb(149,149,149)");
 
-               //get element props
+               // get element props
                blueTweenWidth = $(this).width() + 2 * parseInt($(this).css("padding-left"));
                blueTweenOffset = $(this).offset().left;
 
-               //animate
+               // animate
                $(this).css("color", "rgb(15,15,15)");
                $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
 
             },
+
+            // on mouseleave deselect and switch to original selected element
             mouseleave: function() {
-               //deselect element
+               // deselect element
                $(this).css("color", "rgb(149,149,149)");
                $("#menu"+i).css("color", "rgb(15,15,15)");
             }
+
          });
+
+         // set permanent select when mouse leaves menu
          $("#menuElements").on({
 
-            //set to current state
+            // set to current state
             mouseleave: function() {
 
-               //get el props
-               blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
-               blueTweenOffset = $("#menu"+i).offset().left;
+               // get el props
+               blueTweenWidth = $("#menu" + i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
+               blueTweenOffset = $("#menu" + i).offset().left;
 
-               //animate
+               // animate
                $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             }
          });
 
-         //buttonScroll function
-         // $("#scrollUp").click(function() {
-         //    var mySect = Math.floor((relativeTopPos + 10) / windowHeight);
-         //    console.log(mySect);
-         //    var scrollValue = (mySect - 1) * windowHeight - $("#menu").height();
-         //    if((relativeTopPos + 10) / windowHeight >= 1.1 && (relativeTopPos + 10) / windowHeight < 3) scrollValue = $(window).height();
-         //    else if(mySect == 1) scrollValue = 0;
-         //    $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
-         // });
-         // $("#scrollDown").click(function() {
-         //    var mySect = Math.floor( (relativeTopPos + $("#menu").height()) / windowHeight );
-         //    console.log(mySect);
-         //    var scrollValue = (mySect + 1) * windowHeight - $("#menu").height();
-         //    if(mySect == 0) scrollValue = 2 * $(window).height() - $("#menu").height();
-         //    $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
-         // });
-
-         //menuSelector clicked move to page
+         // menuSelector clicked move to page
          $(".menuSelector").click(function() {
+
+            // get selected section index
             var id = this.id;
             var mySect = id.substr(id.length - 1);
+
+            // get scrollvalue from array by index
             var scrollValue = section[mySect];
+
+            // animate scroll
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+
          });
 
       },
 
-      //onScrolling animations
+      // parallax page controller and scroll event handler
       animations: function() {
 
-
-         //init vars
-         var prezTxtTop;
-         var menuPos = $("#menu").position().top;
-         var j = 1;
-
-         //jScrollability
+         // jScrollability plugin, handles elements only when they enter the viewport
          $.jScrollability([
-            {
-                'selector': '.grid',
-                'start': 'parent',
-                'end': 'parent',
-                'fn': function($el,pcnt) {
-                    var $img = $('.grid-item');
-                    var point = Math.floor(($img.length + 1) * pcnt);
-                    $img.each(function(i,el) {
-                        var $myEl = $(el);
-                        if (i < point - ($img.length + 1) / 4) {
-                            $myEl.css({opacity: 1});
-                        } else {
-                            $myEl.css({opacity: 0});
-                        }
-                    });
-                }
-            }
-        ]);
 
-         //window scroll handler
+            // image grid scroll handler
+            {
+               "selector": ".grid",
+               "start": "parent",
+               "end": "parent",
+               "fn": function($el,pcnt) {
+
+                  // get image list for animating
+                  var $img = $(".grid-item");
+
+                  // set percentage of shown elements, 1.5 is a "delay" for when elements should be shown
+                  // 1.5 ==> 50% delay
+                  var point = Math.floor(($img.length * 1.5 + 1) * pcnt);
+
+                  // handler for each element of grid image list
+                  $img.each(function(i,el) {
+
+                     // verify if img index included in included in the percentage of elements that must be shown or not
+                     // 1/2 ==> for the 50% delay
+                     if (i < point - ($img.length + 1) / 2) {
+                        $(el).css({opacity: 1});
+                     } else {
+                        $(el).css({opacity: 0});
+                     }
+
+                  });
+
+               }
+            },
+
+            // timeline scroll handler
+            {
+               "selector": "#timeline-embed",
+               "start": "window",
+               "end": "window",
+               "fn": function($el,pcnt) {
+
+                  // max opacity 0.97, 0.1 ==> 10% delay for animation
+                  $el.css("opacity", Math.min(pcnt + 0.1, 0.97));
+
+               }
+            }
+
+         ]);
+
+         // window scroll handler
          $(window).scroll(function() {
             scrollAnimation();
          });
 
          var scrollAnimation = function() {
 
-            //get props
+            // init vars
+            var prezTxtTop;
+            var menuPos = $("#menu").position().top;
+
+            // get props
             windowHeight = $(window).height();
             relativeTopPos = $(window).scrollTop();
-            if(relativeTopPos >= section[1]) i = 1;
-            if(relativeTopPos >= section[2]) i = 2;
-            if(relativeTopPos >= section[3]) i = 3;
 
-            //set selected menu button
-            if(i == 0) i=1;
+            // set current section var
+            for (k = 1; k <= section.length-1; k++) {
+               if(relativeTopPos >= section[k]) {
+                  i = k;
+               }
+               else break;
+            }
+
+            // if current section changed
             if(j != i) {
 
+               // set current section backup var
                j = i;
 
-               //get el props
-               blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
-               blueTweenOffset = $("#menu"+i).offset().left;
+               // get props of menuelement corresponding to current section
+               blueTweenWidth = $("#menu" + i).width() + 2 * parseInt($("#menu" + i).css("padding-left"))
+               blueTweenOffset = $("#menu" + i).offset().left;
 
-               //animate
+               // set current menuelement
                $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
                $(".menuSelector").css("color", "rgb(149,149,149)");
-               $("#menu"+i).css("color", "rgb(15,15,15)");
+               $("#menu" + i).css("color", "rgb(15,15,15)");
 
             }
 
-            //set menu pos
+            // if in section 0 (animeParallax)
             if(relativeTopPos <= windowHeight) {
+
+               // prezTxt class control
                $prezTxt.removeClass("affix");
-               $("#prezentareImg").removeClass("affix").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw").css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
+
+               // prezImg class control and parallax effect
+               $("#prezentareImg").removeClass("affix")
+               .css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
+               .css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
+
+               // menu class control and parallax effect
                $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
-               prezTxtTop = $prezTxt.css("top");
+
             }
+
+            // if in section 1 (prezentare) && section 2 (istoric) not on screen
             if(relativeTopPos >= windowHeight && relativeTopPos < 2 * windowHeight) {
+
+               // menu class control
                $("#menu").addClass("affix").css("top", 0);
+
+               // prezImg class control
                $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
+
+               // prezTxt class control
                $prezTxt.addClass("affix").removeClass("bottomSticky");
+
+               // prezTxt parallax effect
                var scale = 0.705 + 0.25 * (relativeTopPos / windowHeight - 1);
                $prezTxt.css({
                   transform: "scale(" + scale + ")",
                   right: "50px"
                });
-            }
-            if(relativeTopPos >= 2 * windowHeight) {
-               $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
-               $prezTxt.removeClass("affix").addClass("bottomSticky");
+
             }
 
-            //debug
+            // if entering section 2 (istoric)
+            if(relativeTopPos >= 2 * windowHeight) {
+
+               // prezImg class control
+               $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
+
+               // prezTxt class control
+               $prezTxt.removeClass("affix").addClass("bottomSticky");
+
+            }
 
          }
 
       },
 
+      // resize event handler
       resizeElements: function() {
 
-         //vars
-         var ii = $("#menu"+i).offset().left;
-         var windowHeight = $(window).height();
+         // resizable vars
+         var ii = $("#menu" + i).offset().left;
+         windowHeight = $(window).height();
 
-         //functions
+         // update list of section heights
          ScrollModule.getSectionPos();
-         $grid.masonry('layout');
+
+         // update masonry grid
+         $grid.masonry("layout");
+
+         // if @media changed menu selector
          if(ii != blueTweenOffset) {
+
+            // get current menuelement props
+            blueTweenWidth = $("#menu" + i).width() + 2 * parseInt($("#menu" + i).css("padding-left"));
             blueTweenOffset =  ii;
 
-            //get el props
-            blueTweenWidth = $("#menu"+i).width() + 2 * parseInt($("#menu"+i).css("padding-left"))
-            blueTweenOffset = $("#menu"+i).offset().left;
-
-            //animate
+            // animate to new current values
             $blueTween.animate({left: blueTweenOffset}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             $blueTween.animate({width: blueTweenWidth}, {queue: false, duration: 750, delay: 0, easing: "easeOutCubic"});
             $(".menuSelector").css("color", "rgb(149,149,149)");
-            $("#menu"+i).css("color", "rgb(15,15,15)");
+            $("#menu" + i).css("color", "rgb(15,15,15)");
 
-            console.log("menu resized");
          }
       },
 
+      // update section heights
       getSectionPos: function() {
 
          setTimeout(function() {
-            //push section heights in var;
+            // push section heights in var;
             section[0] = 0;
             $(".section").each(function(i, el) {
                var sectionPos = $(el).position().top - $("#menu").height();
@@ -252,22 +313,32 @@ var ScrollModule = (function() {
                section[i+1] = sectionPos;
             });
             console.log(section);
-         },5000)
+         }, 1700)
 
       }
 
    };
 })();
 
-//execute functions only when DOM is ready
+// execute functions only when DOM is ready
 $(document).on("ready", function() {
+
+   // initialize elements
    ScrollModule.init();
+
+   // set event handlers
    ScrollModule.bindHandlers();
+
+   // start parallax animation handlers
    ScrollModule.animations();
+
+   // resize event handler
    $(window).resize(function() {
       ScrollModule.resizeElements();
    });
-   $(window).on("load", function() {
-      ScrollModule.getSectionPos();
+
+   // set section height list
+   $("html").imagesLoaded(function() {
+      setTimeout(ScrollModule.getSectionPos(), 500);
    })
 });
