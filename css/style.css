@@ -185,12 +185,16 @@ body{
 }
 
 #prezentareTxt.affix{
+   transform: translateY(-50%);
+   transform-origin: center center;
    position: fixed;
    right: 50px;
    top: 50vh;
 }
 
 #prezentareTxt.bottomSticky{
+   transform: translateY(-50%);
+   transform-origin: center center;
    position: absolute;
    right: 50px;
    top: 150vh;
