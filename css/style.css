@@ -187,13 +187,13 @@ body{
 #prezentareTxt.affix{
    position: fixed;
    right: 50px;
-   top: 30vh;
+   top: 50vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
    right: 50px;
-   top: 130vh;
+   top: 150vh;
 }
 
 .grid {
