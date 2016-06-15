@@ -176,10 +176,10 @@ body{
    text-align: center;
    position: absolute;
    width: 40vw;
-   top: 30vh;
+   top: 50vh;
    right: 50px;
    font-weight: 700;
-   transform: scale(0.7);
+   transform: scale(0.7) translateY(-50%);
    transform-origin: center center;
    margin: 0;
 }
