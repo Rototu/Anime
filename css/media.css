@@ -1,0 +1,108 @@
+@media (max-width: 500px) {
+
+   #menu{
+      display: none;
+   }
+
+}
+
+@media (max-width: 1025px) {
+
+   #loadingBar{
+      margin-top: calc(30vh - 15px);
+      height: 30px;
+   }
+
+   #loadingGif{
+      height: calc(0.38 * 60vw * 0.75);
+      bottom: calc(0.38 * 60vw * 0.25);
+      right: 3vw;
+      position: absolute;;
+      z-index: 100;
+   }
+
+   #Sinon{
+      width: 60%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+   }
+
+   #menu{
+      height: 50px;
+      font-size: 15px;
+   }
+
+   .menuSelector{
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 50px;
+      line-height: 50px;
+   }
+
+   #blueTween{
+      left: 0;
+   }
+
+   #menu1{
+      margin-left: 0;
+   }
+
+   #nav{
+      display: none;
+      line-height: 50px;
+      font-size: 25px;
+      margin-right: 40px;
+   }
+
+}
+@media (min-width: 1025px) {
+
+   #loadingBar{
+      margin-top: calc(30vh - 15px);
+      height: 30px;
+   }
+
+   #loadingGif{
+      height: 25vh;
+      bottom: 10vh;
+      right: 5vw;
+      position: absolute;;
+      z-index: 100;
+   }
+
+   #Sinon{
+      height: 35vh;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+   }
+
+   #menu{
+      height: 60px;
+      font-size: 18px;
+   }
+
+   .menuSelector{
+      padding-left: 25px;
+      padding-right: 25px;
+      height: 60px;
+      line-height: 60px;
+   }
+
+   #blueTween{
+      left: 40px;
+   }
+
+   #menu1{
+      margin-left: 40px;
+   }
+
+   #nav{
+      display: inline-block;
+      line-height: 60px;
+      font-size: 25px;
+      margin-right: 60px;
+   }
+
+}

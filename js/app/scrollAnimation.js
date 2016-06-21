@@ -31,6 +31,8 @@ var ScrollModule = (function() {
    var blueTweenOffset;
 
    //  scroll and window wars
+   var elFixed = false;
+   var elBottom = false;
    var windowHeight;
    var relativeTopPos;
    var section = [];
@@ -175,6 +177,16 @@ var ScrollModule = (function() {
                   $el.css("opacity", Math.min(pcnt + 0.1, 0.97));
 
                }
+            },
+
+            // video overlay scroll handler
+            {
+               "selector": "#video-overlay",
+               "start": "window",
+               "end": "window",
+               "fn": function($el,pcnt) {
+                  $el.css("opacity", Math.min(pcnt));
+               }
             }
 
          ]);
@@ -223,42 +235,57 @@ var ScrollModule = (function() {
             // if in section 0 (animeParallax)
             if(relativeTopPos <= windowHeight) {
 
-               // prezTxt class control
-               $prezTxt.removeClass("affix");
+               if(elFixed) {
+                  // prezTxt class control
+                  $prezTxt.removeClass("affix");
+                  $("#prezentareImg").removeClass("affix");
+                  $("#menu").removeClass("affix");
+                  elFixed = false;
+                  elBottom = false;
+               }
+
+
 
                // prezImg class control and parallax effect
-               $("#prezentareImg").removeClass("affix")
-               .css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
+               $("#prezentareImg") .css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
                .css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
 
                // menu class control and parallax effect
-               $("#menu").removeClass("affix").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
+               $("#menu").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
 
             }
 
             // if in section 1 (prezentare) && section 2 (istoric) not on screen
             if(relativeTopPos >= windowHeight && relativeTopPos < 2 * windowHeight) {
 
-               // menu class control
-               $("#menu").addClass("affix").css("top", 0);
 
-               // prezImg class control
-               $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
+               if(!elFixed){
 
-               // prezTxt class control
-               $prezTxt.addClass("affix").removeClass("bottomSticky");
+                  // menu class control
+                  $("#menu").addClass("affix").css("top", 0);
+
+                  // prezTxt class control
+                  $prezTxt.addClass("affix").removeClass("bottomSticky");
+
+                  // prezImg class control
+                  $("#prezentareImg").addClass("affix").removeClass("bottomSticky");
+
+                  elFixed = true;
+                  elBottom = false;
+
+               }
 
                // prezTxt parallax effect
                var scale = 0.705 + 0.25 * (relativeTopPos / windowHeight - 1);
                $prezTxt.css({
-                  transform: "scale(" + scale + ")",
+                  transform: "scale(" + scale + ") translateY(-50%)",
                   right: "50px"
                });
 
             }
 
             // if entering section 2 (istoric)
-            if(relativeTopPos >= 2 * windowHeight) {
+            if(relativeTopPos >= 2 * windowHeight && !elBottom) {
 
                // prezImg class control
                $("#prezentareImg").removeClass("affix").addClass("bottomSticky");
@@ -266,9 +293,21 @@ var ScrollModule = (function() {
                // prezTxt class control
                $prezTxt.removeClass("affix").addClass("bottomSticky");
 
+               elBottom = true;
+               elFixed = false;
+
             }
 
          }
+
+         $("#my-video").backgroundVideo({
+            $outerWrap: $("#impact"),
+            preventContextMenu: true,
+            parallaxOptions: {
+               offset: 60,
+               effect: 1.3
+            }
+         });
 
       },
 
