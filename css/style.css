@@ -240,7 +240,7 @@ video {
 .video-wrap {
 	height: 100%;
 	width: 100%;
-   z-index: 50;
+   z-index: 12;
 }
 
 #video-overlay{
@@ -251,7 +251,7 @@ video {
    top: 0;
    left: 0;
    opacity: 1;
-   z-index: 100;
+   z-index: 13;
    color: white;
 
 }
