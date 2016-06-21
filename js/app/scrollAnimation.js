@@ -1,26 +1,26 @@
-// //  scroll function optimization
-// (function($) {
-//    var uniqueCntr = 0;
-//    $.fn.scrolled = function (waitTime, fn) {
-//       if (typeof waitTime === "function") {
-//          fn = waitTime;
-//          waitTime = 10;
-//       }
-//       var tag = "scrollTimer" + uniqueCntr++;
-//       this.scroll(function () {
-//          var self = $(this);
-//          var timer = self.data(tag);
-//          if (timer) {
-//             clearTimeout(timer);
-//          }
-//          timer = setTimeout(function () {
-//             self.removeData(tag);
-//             fn.call(self[0]);
-//          }, waitTime);
-//          self.data(tag, timer);
-//       });
-//    }
-// })(jQuery);
+//  scroll function optimization
+(function($) {
+   var uniqueCntr = 0;
+   $.fn.scrolled = function (waitTime, fn) {
+      if (typeof waitTime === "function") {
+         fn = waitTime;
+         waitTime = 5;
+      }
+      var tag = "scrollTimer" + uniqueCntr++;
+      this.scroll(function () {
+         var self = $(this);
+         var timer = self.data(tag);
+         if (timer) {
+            clearTimeout(timer);
+         }
+         timer = setTimeout(function () {
+            self.removeData(tag);
+            fn.call(self[0]);
+         }, waitTime);
+         self.data(tag, timer);
+      });
+   }
+})(jQuery);
 
 // scroll animation controller
 var ScrollModule = (function() {
@@ -185,14 +185,14 @@ var ScrollModule = (function() {
                "start": "window",
                "end": "window",
                "fn": function($el,pcnt) {
-                  $el.css("opacity", Math.min(pcnt));
+                  $el.css("opacity", pcnt);
                }
             }
 
          ]);
 
          // window scroll handler
-         $(window).scroll(function() {
+         $(window).scrolled(function() {
             scrollAnimation();
          });
 
@@ -300,11 +300,11 @@ var ScrollModule = (function() {
 
          }
 
+         // parallax video settings and init
          $("#my-video").backgroundVideo({
             $outerWrap: $("#impact"),
             preventContextMenu: true,
             parallaxOptions: {
-               offset: 60,
                effect: 1.3
             }
          });

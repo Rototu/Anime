@@ -243,6 +243,19 @@ video {
    z-index: 12;
 }
 
+#video-overlay-text{
+   position: absolute;
+   display: block;
+   color: white;
+   font-size: 25px;
+   font-weight: 100;
+   width: 300px;
+   top: 250px;
+   transform: translateY(-50%);
+   left: calc(50% - 150px);
+   text-align: center;
+}
+
 #video-overlay{
    background-color: black;
    height: 100%;
