@@ -77,7 +77,7 @@ body{
 }
 
 #prezentare{
-   background: white url("../img/parallax/mountains.jpg");
+   background: black url("../img/parallax/nature.jpg");
    background-size: cover;
    background-position: bottom;
    height: 200vh;
@@ -182,6 +182,7 @@ body{
    transform: scale(0.7) translateY(-50%);
    transform-origin: center center;
    margin: 0;
+   color: white;
 }
 
 #prezentareTxt.affix{
@@ -203,6 +204,12 @@ body{
    opacity: 0;
 }
 
+#recomandari{
+   background: white url("../img/parallax/mushishi.jpg");
+   background-size: cover;
+   background-position: center;
+}
+
 .tl-text-content p{
    font-size: 2.2vh !important;
    line-height: 2.4vh !important;
@@ -220,14 +227,14 @@ div.tl-slide-content, div.tl-slide-scrollable-container, div.tl-slide-content-co
 }
 
 #istoric{
-   background: white url("../img/parallax/history.jpg");
+   background: white url("../img/parallax/samuraiX.png");
    background-size: cover;
    background-position: center;
 }
 
 #impact{
    background: white;
-   height: 500px;
+   height: calc(100vh - 50px);
 }
 
 video {
@@ -250,7 +257,7 @@ video {
    font-size: 25px;
    font-weight: 100;
    width: 300px;
-   top: 250px;
+   top: calc(50vh - 25px);
    transform: translateY(-50%);
    left: calc(50% - 150px);
    text-align: center;
@@ -267,8 +274,4 @@ video {
    z-index: 13;
    color: white;
 
-}
-
-#interactiv{
-   height: calc(100vh - 50px);
 }

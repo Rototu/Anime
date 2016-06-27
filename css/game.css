@@ -1,5 +1,6 @@
 #interactiv{
-   background: black url("../img/game/wallpaper.jpg") no-repeat;
+   height: calc(100vh - 50px);
+   background: black url("../img/parallax/ergoSideBG.jpg") no-repeat;
    background-size: cover;
    background-position: center;
 }
@@ -10,7 +11,7 @@
    background-color: white;
    border: solid black 0.5vh;
    position: relative;
-   margin-top: calc(45vh - 250px);
+   margin-top: calc(50vh - 265px);
    margin-left: calc(50vw - 500px);
 }
 

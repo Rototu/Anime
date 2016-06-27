@@ -185,7 +185,17 @@ var ScrollModule = (function() {
                "start": "window",
                "end": "window",
                "fn": function($el,pcnt) {
-                  $el.css("opacity", pcnt);
+                  $el.css("opacity", Math.max(pcnt - 0.08, 0));
+               }
+            },
+
+            // game opacity scroll handler
+            {
+               "selector": "#game",
+               "start": "window",
+               "end": "window",
+               "fn": function($el,pcnt) {
+                  $el.css("opacity", pcnt + 0.2);
                }
             }
 
@@ -247,7 +257,7 @@ var ScrollModule = (function() {
 
 
                // prezImg class control and parallax effect
-               $("#prezentareImg") .css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
+               $("#prezentareImg") .css("left", ((relativeTopPos / windowHeight * 10) - 25)  + "vw")
                .css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
 
                // menu class control and parallax effect
@@ -280,6 +290,7 @@ var ScrollModule = (function() {
                $prezTxt.css({
                   transform: "scale(" + scale + ") translateY(-50%)",
                   right: "50px"
+                  // color: "rgb("+ (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + ")"
                });
 
             }
@@ -305,7 +316,7 @@ var ScrollModule = (function() {
             $outerWrap: $("#impact"),
             preventContextMenu: true,
             parallaxOptions: {
-               effect: 1.3
+               effect: 1.7
             }
          });
 
