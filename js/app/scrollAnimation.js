@@ -187,17 +187,17 @@ var ScrollModule = (function() {
                "fn": function($el,pcnt) {
                   $el.css("opacity", Math.max(pcnt - 0.08, 0));
                }
-            },
-
-            // game opacity scroll handler
-            {
-               "selector": "#game",
-               "start": "window",
-               "end": "window",
-               "fn": function($el,pcnt) {
-                  $el.css("opacity", pcnt + 0.2);
-               }
             }
+
+            // // game opacity scroll handler
+            // {
+            //    "selector": "#game",
+            //    "start": "window",
+            //    "end": "window",
+            //    "fn": function($el,pcnt) {
+            //       $el.css("opacity", pcnt + 0.2);
+            //    }
+            // }
 
          ]);
 
