@@ -121,7 +121,7 @@ var ScrollModule = (function() {
             var mySect = id.substr(id.length - 1);
 
             // get scrollvalue from array by index
-            var scrollValue = section[mySect];
+            var scrollValue = section[mySect] + 10;
 
             // animate scroll
             $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
@@ -185,7 +185,20 @@ var ScrollModule = (function() {
                "start": "window",
                "end": "window",
                "fn": function($el,pcnt) {
-                  $el.css("opacity", Math.max(pcnt - 0.08, 0));
+                  $el.css("opacity", Math.max(pcnt - 0.1, 0));
+               }
+            },
+
+            // info pos scroll handler
+            {
+               "selector": "#info",
+               "start": "self",
+               "end": "self",
+               "fn": function($el,pcnt) {
+                  $el.css({
+                     left: ((-12) * (1 - pcnt) + 2) + "vw",
+                     opacity: pcnt
+                  });
                }
             }
 
