@@ -124,7 +124,7 @@ var ScrollModule = (function() {
             var scrollValue = section[mySect] + 10;
 
             // animate scroll
-            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 2000, delay: 0, easing: "easeInOutCubic"});
+            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 3000, delay: 0, easing: "easeInOutCubic"});
 
          });
 
@@ -275,6 +275,8 @@ var ScrollModule = (function() {
 
                // menu class control and parallax effect
                $("#menu").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
+               $("#menu, #menuFill").css("opacity", relativeTopPos / windowHeight);
+               $("#menuFill").css("height", $("#menu").position().top - windowHeight);
 
             }
 
