@@ -122,9 +122,10 @@ var MainModule = (function() {
 
             });
 
-            // clear scrollposition cache
+            // clear scrollposition cache and prevent element display bugs
             $(window).on("unload", function() {
                $(window).scrollTop(0);
+               $("#mySite").hide();
             });
 
          });
