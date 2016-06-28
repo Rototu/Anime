@@ -124,7 +124,7 @@ var ScrollModule = (function() {
             var scrollValue = section[mySect] + 10;
 
             // animate scroll
-            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+            $("html, body").stop().animate({scrollTop: scrollValue}, {queue: false, duration: 2000, delay: 0, easing: "easeInOutCubic"});
 
          });
 
@@ -196,7 +196,7 @@ var ScrollModule = (function() {
                "end": "self",
                "fn": function($el,pcnt) {
                   $el.css({
-                     left: ((-12) * (1 - pcnt) + 2) + "vw",
+                     left: ((-5) * (1 - pcnt) + 2) + "vw",
                      opacity: pcnt
                   });
                }
