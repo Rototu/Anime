@@ -174,7 +174,7 @@ var ScrollModule = (function() {
                "fn": function($el,pcnt) {
 
                   // max opacity 0.97, 0.1 ==> 10% delay for animation
-                  $el.css("opacity", Math.min(pcnt + 0.1, 0.97));
+                  $el.css("opacity", Math.min(pcnt + 0.1, 0.95));
 
                }
             },

@@ -1,0 +1,135 @@
+<div id="game" class="noselect">
+
+   <div class="gameSlide gameElement" id="frame1">
+      <img class="gameElement" id="korosensei" src="img/game/korosensei.png"/>
+      <h1 class="gameElement" id="frame1One"> No, servus! </h1>
+      <h1 class="gameElement" id="frame1Two"> Am uitat, cum te cheamă? </h1>
+      <form class="gameElement" id="frame1Form">
+         <p>
+            NUME:
+            <input id="name" type="text" autocomplete="off"/>
+         </p>
+         <div class="gameElement" id="nameSubmit">
+            CONTINUĂ
+         </div>
+      </form>
+   </div>
+
+   <div class="gameSlide gameElement" id="frame2">
+      <img class="gameElement" id="swirl" src="img/game/swirl.gif"/>
+      <h1 class="gameElement" id="frame2One"> <span class="myCharName"></span>, cu ce caracter ai vrea să joci? </h1>
+      <div class="gameElement" id="charChoice">
+         <img class="gameChar" id="char1" src="img/game/shizuocalm.gif"/>
+         <img class="gameChar" id="char2" src="img/game/sadlevi.gif"/>
+         <img class="gameChar" id="char3" src="img/game/madokaidle.gif"/>
+         <img class="gameChar" id="char4" src="img/game/yuno.gif"/>
+      </div>
+   </div>
+
+   <div class="gameSlide gameElement" id="frame3Shizuo">
+      <img class="gameElement" id="shizuoClick" src="img/game/leftClick.png" />
+      <img class="coin gameElement" src="img/game/coin.gif" />
+      <div class="gameElement" id="shizuo">
+         <span id="shizuoScore"><span id="coinScore">0</span> / 20</span>
+         <img id="shizuoImg" src="img/game/shizuocalmright.gif" />
+      </div>
+      <img class="gameElement" id="runningIzaya" src="img/game/izaya.gif" />
+   </div>
+
+   <div class="gameSlide gameElement" id="frame3Madoka">
+      <img id="madoka" src="img/game/madokawind.gif" />
+      <img id="scientist" src="img/game/scientist.gif" />
+      <span class="txtBubble" id="madokaTxt"></span>
+      <span class="txtBubble" id="makiseTxt"></span>
+      <div class="gameElement" id="animeQuiz">
+         <img class="quizQuestion" id="q1" src=""/>
+         <img class="quizQuestion" id="q2" src=""/>
+         <img class="quizQuestion" id="q3" src=""/>
+         <img class="quizQuestion" id="q4" src=""/>
+      </div>
+   </div>
+
+   <div class="gameSlide gameElement" id="frame3Levi">
+      <img class="gameElement" id="spotlight" src="img/game/lights.png"/>
+      <img id="levi" src="img/game/levinervous.gif" />
+      <div class="gameElement" id="leviGame">
+         <img class="arrow" id="leftArrow" src="img/game/LEFT.png"/>
+         <img class="arrow" id="upArrow" src="img/game/UP.png"/>
+         <img class="arrow" id="downArrow" src="img/game/DOWN.png" />
+         <img class="arrow" id="rightArrow" src="img/game/RIGHT.png" />
+         <img id="arrowContainer" src="img/game/arrowcontainer.png"/>
+         <div id="leviProgress">
+            <div id="danceProgress"></div>
+         </div>
+      </div>
+   </div>
+
+   <div class="gameSlide gameElement" id="frame3Yandere">
+
+      <form id="animeController" name="animeController">
+
+         <p id="tutorial">
+            Pentru a selecta un caracter facţi click pe el.<br />
+            Pentru a-l mişca tineţi apăsat pe el şi trageţi-l.
+         </p>
+         <hr /><br />
+
+         <div id="selectedChar">
+            CARACTERUL SELECTAT <br />
+            <span id="selectedCharName"></span>
+         </div>
+
+         <span>Schimbă caracterul în:</span>
+         <select id="charSelect">
+            <option value="makise">Makise</option>
+            <option value="shinji">Shinji</option>
+            <option value="izaya">Izaya</option>
+            <option value="mikasa">Mikasa</option>
+            <option value="unit01">Unit 01</option>
+            <option value="shizuo">Shizuo</option>
+            <option value="levi">Levi</option>
+         </select>
+
+         <span>Schimbă fundalul în:</span>
+         <select id="bgSelect">
+            <option value="street">Stradă iluminată</option>
+            <option value="sky">Cer înstelat</option>
+            <option value="space">Nava Bebop</option>
+         </select>
+
+         <span>Înălţimea caracterului selectat</span>
+         <select id="replica">
+            <option value="100px">100px</option>
+            <option value="200px">200px</option>
+            <option value="300px">300px</option>
+            <option value="400px">400px</option>
+         </select>
+
+         <button type="submit" form="animeController" value="Submit">Actualizează</button>
+
+      </form>
+
+      <div id="animeContainer">
+         <img class="draggableChar" id="Char1" src="img/game/shinji.gif"/>
+         <img class="draggableChar" id="Char2" src="img/game/neko.gif"/>
+         <img class="draggableChar" id="Char3" src="img/game/unit01.gif"/>
+      </div>
+
+   </div>
+
+   <div class="gameSlide gameElement" id="frame4Shizuo">
+      <div class="gameElement" id="shizuoEndTitle">Felicitări! L-ai prins pe Izaya!</div>
+      <img class="gameElement" id="shizuoEnd" src="img/game/izayaShizu.gif" />
+   </div>
+
+   <div class="gameSlide gameElement" id="frame4Madoka">
+      <div id="madokaEndTitle">Felicitări! Ai trecut de quiz!</div>
+      <img id="madokaEnd" src="img/game/madokafinal.gif" />
+   </div>
+
+   <div class="gameSlide gameElement" id="frame4Levi">
+      <div class="gameElement" id="leviEndTitle">Felicitări! Ai reflexe impresionante!</div>
+      <img class="gameElement" id="leviEnd" src="img/game/danceTitanDance.gif" />
+   </div>
+
+</div>
