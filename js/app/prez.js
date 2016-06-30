@@ -8,7 +8,7 @@ var prezModule = (function() {
 
          //startImage crossfade effect
          $("#section1").crossfade({
-            threshold: 0.4
+            threshold: 0.3
          });
 
          //disable img drag
@@ -22,7 +22,7 @@ var prezModule = (function() {
             $outerWrap: $("#section4"),
             preventContextMenu: true,
             parallaxOptions: {
-               effect: 2
+               effect: 5
             }
          });
 

@@ -20,7 +20,7 @@ body{
    overflow-y: hidden;
    text-align: center;
    font-size: 25px;
-   font-weight: 300;
+   font-weight: 100;
 }
 
 a {
@@ -61,7 +61,8 @@ a {
 }
 
 #section2{
-   padding: 50px;
+   padding: 75px;
+   background-color: rgb(255, 251, 212);
 }
 
 #txtIntro{
@@ -72,6 +73,7 @@ a {
    text-align: justify;
    text-align-last: center;
    -moz-text-align-last: center;
+   font-weight: 300;
 }
 
 #next:hover{
@@ -79,8 +81,8 @@ a {
 }
 
 #section3{
-   padding: 50px;
-   background-color: rgb(16, 0, 17);
+   padding: 75px;
+   background-color: rgb(31,30,25);
    color: white;
 }
 
@@ -116,14 +118,21 @@ video {
 }
 
 #section5{
-   padding: 50px;
-   background-color: black;
+   padding: 75px;
+   background-color: rgb(24, 0, 48);
    color: white;
 }
 
 #section6{
    height: 60vh;
    background: black url("../img/prez/arimaKaoriPlay.jpg");
+   background-position: center;
+   background-size: cover;
+}
+
+#section7{
+   height: 60vh;
+   background: black url("../img/prez/bebop.jpg");
    background-position: center;
    background-size: cover;
 }
