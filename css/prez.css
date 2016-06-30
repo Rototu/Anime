@@ -20,7 +20,7 @@ body{
    overflow-y: hidden;
    text-align: center;
    font-size: 25px;
-   font-weight: 100;
+   font-weight: 300;
 }
 
 a {
@@ -57,7 +57,7 @@ a {
    text-shadow: 0 2px 0 #444;
    color: white;
    font-size: 50px;
-   font-weight: 400;
+   font-weight: 600;
 }
 
 #section2{
@@ -72,7 +72,6 @@ a {
    text-align: justify;
    text-align-last: center;
    -moz-text-align-last: center;
-   font-weight: 200;
 }
 
 #next:hover{
