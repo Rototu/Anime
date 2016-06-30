@@ -202,16 +202,6 @@ var ScrollModule = (function() {
                }
             }
 
-            // // game opacity scroll handler
-            // {
-            //    "selector": "#game",
-            //    "start": "window",
-            //    "end": "window",
-            //    "fn": function($el,pcnt) {
-            //       $el.css("opacity", pcnt + 0.2);
-            //    }
-            // }
-
          ]);
 
          // window scroll handler
@@ -275,7 +265,7 @@ var ScrollModule = (function() {
 
                // menu class control and parallax effect
                $("#menu").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
-               $("#menu, #menuFill").css("opacity", relativeTopPos / windowHeight);
+               $("#menu, #menuFill").css("opacity", relativeTopPos / windowHeight + 0.1);
                $("#menuFill").css("height", $("#menu").position().top - windowHeight);
 
             }

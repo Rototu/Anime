@@ -1,0 +1,108 @@
+* {
+   box-sizing: border-box;
+}
+
+html{
+   margin: 0;
+   width: 100%;
+   overflow-x: hidden;
+}
+
+body{
+   opacity: 0;
+   background-color: white;
+   position: absolute;
+   margin: 0;
+   top: 0;
+   left: 0;
+   font-family: 'Roboto', sans-serif;
+   width: 100%;
+   overflow-y: hidden;
+   text-align: center;
+   font-size: 30px;
+   font-weight: 200;
+}
+
+a {
+  color:inherit;
+  text-decoration: none;
+ }
+
+.noselect{
+   cursor: default;
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+   user-select: none;           /* non-prefixed version, currently
+   not supported by any browser */
+}
+
+.prez{
+   width: 100%;
+   position: relative;
+   overflow: hidden;
+}
+
+#section1{
+   height: 80vh;
+}
+
+#title{
+   position: relative;
+   z-index: 10;
+   display: inline-block;
+   line-height: 80vh;
+   text-shadow: 0 2px 0 #444;
+   color: white;
+   font-size: 50px;
+   font-weight: 400;
+}
+
+#section2{
+   padding: 50px;
+}
+
+#txtIntro{
+   display: block;
+   width: 60%;
+   position: relative;
+   left: 20%;
+   text-align: justify;
+   text-align-last: center;
+   -moz-text-align-last: center;
+   font-weight: 300;
+}
+
+#section3{
+   padding: 50px;
+   background-color: rgb(35,26,53);
+   color: white;
+}
+
+#loremIpsum{
+   display: block;
+   width: 60%;
+   left: 20%;
+   text-align: justify;
+   text-align-last: center;
+   -moz-text-align-last: center;
+   position: relative;
+}
+
+#footer{
+   height: 170px;
+   padding: 20px;
+   font-size: 30px;
+   line-height: 130px;
+   color: rgb(0, 56, 255);
+   font-weight: 400;
+}
+
+#section4{
+   height: 60vh;
+   background: black url("../img/prez/arimaKaoriPlay.jpg");
+   background-position: center;
+   background-size: cover;
+}
