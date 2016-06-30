@@ -305,7 +305,7 @@ var ScrollModule = (function() {
                var scale = 0.705 + 0.25 * (relativeTopPos / windowHeight - 1);
                $prezTxt.css({
                   transform: "scale(" + scale + ") translateY(-50%)",
-                  right: "50px"
+                  right: "30px"
                   // color: "rgb("+ (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + ")"
                });
 

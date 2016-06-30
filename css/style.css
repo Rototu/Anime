@@ -196,13 +196,13 @@ a {
 
 #prezentareTxt.affix{
    position: fixed;
-   right: 50px;
+   right: 30px;
    top: 50vh;
 }
 
 #prezentareTxt.bottomSticky{
    position: absolute;
-   right: 50px;
+   right: 30px;
    top: 150vh;
 }
 
