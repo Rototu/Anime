@@ -159,10 +159,12 @@ a {
 }
 
 #prezentareImg{
-   height: 60vh;
+   height: 50vh;
    position: absolute;
    left: -10vw;
    bottom: 100vh;
+   /*max-width: 60vw;
+   max-height: calc(60vw * 0.667);*/
 }
 
 #prezentareImg.affix{
@@ -183,8 +185,9 @@ a {
    position: absolute;
    width: 40vw;
    top: 50vh;
-   right: 50px;
-   font-weight: 700;
+   right: 30px;
+   font-weight: 400;
+   text-shadow: 0 2px 0 #444;
    transform: scale(0.7) translateY(-50%);
    transform-origin: center center;
    margin: 0;
@@ -267,6 +270,7 @@ video {
    transform: translateY(-50%);
    left: calc(50% - 150px);
    text-align: center;
+   text-shadow: 0 2px 0 #444;
 }
 
 #video-overlay{

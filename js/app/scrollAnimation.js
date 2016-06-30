@@ -34,6 +34,7 @@ var ScrollModule = (function() {
    var elFixed = false;
    var elBottom = false;
    var windowHeight;
+   var windowWidth;
    var relativeTopPos;
    var section = [];
    var i = 1;
@@ -62,6 +63,9 @@ var ScrollModule = (function() {
          // scroll init to top
          window.scrollTo(0, 0);
          $("html, body").scrollTop(0);
+
+         //init windowWidth
+         windowWidth = $(window).width();
 
       },
 
@@ -205,7 +209,7 @@ var ScrollModule = (function() {
          ]);
 
          // window scroll handler
-         $(window).scrolled(function() {
+         $(window).scroll(function() {
             scrollAnimation();
          });
 
@@ -260,8 +264,15 @@ var ScrollModule = (function() {
 
 
                // prezImg class control and parallax effect
-               $("#prezentareImg") .css("left", ((relativeTopPos / windowHeight * 10) - 25)  + "vw")
-               .css("height", ((relativeTopPos / windowHeight * 20) + 60)  + "vh");
+               if( $("#prezentareImg").width() <= windowWidth * 0.55 ) {
+                  $("#prezentareImg").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
+                  .css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh");
+               }
+               if( $("#prezentareImg").width() > windowWidth * 0.55 ) {
+                  $("#prezentareImg").css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh")
+                  .css("left", ( ( relativeTopPos / windowHeight * 10 ) - 10 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 55 ) )  + "vw");
+                  // console.log(( relativeTopPos / windowHeight * 15 ) - 15 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 60 ));
+               }
 
                // menu class control and parallax effect
                $("#menu").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
@@ -333,6 +344,7 @@ var ScrollModule = (function() {
          // resizable vars
          var ii = $("#menu" + i).offset().left;
          windowHeight = $(window).height();
+         windowWidth = $(window).width();
 
          // update list of section heights
          ScrollModule.getSectionPos();
