@@ -19,8 +19,8 @@ body{
    width: 100%;
    overflow-y: hidden;
    text-align: center;
-   font-size: 30px;
-   font-weight: 200;
+   font-size: 25px;
+   font-weight: 100;
 }
 
 a {
@@ -72,16 +72,20 @@ a {
    text-align: justify;
    text-align-last: center;
    -moz-text-align-last: center;
-   font-weight: 300;
+   font-weight: 200;
+}
+
+#next:hover{
+   cursor: pointer;
 }
 
 #section3{
    padding: 50px;
-   background-color: rgb(35,26,53);
+   background-color: rgb(16, 0, 17);
    color: white;
 }
 
-#loremIpsum{
+#cadre, #estetica{
    display: block;
    width: 60%;
    left: 20%;
@@ -91,6 +95,40 @@ a {
    position: relative;
 }
 
+#section4{
+   height: 60vh;
+   background-position: center;
+   background-size: cover;
+}
+
+video {
+   position: absolute;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   display: block;
+   vertical-align: baseline;
+}
+
+.video-wrap {
+   height: 100%;
+   width: 100%;
+   z-index: 12;
+}
+
+#section5{
+   padding: 50px;
+   background-color: black;
+   color: white;
+}
+
+#section6{
+   height: 60vh;
+   background: black url("../img/prez/arimaKaoriPlay.jpg");
+   background-position: center;
+   background-size: cover;
+}
+
 #footer{
    height: 170px;
    padding: 20px;
@@ -98,11 +136,4 @@ a {
    line-height: 130px;
    color: rgb(0, 56, 255);
    font-weight: 400;
-}
-
-#section4{
-   height: 60vh;
-   background: black url("../img/prez/arimaKaoriPlay.jpg");
-   background-position: center;
-   background-size: cover;
 }

@@ -11,12 +11,20 @@ var prezModule = (function() {
             threshold: 0.4
          });
 
-         //set scrollspeed animation
-         jQuery.scrollSpeed( 200, 1500, "easeOutQuad" );
-
+         //disable img drag
          $("img").on("dragstart", function(event) { event.preventDefault(); });
 
+         //enable parallax
          $(window).enllax();
+
+         // parallax video settings and init
+         $("#my-video").backgroundVideo({
+            $outerWrap: $("#section4"),
+            preventContextMenu: true,
+            parallaxOptions: {
+               effect: 2
+            }
+         });
 
       },
 
@@ -27,14 +35,25 @@ var prezModule = (function() {
             $("body").hide();
          });
 
+         $("#next").click(function() {
+            $("html, body").animate({ scrollTop: $(document).height() }, {queue: false, duration: 60000, delay: 0, easing: "linear"});
+         });
+
       },
 
       windowLoaded: function() {
 
          $("body").animate({opacity: 1}, {queue: false, duration: 1500, delay: 0, easing: "easeInOutCubic"});
          setTimeout(function() {
+
+            //reset scroll
             $(window).scroll();
-         }, 100);
+            $(window).scrollTop(0);
+
+            //set scrollspeed animation
+            jQuery.scrollSpeed( 200, 1500, "easeOutQuad" );
+
+         }, 150);
 
       }
 
