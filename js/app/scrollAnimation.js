@@ -189,7 +189,7 @@ var ScrollModule = (function() {
                "start": "window",
                "end": "window",
                "fn": function($el,pcnt) {
-                  $el.css("opacity", Math.max(pcnt - 0.1, 0));
+                  $el.css("opacity", Math.max(pcnt - 0.15, 0));
                }
             },
 
