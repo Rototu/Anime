@@ -1,6 +1,7 @@
 var prezModule = (function() {
 
    var myVar;
+   var scrollStarted = false;
 
    return {
 
@@ -36,7 +37,15 @@ var prezModule = (function() {
          });
 
          $("#next").click(function() {
-            $("html, body").animate({ scrollTop: $(document).height() }, {queue: false, duration: 60000, delay: 0, easing: "linear"});
+            $("html, body").animate({ scrollTop: $(document).height() }, {queue: false, duration: 10000, delay: 0, easing: "linear"});
+            scrollStarted = true;
+            setTimeout(function() {
+               scrollStarted = false;
+            }, 200);
+         });
+
+         $("html, body").click(function() {
+            if(!scrollStarted) $(this).stop();
          });
 
       },
