@@ -19,7 +19,7 @@ var prezModule = (function() {
 
          // parallax video settings and init
          $("#my-video").backgroundVideo({
-            $outerWrap: $("#section4"),
+            $outerWrap: $("#section3"),
             preventContextMenu: true,
             parallaxOptions: {
                effect: 5
