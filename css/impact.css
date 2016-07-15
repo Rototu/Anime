@@ -1,0 +1,135 @@
+* {
+   box-sizing: border-box;
+}
+
+html{
+   margin: 0;
+   width: 100%;
+   overflow-x: hidden;
+}
+
+body{
+   background-color: white;
+   color: black;
+   margin: 0;
+   position: relative;
+   font-family: 'Roboto', sans-serif;
+   width: 100%;
+   min-height: 100vh;
+   overflow-y: hidden;
+   text-align: center;
+   font-size: 25px;
+   font-weight: 300;
+   text-align: center;
+}
+
+a {
+  color:inherit;
+  text-decoration: none;
+ }
+
+.noselect{
+   cursor: default;
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+   user-select: none;           /* non-prefixed version, currently
+   not supported by any browser */
+}
+
+#box{
+   position: absolute;
+   height: 300px;
+   width: 100%;
+   top: 50vh;
+   left: 0;
+   transform: translateY(-50%);
+   z-index: 100;
+}
+
+.title{
+   display: inline-block;
+   font-size: 64px;
+   font-weight: 100;
+}
+
+#stickerBox{
+   height: 200px;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   text-align: center;
+}
+
+.sticker{
+   height: 100%;
+   display: inline-block;
+   width: 200px;
+   margin: 30px;
+}
+
+#stickerUno .sticker-img {
+   background-image: url("../img/impact/stickerUno.png");
+   background-size: cover;
+   background-position: center;
+   border: solid black 2px;
+   border-radius: 100px;
+}
+
+#stickerDuo .sticker-img {
+   background-image: url("../img/impact/stickerDuo.png");
+   background-size: cover;
+   background-position: center;
+   border: solid black 2px;
+   border-radius: 100px;
+}
+
+#stickerTitle span{
+   display: inline-block;
+   margin: 20px 30px 0 30px;
+   font-size: 20px;
+   width: 200px;
+}
+
+#wrapperCinema{
+      background-image: url("../img/impact/fullmetal.jpg");
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+}
+
+#impactCinema{
+   background-color: rgba(255, 255, 255, 0.8);
+   display: none;
+   opacity: 0;
+   position: relative;
+   width: 90%;
+   left: 5%;
+   padding: 60px;
+   z-index: 1;
+}
+
+.aniMov{
+   display: inline-block;
+   width: 100%;
+}
+
+.aniMov img{
+   border: solid black 1px;
+}
+
+h3{
+   font-size: 20px;
+   font-weight: 100;
+}
+
+#impactCultura{
+   display: none;
+   opacity: 0;
+   position: relative;
+   width: calc(100vw - 40px);
+   left: 20px;
+   z-index: 1;
+}

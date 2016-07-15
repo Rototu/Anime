@@ -264,13 +264,13 @@ video {
    display: block;
    color: white;
    font-size: 25px;
-   font-weight: 100;
+   font-weight: 300;
    width: 300px;
    top: calc(50vh - 25px);
    transform: translateY(-50%);
    left: calc(50% - 150px);
    text-align: center;
-   text-shadow: 0 2px 0 #444;
+   text-shadow: 2px 2px 1px #444;
 }
 
 #video-overlay{
@@ -283,6 +283,24 @@ video {
    opacity: 1;
    z-index: 13;
    color: white;
+}
+
+#prezLink{
+   transition: color 0.5s;
+   color: rgb(255, 184, 0);
+}
+
+#prezLink:hover{
+   color: rgb(255, 77, 0);
+}
+
+#impactLink{
+   transition: color 0.5s;
+   color: rgb(110, 155, 255);
+}
+
+#impactLink:hover{
+   color: rgb(131, 255, 255);
 }
 
 #interactiv{
