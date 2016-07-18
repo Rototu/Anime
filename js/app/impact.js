@@ -13,31 +13,65 @@ var ImpactModule = (function () {
          //enable parallax
          $(window).enllax();
 
+         //make sure window is not scrolled down
+         $(window).scrollTop(0);
+
       },
 
       bindHandlers: function () {
 
-         //hide titleBox
+         //section select
          $(".sticker").click(function() {
 
-            $("#box").fadeOut(1000);
+            //hide start wrapper
+            $("#startWrapper").fadeOut(1000);
 
+            //function to do after wrapper is hidden
             setTimeout(function() {
 
+               //switch for each sticker by id
                switch (this.id) {
+
+                  //if first sticker then show first section
                   case "stickerUno":
-                  $("#impactCinema").show().animate({opacity: 1}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+                  $("#wrapperCinema").fadeIn(1000);
                   break;
 
+                  //id second sticker then show second section
                   case "stickerDuo":
-                  $("#impactCultura").show().animate({opacity: 1}, {queue: false, duration: 1000, delay: 0, easing: "easeInOutCubic"});
+                  $("#wrapperCultura").fadeIn(1000);
                   break;
 
+                  //probably useless
                   default: return;
+
                }
 
-            }.bind(this),1500);
+               //reset scroll again
+               $(window).scrollTop(0);
 
+            }.bind(this),1000);
+
+         });
+
+         //#backToMain1
+         $("#backToMain1").click(function() {
+            $("#wrapperCinema").fadeOut(1000, function() {
+               $("#startWrapper").fadeIn(1000);
+            });
+         });
+
+         //#backToMain2
+         $("#backToMain2").click(function() {
+            $("#wrapperCultura").fadeOut(1000, function() {
+               $("#startWrapper").fadeIn(1000);
+            });
+         });
+
+         // clear scrollposition cache and prevent element display bugs
+         $(window).on("unload", function() {
+            $(window).scrollTop(0);
+            $("html").hide();
          });
 
       }

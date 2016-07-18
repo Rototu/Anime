@@ -39,14 +39,39 @@ a {
    not supported by any browser */
 }
 
+#startWrapper{
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
 #box{
    position: absolute;
-   height: 300px;
+   height: 320px;
    width: 100%;
    top: 50vh;
    left: 0;
    transform: translateY(-50%);
    z-index: 100;
+}
+
+#footer{
+   position: absolute;
+   line-height: 40px;
+   font-size: 16px;
+   color: gray;
+   bottom: 0;
+   width: 100%;
+   left: 0;
+   cursor: pointer;
+   transition: all 0.5s;
+   display: block;
+}
+
+#footer:hover{
+   color: black;
 }
 
 .title{
@@ -68,6 +93,7 @@ a {
    display: inline-block;
    width: 200px;
    margin: 30px;
+   cursor: pointer;
 }
 
 #stickerUno .sticker-img {
@@ -88,25 +114,25 @@ a {
 
 #stickerTitle span{
    display: inline-block;
-   margin: 20px 30px 0 30px;
-   font-size: 20px;
+   margin: 30px 30px 0 30px;
+   font-size: 30px;
    width: 200px;
 }
 
 #wrapperCinema{
-      background-image: url("../img/impact/fullmetal.jpg");
+      background-image: url("../img/impact/millenniumactress.jpg");
       background-size: cover;
       background-position: center;
       width: 100%;
+      display: none;
 }
 
 #impactCinema{
-   background-color: rgba(255, 255, 255, 0.8);
-   display: none;
-   opacity: 0;
+   background-color: rgba(255, 255, 255, 0.9);
+   display: inline-block;
    position: relative;
    width: 90%;
-   left: 5%;
+   max-width: 1200px;
    padding: 60px;
    z-index: 1;
 }
@@ -125,11 +151,58 @@ h3{
    font-weight: 100;
 }
 
+#backToMain1{
+   position: absolute;
+   bottom: 10px;
+   display: block;
+   width: 100%;
+   height: 40px;
+   line-height: 40px;
+   left:0;
+   transition: all 0.5s;
+   font-weight: 400;
+   cursor: pointer;
+   color: gray;
+}
+
+#backToMain2{
+   position: absolute;
+   bottom: 0;
+   display: block;
+   width: 100%;
+   height: 80px;
+   line-height: 80px;
+   left: 0;
+   transition: all 0.5s;
+   font-weight: 400;
+   cursor: pointer;
+   color: gray;
+}
+
+#backToMain1:hover, #backToMain2:hover{
+   color: black;
+}
+
+#wrapperCultura{
+      background-image: url("../img/impact/steinsgate.jpg");
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      display: none;
+}
+
 #impactCultura{
-   display: none;
-   opacity: 0;
+   background-color: rgba(255, 255, 255, 0.9);
+   display: inline-block;
    position: relative;
-   width: calc(100vw - 40px);
-   left: 20px;
+   width: 90%;
+   max-width: 1200px;
+   padding: 60px;
    z-index: 1;
+}
+
+#impactCultura p{
+   text-align: justify;
+   -moz-text-align-last: center;
+   text-align-last: center;
 }
