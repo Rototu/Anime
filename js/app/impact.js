@@ -16,6 +16,9 @@ var ImpactModule = (function () {
          //make sure window is not scrolled down
          $(window).scrollTop(0);
 
+         //set scrollspeed animation
+         jQuery.scrollSpeed( 200, 1500, "easeOutQuad" );
+
       },
 
       bindHandlers: function () {
