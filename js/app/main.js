@@ -106,7 +106,7 @@ var MainModule = (function() {
 
                // animation options
                var loadWidth = { width: loadingBarWidth * imgCounter / imgNumber + 1 };
-               var loadOptions = { queue: true, duration: 20, delay: 0, easing: "linear", step: loadStep, done: loadDone }
+               var loadOptions = { queue: true, duration: 20, delay: 0, easing: "linear", step: loadStep, done: loadDone };
 
                // animate loadingBar
                $("#loadedPercentage").animate(loadWidth, loadOptions);

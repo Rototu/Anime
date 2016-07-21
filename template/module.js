@@ -14,6 +14,6 @@ var MainModule = (function () {
 })();
 
 $(document).on("ready", function () {
-   MenuModule.init();
-   MenuModule.bindHandlers();
+   MainModule.init();
+   MainModule.bindHandlers();
 });
