@@ -5,13 +5,15 @@ var GameModule = (function() {
    var $mainChar = $("#mainChar");
    var playerMoving;
    var solids = [];
+   var nearbySolids = [];
    var gameOffset = {};
 
    // char control vars
-   var playerMoveOptions = { queue: true, duration: 10, delay: 0, easing: "linear" },
+   var playerMoveOptions = { queue: true, duration: 1, delay: 0, easing: "linear" },
    moveValue, movementOrientation, currentKey;
    var mainCharSpriteAnimating = false;
    var listeningToKeyPress = true;
+   var posX, posY;
 
    return {
 
@@ -120,52 +122,57 @@ var GameModule = (function() {
 
       solidCollision: function() {
 
+         var dist, currentItem, diagDist, distL, distR, distT, distB;
+
          // build list of solid objects
          $(".solid").each(function(index) {
             $self = $(this);
             solids[index] = {
-               item: $self,
-               x: $self.position().left,
-               y: $self.position().top,
+               obj: $self,
+               x: $self.offset().left + $self.width() / 2,
+               y: $self.offset().top + $self.height() / 2,
                height: $self.height(),
                width: $self.width()
             };
          });
 
-         // collision test set as global interval
-         window.detectCollision = setInterval(function() {
+         // start collision test cycle
+         detectCollision = setInterval(function() {
+
+            // get player coordinates
+            posX = $mainChar.offset().left + 16;
+            posY = $mainChar.offset().top + 16;
 
             // loop through solid objects
-            for(var obj1 in solids) {
+            for(index in solids) {
 
-               // update position and id for current solid
-               var currentId = solids[obj1].item.prop('id');
-               solids[obj1].x = solids[obj1].item.position().left;
-               solids[obj1].y = solids[obj1].item.position().top;
+               // test if obj is not mainChar
+               if(index != 0) {
 
-               // loop through rest of solids
-               for(var obj2 in solids) {
+                  // get distances beetween player and current object
+                  currentItem = solids[index];
+                  diagDist = Math.sqrt((currentItem.width*currentItem.width/4)+(currentItem.height*currentItem.height/4));
+                  dist = Math.sqrt((posX - currentItem.x)*(posX - currentItem.x) + (posY - currentItem.y)*(posY - currentItem.y));
+                  distR = currentItem.x - posX - 16 - currentItem.width / 2;
+                  distL = posX - currentItem.x - 16 - currentItem.width / 2;
+                  distB = currentItem.y - posY - 16 - currentItem.height / 2;
+                  distT = posY - currentItem.y - 16 - currentItem.height / 2;
 
-                  // if not same solids test for collision
-                  if(obj1 != obj2) {
-
-                     // Collision conditions
-                     var test1 = (solids[obj1].x < solids[obj2].x + solids[obj2].width);
-                     var test2 = (solids[obj1].x + solids[obj1].width > solids[obj2].x);
-                     var test3 = (solids[obj1].y < solids[obj2].y + solids[obj2].height);
-                     var test4 = (solids[obj1].height + solids[obj1].y > solids[obj2].y);
-
-                     // test and update
-                     if (test1 && test2 && test3 && test4) {
-                        solids[obj1].colliding = true;
-                     } else {
-                        solids[obj1].colliding = false;
-                     }
-
+                  // test to see if they are in danger of collision
+                  if((dist - diagDist - 23 < 20) && ((distR < 20 && distR > 0) || (distL < 20 && distL > 0) || (distT < 20 && distT > 0) || (distB < 20 && distB > 0))) {
+                     // if current obj is not in nearbySolids array, push it in
+                     if($.inArray(index, nearbySolids) < 0)
+                     nearbySolids.push(index)
+                  }
+                  // if element is not in proximity of the player and is in the nearbySolids array, remove it
+                  else if($.inArray(index, nearbySolids) >= 0) {
+                     var val = $.inArray(index, nearbySolids);
+                     nearbySolids.splice(val, 1);
                   }
                }
             }
-         }, 100);
+
+         }, 20);
 
       },
 
@@ -234,82 +241,64 @@ var GameModule = (function() {
          });
       },
 
+      testForObjectCollision: function(obj1, obj2, myDirection, val) {
+
+         // declare vars
+         var x = obj1.x - obj1.width / 2, y = obj1.y - obj1.height / 2;
+         var a = obj2.x - obj2.width / 2, b = obj2.y - obj2.height / 2;
+
+         // set next step
+         switch(myDirection) {
+            case "up": y -= val; break;
+            case "left": x -= val; break;
+            case "down": y += val; break;
+            case "right": x += val; break;
+            default: return;
+         }
+
+         // test next step
+         if (x < a + obj2.width && x + obj1.width > a && y < b + obj2.height && obj1.height + y > b) {
+            return false;
+         } else {
+            return true;
+         }
+
+      },
+
       mainCharAnimation: function() {
 
-         // collision vars
-         var collided = false;
-         var badOrientation;
-         var posX;
-         var insideBox = true;
-         var escaping = false;
+         var movementPossible = true;
+
+         setInterval(function() {
+
+            // test if in danger of collision
+            if(nearbySolids.length > 0) {
+
+               // loop through nearby objects
+               for(index in nearbySolids) {
+
+                  // declare local vars
+                  var self = solids[nearbySolids[index]];
+                  var myChar = {
+                     x: posX,
+                     y: posY,
+                     width: solids[0].width,
+                     height: solids[0].height
+                  };
+
+                  // test to see if next step is possible
+                  movementPossible = GameModule.testForObjectCollision(myChar, self, movementOrientation, 10);
+
+               }
+            }
+
+         }, 10);
 
          // character control refresh function (listen ==> action)
          var charMovement = setInterval(function() {
 
-            // get player coordinates
-            posX = $mainChar.offset().left;
-            posY = $mainChar.offset().top;
-
-            // test if player is inside of game borders
-            if(posX <= gameOffset.x + 5 || posX >= gameOffset.x - 37 + 800 || posY <= gameOffset.y + 10 || posY >= gameOffset.y - 47 + 450) {
-               insideBox = false;
-            } else insideBox = true;
-
             // test if character should be moving
             if(playerMoving && controlsEnabled) {
-
-               // test if mainChar is colliding with another solid
-               if(solids[0].colliding || !insideBox && !escaping) {
-
-                  
-
-                  // stop movement and declare collision locally
-                  if(!collided) {
-                     collided = true;
-                     badOrientation = movementOrientation;
-                     $mainChar.clearQueue();
-                     moveValue = null;
-                     $mainChar.css({
-                        left: $mainChar.x + "px",
-                        top: $mainChar.y + "px"
-                     });
-                  }
-
-                  // force escape direction on player
-                  else if(collided) {
-
-                     // set escape direction conditions
-                     var bool1 = (badOrientation == "left" && movementOrientation == "right");
-                     var bool2 = (badOrientation == "right" && movementOrientation == "left");
-                     var bool3 = (badOrientation == "up" && movementOrientation == "down");
-                     var bool4 = (badOrientation == "down" && movementOrientation == "up");
-
-                     // test for escape conditions
-                     if(badOrientation != movementOrientation) {
-
-                        // declare escape from collision
-                        badOrientation = null;
-                        collided = false;
-                        escaping = true;
-                        setTimeout(function() {
-                           escaping = false;
-                        }, 1000);
-
-                     }
-
-                     // if not escaping then set current pos to last know right pos
-                     else {
-                        $mainChar.clearQueue();
-                        moveValue = null;
-                        $mainChar.css({
-                           left: $mainChar.x + "px",
-                           top: $mainChar.y + "px"
-                        });
-                     }
-
-                  }
-
-               }
 
                // test if sprite animation cycle has started
                if(!mainCharSpriteAnimating) {
@@ -321,7 +310,7 @@ var GameModule = (function() {
                }
 
                // move character in received direction with set options
-               $mainChar.animate(moveValue, playerMoveOptions);
+               if(movementPossible || nearbySolids.length == 0) $mainChar.animate(moveValue, playerMoveOptions);
 
             }
 
@@ -333,14 +322,6 @@ var GameModule = (function() {
             }
 
          }, 20);
-
-         // if player is not colliding set current pos as a good pos
-         setInterval(function() {
-            if(!solids[0].colliding && insideBox) {
-               $mainChar.x = $mainChar.position().left;
-               $mainChar.y = $mainChar.position().y;
-            }
-         }, 100);
 
       }
    };
