@@ -4,9 +4,7 @@ var GameModule = (function() {
    var controlsEnabled = false;
    var $mainChar = $("#mainChar");
    var playerMoving;
-   var solids = [];
-   var nearbySolids = [];
-   var gameOffset = {};
+   var $solids = $(".solids");
 
    // char control vars
    var playerMoveOptions = { queue: true, duration: 1, delay: 0, easing: "linear" },
@@ -15,6 +13,10 @@ var GameModule = (function() {
    var listeningToKeyPress = true;
    var posX, posY;
 
+   // var map => 2D array
+   var myMap = new Int8Array(1152);
+   myMap.fill(0);
+
    return {
 
       init: function() {
@@ -22,17 +24,30 @@ var GameModule = (function() {
          // enable char controls after page is loaded
          controlsEnabled = true;
 
-         // get gameOffset and store it in global var
-         gameOffset.x = $("#gameBox").offset().left;
-         gameOffset.y = $("#gameBox").offset().top;
+         // add functions to help with 2D array
+         Int8Array.prototype.get = function(i,j) {
+            return this[(i*this.width) + j];
+         }
+         Int8Array.prototype.set = function(i,j,val) {
+            this[(i*this.width) + j] = val;
+            return this[(i*this.width) + j];
+         }
+         Int8Array.prototype.setwidth = function(w) {
+            this.width = w;
+         }
+
+         // set properties for 2D array
+         myMap.setwidth(47);
+
+         // char pos init
+         GameModule.setSolidPos($mainChar, 8, 12, 2);
+         GameModule.setSolidPos($("#tree"), 38, 10, 1);
 
       },
 
       bindHandlers: function() {
 
          $(window).on("resize", function() {
-            gameOffset.x = $("#gameBox").offset().left;
-            gameOffset.y = $("#gameBox").offset().top;
          });
 
       },
@@ -87,7 +102,6 @@ var GameModule = (function() {
 
          // transform movementOrientation string to line id from sprite
          switch (movementOrientation) {
-
             case "up":
             $el.spriteLine = 3;
             break;
@@ -105,7 +119,6 @@ var GameModule = (function() {
             break;
 
             default: return;
-
          }
 
       },
@@ -120,59 +133,143 @@ var GameModule = (function() {
 
       },
 
-      solidCollision: function() {
+      emptySolidPos: function($el) {
 
-         var dist, currentItem, diagDist, distL, distR, distT, distB;
+         // get pos
+         var w = $el.width() / 16;
+         var h = $el.height() / 16;
+         var x = $el.gamePosX;
+         var y = $el.gamePosY;
 
-         // build list of solid objects
-         $(".solid").each(function(index) {
-            $self = $(this);
-            solids[index] = {
-               obj: $self,
-               x: $self.offset().left + $self.width() / 2,
-               y: $self.offset().top + $self.height() / 2,
-               height: $self.height(),
-               width: $self.width()
-            };
-         });
+         // delete pos in 2D array
+         for(var i=y; i<y+h; i++) {
+            for(var j=x; j<x+w; j++) myMap.set(i,j,0);
+         }
 
-         // start collision test cycle
-         detectCollision = setInterval(function() {
+      },
 
-            // get player coordinates
-            posX = $mainChar.offset().left + 16;
-            posY = $mainChar.offset().top + 16;
+      setSolidPos: function($el, x, y, val) {
 
-            // loop through solid objects
-            for(index in solids) {
+         // verifiy if in map boundaries
+         if(x>=0 && y>=0 && x<48 && y<24) {
 
-               // test if obj is not mainChar
-               if(index != 0) {
+            // define pos
+            $el.gamePosX = x;
+            $el.gamePosY = y;
 
-                  // get distances beetween player and current object
-                  currentItem = solids[index];
-                  diagDist = Math.sqrt((currentItem.width*currentItem.width/4)+(currentItem.height*currentItem.height/4));
-                  dist = Math.sqrt((posX - currentItem.x)*(posX - currentItem.x) + (posY - currentItem.y)*(posY - currentItem.y));
-                  distR = currentItem.x - posX - 16 - currentItem.width / 2;
-                  distL = posX - currentItem.x - 16 - currentItem.width / 2;
-                  distB = currentItem.y - posY - 16 - currentItem.height / 2;
-                  distT = posY - currentItem.y - 16 - currentItem.height / 2;
+            // set pos on screen
+            $el.css({ left: x*16, top: y*16 });
 
-                  // test to see if they are in danger of collision
-                  if((dist - diagDist - 23 < 20) && ((distR < 20 && distR > 0) || (distL < 20 && distL > 0) || (distT < 20 && distT > 0) || (distB < 20 && distB > 0))) {
-                     // if current obj is not in nearbySolids array, push it in
-                     if($.inArray(index, nearbySolids) < 0)
-                     nearbySolids.push(index)
-                  }
-                  // if element is not in proximity of the player and is in the nearbySolids array, remove it
-                  else if($.inArray(index, nearbySolids) >= 0) {
-                     var val = $.inArray(index, nearbySolids);
-                     nearbySolids.splice(val, 1);
-                  }
-               }
+            // set pos in 2D array
+            var w = $el.width() / 16;
+            var h = $el.height() / 16;
+            for(var i=y; i<y+h; i++) {
+               for(var j=x; j<x+w; j++) myMap.set(i,j,val);
             }
 
-         }, 20);
+         }
+
+      },
+
+      animateCharPos: function($el, x, y) {
+
+         // verifiy if in map boundaries
+         if(x>=0 && y>=0 && x<48 && y<24) {
+
+            // define pos
+            $el.gamePosX = x;
+            $el.gamePosY = y;
+
+            // set pos on screen
+            var options = {queue: false, duration: 500, delay: 0, easing: "linear", done:function() {
+               listeningToKeyPress = true;
+               if(!playerMoving) {
+                  mainCharSpriteAnimating = false;
+                  GameModule.disableSprite($el);
+                  $el.clearQueue();
+                  $el.stop();
+               }
+            }};
+            $el.animate({ left: x*16, top: y*16 }, options);
+
+            // set pos in 2D array
+            var w = $el.width() / 16;
+            var h = $el.height() / 16;
+            for(var i=y; i<y+h; i++) {
+               for(var j=x; j<x+w; j++) myMap.set(i,j,val);
+            }
+
+         }
+
+      },
+
+      logArray: function() {
+
+         // convert typed array into 2D string
+         var line = "";
+         for(var i=0; i<24; i++) {
+            for(var j=0; j<48; j++) line += (myMap.get(i,j) + " ");
+            line += "\n";
+         }
+
+         // log array
+         console.log(line);
+
+      },
+
+      testPosition: function($el, x, y) {
+
+         // verifiy if in map boundaries
+         if(x>=0 && y>=0 && x<48 && y<24) {
+
+            // test for collision
+            var w = $el.width() / 16;
+            var h = $el.height() / 16;
+            for(var i=y; i<y+h; i++) {
+               for(var j=x; j<x+w; j++) {
+                  if(myMap.get(i,j) != 0) return false;
+               }
+            }
+            return true;
+
+         } else return false;
+
+      },
+
+      moveSolid: function($el, x, y) {
+
+         if(GameModule.testPosition($el, x, y)) {
+            GameModule.emptySolidPos($el);
+            GameModule.animateCharPos($el, x, y, 2);
+         } else {
+            mainCharSpriteAnimating = false;
+            GameModule.disableSprite($el);
+            $el.clearQueue();
+            $el.stop();
+         }
+
+      },
+
+      moveCharacter: function(direction) {
+
+         var $el = $mainChar;
+
+         // transform movementOrientation string to line id from sprite
+         switch (direction) {
+            case "up": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY-2);
+            break;
+
+            case "down": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY+2);
+            break;
+
+            case "left": GameModule.moveSolid($el, $el.gamePosX-2, $el.gamePosY);
+            break;
+
+            case "right": GameModule.moveSolid($el, $el.gamePosX+2, $el.gamePosY);
+            break;
+
+            default: return;
+         }
 
       },
 
@@ -195,25 +292,21 @@ var GameModule = (function() {
 
                   // left key
                   case 37:
-                  moveValue = {left: "-=2px"};
                   movementOrientation = "left";
                   break;
 
                   // up key
                   case 38:
-                  moveValue = {top: "-=2px"};
                   movementOrientation = "up";
                   break;
 
                   // right key
                   case 39:
-                  moveValue = {left: "+=2px"};
                   movementOrientation = "right";
                   break;
 
                   // down key
                   case 40:
-                  moveValue = {top: "+=2px"};
                   movementOrientation = "down";
                   break;
 
@@ -222,8 +315,13 @@ var GameModule = (function() {
 
                }
 
-               // switch sprite orientation;
+               // switch sprite orientation and animate;
                GameModule.changeSpriteOrientation($mainChar, movementOrientation);
+               if(!mainCharSpriteAnimating) {
+                  GameModule.animateSprite($mainChar, 32, 3, 120);
+                  mainCharSpriteAnimating = true;
+               }
+               GameModule.moveCharacter(movementOrientation);
 
             }
          });
@@ -234,35 +332,10 @@ var GameModule = (function() {
             // test if released key coincides with the first pressed key
             if(currentKey == e.which && controlsEnabled) {
                playerMoving = false;
-               $mainChar.clearQueue();
                listeningToKeyPress = true;
             }
 
          });
-      },
-
-      testForObjectCollision: function(obj1, obj2, myDirection, val) {
-
-         // declare vars
-         var x = obj1.x - obj1.width / 2, y = obj1.y - obj1.height / 2;
-         var a = obj2.x - obj2.width / 2, b = obj2.y - obj2.height / 2;
-
-         // set next step
-         switch(myDirection) {
-            case "up": y -= val; break;
-            case "left": x -= val; break;
-            case "down": y += val; break;
-            case "right": x += val; break;
-            default: return;
-         }
-
-         // test next step
-         if (x < a + obj2.width && x + obj1.width > a && y < b + obj2.height && obj1.height + y > b) {
-            return false;
-         } else {
-            return true;
-         }
-
       },
 
       mainCharAnimation: function() {
@@ -330,7 +403,7 @@ var GameModule = (function() {
 $(document).on("ready", function() {
    GameModule.init();
    GameModule.bindHandlers();
-   GameModule.solidCollision();
+   // GameModule.solidCollision();
    GameModule.mainCharControls();
-   GameModule.mainCharAnimation();
+   // GameModule.mainCharAnimation();
 });

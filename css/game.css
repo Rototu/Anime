@@ -49,11 +49,11 @@ a {
 #gameBox{
    background: url("../img/game/grassPattern.png");
    background-color: white;
-   height: 450px;
-   width: 800px;
+   height: 384px;
+   width: 768px;
    position: fixed;
-   top: calc(50vh - 225px);
-   left: calc(50vw - 400px);
+   top: calc(50vh - 192px);
+   left: calc(50vw - 384px);
    border: solid white 1px;
    overflow: hidden;
 }
@@ -63,8 +63,6 @@ a {
    height: 32px;
    background-color: white;
    position: absolute;
-   left: 100px;
-   top: 100px;
    background: url('../img/game/sprites/L.png') 0 0;
    /*border: solid black 1px;*/
 }
@@ -73,7 +71,5 @@ a {
    width: 64px;
    height: 64px;
    position: absolute;
-   bottom: 300px;
-   right: 300px;
    background: url('../img/game/sprites/tree.png') 0 0;
 }
