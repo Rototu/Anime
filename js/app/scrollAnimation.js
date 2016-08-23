@@ -170,19 +170,6 @@ var ScrollModule = (function() {
                }
             },
 
-            // timeline scroll handler
-            {
-               "selector": "#timeline-embed",
-               "start": "window",
-               "end": "window",
-               "fn": function($el,pcnt) {
-
-                  // max opacity 0.97, 0.1 ==> 10% delay for animation
-                  $el.css("opacity", Math.min(pcnt + 0.1, 0.95));
-
-               }
-            },
-
             // video overlay scroll handler
             {
                "selector": "#video-overlay",
@@ -263,16 +250,16 @@ var ScrollModule = (function() {
 
 
 
-               // prezImg class control and parallax effect
-               if( $("#prezentareImg").width() <= windowWidth * 0.55 ) {
-                  $("#prezentareImg").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
-                  .css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh");
-               }
-               if( $("#prezentareImg").width() > windowWidth * 0.55 ) {
-                  $("#prezentareImg").css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh")
-                  .css("left", ( ( relativeTopPos / windowHeight * 10 ) - 10 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 55 ) )  + "vw");
-                  // console.log(( relativeTopPos / windowHeight * 15 ) - 15 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 60 ));
-               }
+               // // prezImg class control and parallax effect
+               // if( $("#prezentareImg").width() <= windowWidth * 0.55 ) {
+               //    $("#prezentareImg").css("left", ((relativeTopPos / windowHeight * 10) - 10)  + "vw")
+               //    .css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh");
+               // }
+               // if( $("#prezentareImg").width() > windowWidth * 0.55 ) {
+               //    $("#prezentareImg").css("height", ((relativeTopPos / windowHeight * 30) + 50)  + "vh")
+               //    .css("left", ( ( relativeTopPos / windowHeight * 10 ) - 10 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 55 ) )  + "vw");
+               //    // console.log(( relativeTopPos / windowHeight * 15 ) - 15 - ( $("#prezentareImg").width() * 100 / windowWidth	 - 60 ));
+               // }
 
                // menu class control and parallax effect
                $("#menu").css("top", windowHeight + (1 - relativeTopPos / windowHeight) * 50);
