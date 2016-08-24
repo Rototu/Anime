@@ -39,22 +39,78 @@ var GameModule = (function() {
          // set properties for 2D array
          myMap.setwidth(47);
 
-         // char pos init
-         GameModule.setSolidPos($mainChar, 8, 12, 2);
-         GameModule.setSolidPos($("#tree"), 38, 10, 1);
+         // start game
+         GameModule.frame1();
 
       },
 
       bindHandlers: function() {
 
+         // resize handler
          $(window).on("resize", function() {
+
+         });
+
+         // npc click handler
+         $(".npc").click(function() {
+
+            // test if mainChar is near clicked npc
+            var dist = GameModule.getDistanceBetweenElements($(this), $mainChar);
+            if(dist <= ($(this).width() / 2 + 16)) {
+
+            } else {
+
+            }
+
          });
 
       },
 
-      animateSprite: function($el, spriteSize, numberOfFrames, refreshRate) {
+      frame1: function() {
 
-         // frame id from sprite
+         // get npc
+         $asuna = $("#asuna");
+
+         // elements pos init
+         GameModule.setSolidPos($mainChar, 8, 12, 2);
+         GameModule.setSolidPos($asuna, 36, 12, 2);
+         GameModule.setSolidPos($("#tree"), 38, 10, 1);
+         GameModule.setSolidPos($("#grass"), 0, 17, 1);
+
+         // show elements
+         $(".frame1").show();
+
+      },
+
+      getPositionAtCenter: function ($el) {
+
+         // get bounding rectangle data of $el
+         var data = $el.get(0).getBoundingClientRect();
+
+         // return center position
+         return {
+            x: data.left + data.width / 2,
+            y: data.top + data.height / 2
+         };
+
+      },
+
+      getDistanceBetweenElements: function($el1, $el2) {
+
+         // get center points of elements
+         var aPosition = GameModule.getPositionAtCenter($el1);
+         var bPosition = GameModule.getPositionAtCenter($el2);
+
+         // return distance between points
+         return Math.sqrt(
+            Math.pow(aPosition.x - bPosition.x, 2) +
+            Math.pow(aPosition.y - bPosition.y, 2)
+         );
+      },
+
+      animateSprite: function($el, spriteWidth, spriteHeight, numberOfFrames, refreshRate) {
+
+         // frame id for sprite
          var currentFrame = 0;
 
          // frameSelector
@@ -70,7 +126,7 @@ var GameModule = (function() {
          // animate frame function
          var animateSprite = function(){
             frameSelect();
-            $el.css("background-position", (-currentFrame)*spriteSize + "px " + (-$el.spriteLine)*spriteSize + "px" );
+            $el.css("background-position", (-currentFrame)*spriteWidth + "px " + (-$el.spriteLine)*spriteHeight + "px" );
          };
 
          // animation function
@@ -171,7 +227,7 @@ var GameModule = (function() {
 
       },
 
-      animateCharPos: function($el, x, y) {
+      animateCharPos: function($el, x, y, val) {
 
          // verifiy if in map boundaries
          if(x>=0 && y>=0 && x<48 && y<24) {
@@ -181,7 +237,7 @@ var GameModule = (function() {
             $el.gamePosY = y;
 
             // set pos on screen
-            var options = {queue: false, duration: 500, delay: 0, easing: "linear", done:function() {
+            var options = {queue: false, duration: 600, delay: 0, easing: "linear", done:function() {
                listeningToKeyPress = true;
                if(!playerMoving) {
                   mainCharSpriteAnimating = false;
@@ -227,21 +283,23 @@ var GameModule = (function() {
             var h = $el.height() / 16;
             for(var i=y; i<y+h; i++) {
                for(var j=x; j<x+w; j++) {
-                  if(myMap.get(i,j) != 0) return false;
+                  if(myMap.get(i,j) > 0) return myMap.get(i,j);
                }
             }
-            return true;
+            return 0;
 
-         } else return false;
+         } else return -1;
 
       },
 
       moveSolid: function($el, x, y) {
 
-         if(GameModule.testPosition($el, x, y)) {
+         // test if target position empty
+         if(GameModule.testPosition($el, x, y) === 0) {
             GameModule.emptySolidPos($el);
             GameModule.animateCharPos($el, x, y, 2);
          } else {
+            listeningToKeyPress = true;
             mainCharSpriteAnimating = false;
             GameModule.disableSprite($el);
             $el.clearQueue();
@@ -252,6 +310,7 @@ var GameModule = (function() {
 
       moveCharacter: function(direction) {
 
+         // set var for readability
          var $el = $mainChar;
 
          // transform movementOrientation string to line id from sprite
@@ -318,7 +377,7 @@ var GameModule = (function() {
                // switch sprite orientation and animate;
                GameModule.changeSpriteOrientation($mainChar, movementOrientation);
                if(!mainCharSpriteAnimating) {
-                  GameModule.animateSprite($mainChar, 32, 3, 120);
+                  GameModule.animateSprite($mainChar, 32, 32, 3, 120);
                   mainCharSpriteAnimating = true;
                }
                GameModule.moveCharacter(movementOrientation);
@@ -332,78 +391,16 @@ var GameModule = (function() {
             // test if released key coincides with the first pressed key
             if(currentKey == e.which && controlsEnabled) {
                playerMoving = false;
-               listeningToKeyPress = true;
             }
 
          });
-      },
-
-      mainCharAnimation: function() {
-
-         var movementPossible = true;
-
-         setInterval(function() {
-
-            // test if in danger of collision
-            if(nearbySolids.length > 0) {
-
-               // loop through nearby objects
-               for(index in nearbySolids) {
-
-                  // declare local vars
-                  var self = solids[nearbySolids[index]];
-                  var myChar = {
-                     x: posX,
-                     y: posY,
-                     width: solids[0].width,
-                     height: solids[0].height
-                  };
-
-                  // test to see if next step is possible
-                  movementPossible = GameModule.testForObjectCollision(myChar, self, movementOrientation, 10);
-
-               }
-            }
-
-         }, 10);
-
-         // character control refresh function (listen ==> action)
-         var charMovement = setInterval(function() {
-
-            // test if character should be moving
-            if(playerMoving && controlsEnabled) {
-
-               // test if sprite animation cycle has started
-               if(!mainCharSpriteAnimating) {
-
-                  // start sprite animation cycle
-                  GameModule.animateSprite($mainChar, 32, 3, 100);
-                  mainCharSpriteAnimating = true;
-
-               }
-
-               // move character in received direction with set options
-               if(movementPossible || nearbySolids.length == 0) $mainChar.animate(moveValue, playerMoveOptions);
-
-            }
-
-            // on keyUp if player is moving stop all its animation cycles
-            else if(mainCharSpriteAnimating) {
-               $mainChar.stop();
-               GameModule.disableSprite($mainChar);
-               mainCharSpriteAnimating = false;
-            }
-
-         }, 20);
-
       }
+
    };
 })();
 
 $(document).on("ready", function() {
-   GameModule.init();
-   GameModule.bindHandlers();
-   // GameModule.solidCollision();
-   GameModule.mainCharControls();
-   // GameModule.mainCharAnimation();
+   GameModule.init(); // init game vars
+   GameModule.bindHandlers(); // bind game handlers
+   GameModule.mainCharControls(); // enable main char movement
 });

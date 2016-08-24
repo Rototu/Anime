@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -7,14 +7,14 @@
     src: url(../minecraftia/Minecraftia-Regular.ttf);
 }
 
-html{
+html {
   margin: 0;
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
 }
 
-body{
+body {
   background: black url("../img/game/kirito.jpg");
   background-position: center;
   background-size: cover;
@@ -33,7 +33,11 @@ a {
  text-decoration: none;
 }
 
-.noselect{
+.solid {
+   display: none;
+}
+
+.noselect {
   cursor: default;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -46,8 +50,8 @@ a {
 
 /* game elements */
 
-#gameBox{
-   background: url("../img/game/grassPattern.png");
+#gameBox {
+   background: url("../img/game/levels/level1.png");
    background-color: white;
    height: 384px;
    width: 768px;
@@ -58,16 +62,34 @@ a {
    overflow: hidden;
 }
 
-#mainChar{
+.npc {
+   cursor: pointer;
+}
+
+#grass {
+   width: 768px;
+   height: 112px;
+   position: absolute;
+   background: url('../img/game/sprites/grass.png');
+}
+
+#mainChar {
    width: 32px;
    height: 32px;
    background-color: white;
    position: absolute;
-   background: url('../img/game/sprites/L.png') 0 0;
-   /*border: solid black 1px;*/
+   background: url('../img/game/sprites/kirito.png') 0 0;
 }
 
-#tree{
+#asuna {
+   width: 32px;
+   height: 32px;
+   background-color: white;
+   position: absolute;
+   background: url('../img/game/gifs/asuna2.gif') 0 0;
+}
+
+#tree {
    width: 64px;
    height: 64px;
    position: absolute;
