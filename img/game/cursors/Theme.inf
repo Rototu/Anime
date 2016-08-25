@@ -1,0 +1,59 @@
+;Dimension
+;	- Win 9x/NT Cursor Scheme installation file.
+
+[Version]
+signature="$CHICAGO$"
+
+[DefaultInstall]
+CopyFiles = Scheme.Cur, Scheme.Txt
+AddReg    = Scheme.Reg
+
+[DestinationDirs]
+Scheme.Cur = 10,"%CUR_DIR%"
+Scheme.Txt = 10,"%CUR_DIR%"
+
+[Scheme.Reg]
+HKCU,"Control Panel\Cursors\Schemes","%SCHEME_NAME%",,"%10%\%CUR_DIR%\%Norm_cur%,%10%\%CUR_DIR%\%Help_cur%,%10%\%CUR_DIR%\%Work_cur%,%10%\%CUR_DIR%\%Busy_cur%,%10%\%CUR_DIR%\%Prcs_cur%,%10%\%CUR_DIR%\%Text_cur%,%10%\%CUR_DIR%\%Hand_cur%,%10%\%CUR_DIR%\%Unav_cur%,%10%\%CUR_DIR%\%Vert_cur%,%10%\%CUR_DIR%\%Horz_cur%,%10%\%CUR_DIR%\%Dgn1_cur%,%10%\%CUR_DIR%\%Dgn2_cur%,%10%\%CUR_DIR%\%Move_cur%,%10%\%CUR_DIR%\%Altr_cur%,%10%\%CUR_DIR%\%Link_cur%"
+
+; -- Common Information
+
+[Scheme.Cur]
+Dim_help.cur
+Dim_move.cur
+Dim_dgn1.cur
+Dim_dgn2.cur
+Dim_horz.cur
+Dim_vert.cur
+Dim_unav.cur
+Dim_work.ani
+Dim_busy.ani
+Dim_altr.cur
+Dim_hand.cur
+Dim_link.cur
+Dim_norm.cur
+Dim_prcs.cur
+Dim_text.cur
+
+[Scheme.Txt]
+INSTRUCTIONS.txt
+Theme.inf
+Dimension.jpg
+
+[Strings]
+CUR_DIR     = "Cursors\Dimension"
+SCHEME_NAME = "Dimension"
+altr_cur    = "Dim_altr.cur"
+busy_cur    = "Dim_busy.ani"
+dgn1_cur    = "Dim_dgn1.cur"
+dgn2_cur    = "Dim_dgn2.cur"
+hand_cur    = "Dim_hand.cur"
+help_cur    = "Dim_help.cur"
+horz_cur    = "Dim_horz.cur"
+link_cur    = "Dim_link.cur"
+move_cur    = "Dim_move.cur"
+norm_cur    = "Dim_norm.cur"
+prcs_cur    = "Dim_prcs.cur"
+text_cur    = "Dim_text.cur"
+unav_cur    = "Dim_unav.cur"
+vert_cur    = "Dim_vert.cur"
+work_cur    = "Dim_work.ani"

@@ -5,7 +5,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-   <title>Anime RPG</title>
+   <title>Anime RPG Level Creator</title>
 
    <link rel="stylesheet" rel="stylesheet" href="css/game.css" />
    <link href="css/Roboto.css" rel="stylesheet" rel="stylesheet" type="text/css" />
@@ -18,21 +18,22 @@
 
 </head>
 
-<body class="noselect">
+<body class="noselect center">
 
-   <div id="gameBox">
-      <div id="mainChar" class="solid frame1"></div>
-      <div id="asuna" class="solid frame1 npc"></div>
-      <div id="tree" class="solid frame1"></div>
-      <div id="grass" class="solid frame1"></div>
+   <div id="gameCreator">
+
    </div>
+
+   <input id="levelSelector" type="file" name="pic" accept="image/*">
+   <input id="levelSubmit" type="button" name="picSubmit" value="Trimite imagine 768px * 384px" onclick="MainModule.uploadImg();">
+   <input id="downloadFile" type="button" name="mapDownload" value="Descarca matrice harta" onclick="MainModule.stringifyMap();">
+   <a id="downloadAnchorElem" style="display:none"></a>
 
    <!-- vendor scripts -->
    <script src="js/vendor/imagesloaded.pkgd.min.js"></script>
 
    <!-- page scripts  -->
-   <script type="text/javascript" src="js/app/levels/level.js"></script>
-   <script src="js/app/game.js"></script>
+   <script src="js/app/gameCreator.js"></script>
 
 </body>
 </html>

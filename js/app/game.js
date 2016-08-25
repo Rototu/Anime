@@ -21,6 +21,10 @@ var GameModule = (function() {
 
       init: function() {
 
+         // parse level1
+         var myData = window.myLevelArray;
+         console.log(myData);
+
          // enable char controls after page is loaded
          controlsEnabled = true;
 
@@ -59,6 +63,10 @@ var GameModule = (function() {
             if(dist <= ($(this).width() / 2 + 16)) {
 
             } else {
+               // get JSON level
+               $.getJSON("scene.json", function(json) {
+                  console.log(json); // this will show the info it in firebug console
+               });
 
             }
 
@@ -71,10 +79,13 @@ var GameModule = (function() {
          // get npc
          $asuna = $("#asuna");
 
+         // set tree size options
+         var treeSize = {width: 48, height: 32, x: 38, y: 12};
+
          // elements pos init
-         GameModule.setSolidPos($mainChar, 8, 12, 2);
+         GameModule.setSolidPos($mainChar, 8, 12, -1);
          GameModule.setSolidPos($asuna, 36, 12, 2);
-         GameModule.setSolidPos($("#tree"), 38, 10, 1);
+         GameModule.setSolidPos($("#tree"), 35, 6, 1, treeSize);
          GameModule.setSolidPos($("#grass"), 0, 17, 1);
 
          // show elements
@@ -204,7 +215,7 @@ var GameModule = (function() {
 
       },
 
-      setSolidPos: function($el, x, y, val) {
+      setSolidPos: function($el, x, y, val, options) {
 
          // verifiy if in map boundaries
          if(x>=0 && y>=0 && x<48 && y<24) {
@@ -216,9 +227,19 @@ var GameModule = (function() {
             // set pos on screen
             $el.css({ left: x*16, top: y*16 });
 
+            // get width and handle special options arg
+            var w, h;
+            if(options) {
+               w = options.width / 16;
+               h = options.height / 16;
+               x = options.x;
+               y = options.y;
+            } else {
+               w = $el.width() / 16;
+               h = $el.height() / 16;
+            }
+
             // set pos in 2D array
-            var w = $el.width() / 16;
-            var h = $el.height() / 16;
             for(var i=y; i<y+h; i++) {
                for(var j=x; j<x+w; j++) myMap.set(i,j,val);
             }
@@ -237,7 +258,7 @@ var GameModule = (function() {
             $el.gamePosY = y;
 
             // set pos on screen
-            var options = {queue: false, duration: 600, delay: 0, easing: "linear", done:function() {
+            var options = {queue: true, duration: 330, delay: 0, easing: "linear", done: function() {
                listeningToKeyPress = true;
                if(!playerMoving) {
                   mainCharSpriteAnimating = false;
@@ -297,7 +318,7 @@ var GameModule = (function() {
          // test if target position empty
          if(GameModule.testPosition($el, x, y) === 0) {
             GameModule.emptySolidPos($el);
-            GameModule.animateCharPos($el, x, y, 2);
+            GameModule.animateCharPos($el, x, y, -1);
          } else {
             listeningToKeyPress = true;
             mainCharSpriteAnimating = false;
@@ -315,16 +336,16 @@ var GameModule = (function() {
 
          // transform movementOrientation string to line id from sprite
          switch (direction) {
-            case "up": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY-2);
+            case "up": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY-1);
             break;
 
-            case "down": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY+2);
+            case "down": GameModule.moveSolid($el, $el.gamePosX, $el.gamePosY+1);
             break;
 
-            case "left": GameModule.moveSolid($el, $el.gamePosX-2, $el.gamePosY);
+            case "left": GameModule.moveSolid($el, $el.gamePosX-1, $el.gamePosY);
             break;
 
-            case "right": GameModule.moveSolid($el, $el.gamePosX+2, $el.gamePosY);
+            case "right": GameModule.moveSolid($el, $el.gamePosX+1, $el.gamePosY);
             break;
 
             default: return;
