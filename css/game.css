@@ -113,17 +113,31 @@ a {
    cursor: url("../img/game/cursors/left_ptr.cur"), default;
 }
 
-.npc {
-   cursor: url("../img/game/cursors/pointing_hand.cur"), pointer;
-   z-index: 20;
-   box-sizing: content-box;
+#overlay {
+   width: 768px;
+   height: 384px;
+   z-index: 100;
+   position: absolute;
+   top: 0;
+   left: 0;
 }
 
-#grass {
-   width: 768px;
-   height: 112px;
+#message {
+   width: 100px;
+   height: 48px;
+   font-size: 10px;
+   line-height: 11px;
+   padding: 7px 7px 20px 7px;
+   z-index: 1000;
+   background: url("../img/game/speechBubble.png");
+   display: none;
    position: absolute;
-   background: url('../img/game/sprites/grass.png');
+}
+
+.npc {
+   cursor: url("../img/game/cursors/pointing_hand.cur"), pointer;
+   z-index: 101;
+   box-sizing: content-box;
 }
 
 #mainChar {
@@ -132,6 +146,7 @@ a {
    background-color: white;
    position: absolute;
    background: url('../img/game/sprites/kirito.png') 0 0;
+   z-index: 20;
 }
 
 #asuna {
@@ -140,13 +155,4 @@ a {
    background-color: white;
    position: absolute;
    background: url('../img/game/gifs/asuna2.gif') 0 0;
-}
-
-#tree {
-   width: 128px;
-   height: 128px;
-   position: absolute;
-   background: url('../img/game/tree/tree2.png') 0 0;
-   background-size: auto 128px;
-   z-index: 10;
 }

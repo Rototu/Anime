@@ -56,10 +56,11 @@ var MainModule = (function() {
 
       stringifyMap: function() {
 
-         var mapString = `window.myLevelArray = [`;
-         for(i=0; i < 1152; i++) {
+         var mapString = "window.myLevelArray = [\n";
+         for(var i = 0; i < 1152; i++) {
+            if(i % 48 == 0 && i < 1150 && i > 1) mapString += "\n";
             if(i < 1151) mapString += (myMap[i] + ", ");
-            if(i == 1151 ) mapString += (myMap[i] + `];`);
+            if(i == 1151) mapString += (myMap[i] + "\n];");
          }
          MainModule.createFileAndDownload(mapString);
 

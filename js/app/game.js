@@ -5,6 +5,7 @@ var GameModule = (function() {
    var $mainChar = $("#mainChar");
    var playerMoving;
    var $solids = $(".solids");
+   var speechBubble = [];
 
    // char control vars
    var playerMoveOptions = { queue: true, duration: 1, delay: 0, easing: "linear" },
@@ -20,10 +21,6 @@ var GameModule = (function() {
    return {
 
       init: function() {
-
-         // parse level1
-         var myData = window.myLevelArray;
-         console.log(myData);
 
          // enable char controls after page is loaded
          controlsEnabled = true;
@@ -41,7 +38,7 @@ var GameModule = (function() {
          }
 
          // set properties for 2D array
-         myMap.setwidth(47);
+         myMap.setwidth(48);
 
          // start game
          GameModule.frame1();
@@ -61,12 +58,8 @@ var GameModule = (function() {
             // test if mainChar is near clicked npc
             var dist = GameModule.getDistanceBetweenElements($(this), $mainChar);
             if(dist <= ($(this).width() / 2 + 16)) {
-
+               GameModule.showNPCBubble($(this));
             } else {
-               // get JSON level
-               $.getJSON("scene.json", function(json) {
-                  console.log(json); // this will show the info it in firebug console
-               });
 
             }
 
@@ -76,20 +69,40 @@ var GameModule = (function() {
 
       frame1: function() {
 
+         // parse level1
+         var myData = window.myLevel1Array;
+         for(var i = 0; i < 1152; i++) {
+            myMap[i] = myData[i];
+         }
+
          // get npc
          $asuna = $("#asuna");
-
-         // set tree size options
-         var treeSize = {width: 48, height: 32, x: 38, y: 12};
+         var string1 = "I've lost my sword...";
+         var string2 = "Can you find it for me?";
+         var string3 = "Take the boat to the city!^500";
+         speechBubble = [string1, string2, string3];
 
          // elements pos init
-         GameModule.setSolidPos($mainChar, 8, 12, -1);
-         GameModule.setSolidPos($asuna, 36, 12, 2);
-         GameModule.setSolidPos($("#tree"), 35, 6, 1, treeSize);
-         GameModule.setSolidPos($("#grass"), 0, 17, 1);
+         $("#overlay").prop("src", "img/game/levels/level1Overlay.png")
+         GameModule.setSolidPos($mainChar, 2, 10, -1);
+         GameModule.setSolidPos($asuna, 26, 14, 2);
 
          // show elements
          $(".frame1").show();
+
+      },
+
+      showNPCBubble: function($el) {
+
+         var top = $el.position().top - 48;
+         var left = $el.position().left + ($el.width() / 2) - 50;
+         $("#message").css({top: top, left: left}).show().typed({
+            strings: speechBubble,
+            typeSpeed: 10,
+            callback: function() {
+               $("#message").hide();
+            }
+         });
 
       },
 
@@ -248,7 +261,7 @@ var GameModule = (function() {
 
       },
 
-      animateCharPos: function($el, x, y, val) {
+      animateCharPos: function($el, x, y, val, duration) {
 
          // verifiy if in map boundaries
          if(x>=0 && y>=0 && x<48 && y<24) {
@@ -258,14 +271,14 @@ var GameModule = (function() {
             $el.gamePosY = y;
 
             // set pos on screen
-            var options = {queue: true, duration: 330, delay: 0, easing: "linear", done: function() {
+            var options = {queue: true, duration: duration, delay: 0, easing: "linear", done: function() {
                listeningToKeyPress = true;
-               if(!playerMoving) {
-                  mainCharSpriteAnimating = false;
-                  GameModule.disableSprite($el);
-                  $el.clearQueue();
-                  $el.stop();
-               }
+               setTimeout(function() {
+                  if(!playerMoving) {
+                     mainCharSpriteAnimating = false;
+                     GameModule.disableSprite($el);
+                  }
+               }, 100);
             }};
             $el.animate({ left: x*16, top: y*16 }, options);
 
@@ -304,7 +317,9 @@ var GameModule = (function() {
             var h = $el.height() / 16;
             for(var i=y; i<y+h; i++) {
                for(var j=x; j<x+w; j++) {
-                  if(myMap.get(i,j) > 0) return myMap.get(i,j);
+                  if(myMap.get(i,j) > 0) {
+                     return myMap.get(i,j);
+                  }
                }
             }
             return 0;
@@ -316,15 +331,15 @@ var GameModule = (function() {
       moveSolid: function($el, x, y) {
 
          // test if target position empty
-         if(GameModule.testPosition($el, x, y) === 0) {
+         if(GameModule.testPosition($el, x, y) == 0) {
             GameModule.emptySolidPos($el);
-            GameModule.animateCharPos($el, x, y, -1);
+            GameModule.animateCharPos($el, x, y, -1, 250);
          } else {
             listeningToKeyPress = true;
             mainCharSpriteAnimating = false;
-            GameModule.disableSprite($el);
             $el.clearQueue();
             $el.stop();
+            GameModule.disableSprite($el);
          }
 
       },
