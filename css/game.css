@@ -15,9 +15,9 @@ html {
 }
 
 body {
-  background: black url("../img/game/kirito.jpg");
-  background-position: center;
+  background: white url("../img/game/kirito.jpg");
   background-size: cover;
+  background-position: center;
   position: absolute;
   margin: 0;
   top: 0;
@@ -50,6 +50,30 @@ a {
   -ms-user-select: none;       /* IE/Edge */
   user-select: none;           /* non-prefixed version, currently
   not supported by any browser */
+}
+
+/* typed cursor */
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
 }
 
 /* game creator elements */
@@ -108,9 +132,28 @@ a {
    position: fixed;
    top: calc(50vh - 192px);
    left: calc(50vw - 384px);
-   border: solid white 1px;
+   /*border: solid white 1px;*/
    overflow: hidden;
    cursor: url("../img/game/cursors/left_ptr.cur"), default;
+}
+
+#intro {
+   font-family: ‘Lucida Console’, Monaco, monospace;
+   font-size: 18px;
+   text-align: left;
+   color: white;
+   z-index: 1000;
+   background-color: black;
+   /*background: url("../img/game/levels/intro.png");*/
+   background-size: cover;
+   border: solid white 1px;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   padding: 10px;
+}
+
+#introText {
 }
 
 #overlay {
@@ -134,7 +177,8 @@ a {
    position: absolute;
 }
 
-.npc {
+.npc, .exit{
+   position: absolute;
    cursor: url("../img/game/cursors/pointing_hand.cur"), pointer;
    z-index: 101;
    box-sizing: content-box;
@@ -149,10 +193,23 @@ a {
    z-index: 20;
 }
 
+#boat {
+   opacity: 0;
+}
+
 #asuna {
    width: 32px;
    height: 32px;
    background-color: white;
    position: absolute;
    background: url('../img/game/gifs/asuna2.gif') 0 0;
+}
+
+#asuna:hover::after {
+   font-size: 8px;
+   content: url('../img/game/greenCursor.png');
+   display: block;
+   position: absolute;
+   top: -18px;
+   left: 8px;
 }

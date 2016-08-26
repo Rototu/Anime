@@ -3,6 +3,7 @@ var GameModule = (function() {
    // global vars
    var controlsEnabled = false;
    var $mainChar = $("#mainChar");
+   $mainChar.currentFrame = 0;
    var playerMoving;
    var $solids = $(".solids");
    var speechBubble = [];
@@ -41,7 +42,7 @@ var GameModule = (function() {
          myMap.setwidth(48);
 
          // start game
-         GameModule.frame1();
+         GameModule.intro();
 
       },
 
@@ -65,6 +66,37 @@ var GameModule = (function() {
 
          });
 
+         // exit click handler
+         $("#boat").click(function() {
+
+            // test if mainChar is near clicked npc
+            var dist = GameModule.getDistanceBetweenElements($(this), $mainChar);
+            if(dist <= ($(this).width() / 2)) {
+               GameModule.frame2();
+            } else {
+
+            }
+
+         });
+
+      },
+
+      intro: function() {
+
+         var introString = ["^1000 Bine ai venit în multiversul anime-urilor! ^1000 <br>" +
+         "Prin această lume poți naviga cu ajutorul săgeților de pe tastatură. ^1000 <br>" +
+         "Pentru a interacționa cu alte caractere sau obiecte, aproprie-te și fă click pe ele. ^1000 <br>" +
+         "Înainte de a intra în joc, selectează-ți caracterul și denumește-l! ^1000"];
+
+         $("#introText").typed({
+            strings: introString,
+            typeSpeed: 10,
+            callback: function() {
+
+            }
+         });
+         GameModule.frame1();
+
       },
 
       frame1: function() {
@@ -77,15 +109,16 @@ var GameModule = (function() {
 
          // get npc
          $asuna = $("#asuna");
-         var string1 = "I've lost my sword...";
-         var string2 = "Can you find it for me?";
-         var string3 = "Take the boat to the city!^500";
+         var string1 = "Mi-am pierdut sabia...";
+         var string2 = "Poți să o cauți pentru mine?";
+         var string3 = "Ia barca spre sat!^500";
          speechBubble = [string1, string2, string3];
 
          // elements pos init
          $("#overlay").prop("src", "img/game/levels/level1Overlay.png")
          GameModule.setSolidPos($mainChar, 2, 10, -1);
          GameModule.setSolidPos($asuna, 26, 14, 2);
+         $("#boat").css({left: 26*16, top: 20*16});
 
          // show elements
          $(".frame1").show();
@@ -134,23 +167,20 @@ var GameModule = (function() {
 
       animateSprite: function($el, spriteWidth, spriteHeight, numberOfFrames, refreshRate) {
 
-         // frame id for sprite
-         var currentFrame = 0;
-
          // frameSelector
          var frameSelect = function() {
-            if(currentFrame < numberOfFrames) {
-               currentFrame++;
+            if($el.currentFrame < numberOfFrames) {
+               $el.currentFrame++;
             }
-            if(currentFrame == numberOfFrames) {
-               currentFrame = 0;
+            if($el.currentFrame == numberOfFrames) {
+               $el.currentFrame = 0;
             }
          };
 
          // animate frame function
          var animateSprite = function(){
             frameSelect();
-            $el.css("background-position", (-currentFrame)*spriteWidth + "px " + (-$el.spriteLine)*spriteHeight + "px" );
+            $el.css("background-position", (-$el.currentFrame)*spriteWidth + "px " + (-$el.spriteLine)*spriteHeight + "px" );
          };
 
          // animation function
@@ -273,12 +303,8 @@ var GameModule = (function() {
             // set pos on screen
             var options = {queue: true, duration: duration, delay: 0, easing: "linear", done: function() {
                listeningToKeyPress = true;
-               setTimeout(function() {
-                  if(!playerMoving) {
-                     mainCharSpriteAnimating = false;
-                     GameModule.disableSprite($el);
-                  }
-               }, 100);
+               mainCharSpriteAnimating = false;
+               GameModule.disableSprite($el);
             }};
             $el.animate({ left: x*16, top: y*16 }, options);
 
@@ -333,7 +359,7 @@ var GameModule = (function() {
          // test if target position empty
          if(GameModule.testPosition($el, x, y) == 0) {
             GameModule.emptySolidPos($el);
-            GameModule.animateCharPos($el, x, y, -1, 250);
+            GameModule.animateCharPos($el, x, y, -1, 300);
          } else {
             listeningToKeyPress = true;
             mainCharSpriteAnimating = false;
@@ -413,7 +439,7 @@ var GameModule = (function() {
                // switch sprite orientation and animate;
                GameModule.changeSpriteOrientation($mainChar, movementOrientation);
                if(!mainCharSpriteAnimating) {
-                  GameModule.animateSprite($mainChar, 32, 32, 3, 120);
+                  GameModule.animateSprite($mainChar, 32, 32, 3, 100);
                   mainCharSpriteAnimating = true;
                }
                GameModule.moveCharacter(movementOrientation);
