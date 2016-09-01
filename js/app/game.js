@@ -6,7 +6,6 @@ var GameModule = (function() {
    $mainChar.currentFrame = 0;
    var playerMoving;
    var $solids = $(".solids");
-   var speechBubble = [];
 
    // char control vars
    var playerMoveOptions = { queue: true, duration: 1, delay: 0, easing: "linear" },
@@ -41,7 +40,7 @@ var GameModule = (function() {
          // set properties for 2D array
          myMap.setwidth(48);
 
-         // start game
+         // start intro
          GameModule.intro();
 
       },
@@ -59,7 +58,7 @@ var GameModule = (function() {
             // test if mainChar is near clicked npc
             var dist = GameModule.getDistanceBetweenElements($(this), $mainChar);
             if(dist <= ($(this).width() / 2 + 16)) {
-               GameModule.showNPCBubble($(this));
+               GameModule.showNPCBubble($(this), $("#asuna").strings1);
             } else {
 
             }
@@ -83,18 +82,8 @@ var GameModule = (function() {
 
       intro: function() {
 
-         var introString = ["^1000 Bine ai venit în multiversul anime-urilor! ^1000 <br>" +
-         "Prin această lume poți naviga cu ajutorul săgeților de pe tastatură. ^1000 <br>" +
-         "Pentru a interacționa cu alte caractere sau obiecte, aproprie-te și fă click pe ele. ^1000 <br>" +
-         "Înainte de a intra în joc, selectează-ți caracterul și denumește-l! ^1000"];
-
-         $("#introText").typed({
-            strings: introString,
-            typeSpeed: 10,
-            callback: function() {
-
-            }
-         });
+         // hide intro
+         $("#intro").fadeOut();
          GameModule.frame1();
 
       },
@@ -107,12 +96,12 @@ var GameModule = (function() {
             myMap[i] = myData[i];
          }
 
-         // get npc
+         // set asuna NPC
          $asuna = $("#asuna");
          var string1 = "Mi-am pierdut sabia...";
          var string2 = "Poți să o cauți pentru mine?";
          var string3 = "Ia barca spre sat!^500";
-         speechBubble = [string1, string2, string3];
+         $asuna.strings1 = [string1, string2, string3];
 
          // elements pos init
          $("#overlay").prop("src", "img/game/levels/level1Overlay.png")
@@ -123,14 +112,21 @@ var GameModule = (function() {
          // show elements
          $(".frame1").show();
 
+         // indication
+         var myString = ["Uite-o pe Asuna, prietena lui Kirito! ^200", "Înainte să plec de aici, ar trebui să vorbesc cu ea... ^500"];
+         GameModule.showNPCBubble($mainChar, myString);
+
+         // enable main char movement
+         GameModule.mainCharControls();
+
       },
 
-      showNPCBubble: function($el) {
+      showNPCBubble: function($el, stringArray) {
 
          var top = $el.position().top - 48;
          var left = $el.position().left + ($el.width() / 2) - 50;
          $("#message").css({top: top, left: left}).show().typed({
-            strings: speechBubble,
+            strings: stringArray,
             typeSpeed: 10,
             callback: function() {
                $("#message").hide();
@@ -300,12 +296,18 @@ var GameModule = (function() {
             $el.gamePosX = x;
             $el.gamePosY = y;
 
-            // set pos on screen
+            // animate options
             var options = {queue: true, duration: duration, delay: 0, easing: "linear", done: function() {
                listeningToKeyPress = true;
                mainCharSpriteAnimating = false;
                GameModule.disableSprite($el);
             }};
+
+            // animate
+            if(!mainCharSpriteAnimating) {
+               GameModule.animateSprite($mainChar, 32, 32, 3, 125);
+               mainCharSpriteAnimating = true;
+            }
             $el.animate({ left: x*16, top: y*16 }, options);
 
             // set pos in 2D array
@@ -359,13 +361,12 @@ var GameModule = (function() {
          // test if target position empty
          if(GameModule.testPosition($el, x, y) == 0) {
             GameModule.emptySolidPos($el);
-            GameModule.animateCharPos($el, x, y, -1, 300);
+            GameModule.animateCharPos($el, x, y, -1, 400);
          } else {
             listeningToKeyPress = true;
             mainCharSpriteAnimating = false;
             $el.clearQueue();
             $el.stop();
-            GameModule.disableSprite($el);
          }
 
       },
@@ -438,10 +439,6 @@ var GameModule = (function() {
 
                // switch sprite orientation and animate;
                GameModule.changeSpriteOrientation($mainChar, movementOrientation);
-               if(!mainCharSpriteAnimating) {
-                  GameModule.animateSprite($mainChar, 32, 32, 3, 100);
-                  mainCharSpriteAnimating = true;
-               }
                GameModule.moveCharacter(movementOrientation);
 
             }
@@ -453,6 +450,9 @@ var GameModule = (function() {
             // test if released key coincides with the first pressed key
             if(currentKey == e.which && controlsEnabled) {
                playerMoving = false;
+               if(mainCharSpriteAnimating == false) {
+                  GameModule.disableSprite($mainChar);
+               }
             }
 
          });
@@ -464,5 +464,4 @@ var GameModule = (function() {
 $(document).on("ready", function() {
    GameModule.init(); // init game vars
    GameModule.bindHandlers(); // bind game handlers
-   GameModule.mainCharControls(); // enable main char movement
 });

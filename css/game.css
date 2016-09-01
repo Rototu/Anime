@@ -52,30 +52,6 @@ a {
   not supported by any browser */
 }
 
-/* typed cursor */
-
-.typed-cursor{
-    opacity: 1;
-    -webkit-animation: blink 0.7s infinite;
-    -moz-animation: blink 0.7s infinite;
-    animation: blink 0.7s infinite;
-}
-@keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
-    100% { opacity:1; }
-}
-@-webkit-keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
-    100% { opacity:1; }
-}
-@-moz-keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
-    100% { opacity:1; }
-}
-
 /* game creator elements */
 
 #gameCreator {
@@ -138,9 +114,8 @@ a {
 }
 
 #intro {
-   font-family: ‘Lucida Console’, Monaco, monospace;
+   text-align: center;
    font-size: 18px;
-   text-align: left;
    color: white;
    z-index: 1000;
    background-color: black;
@@ -150,10 +125,75 @@ a {
    width: 100%;
    height: 100%;
    position: absolute;
-   padding: 10px;
+   padding: 20px;
 }
 
-#introText {
+.typed-cursor{
+   display: none;
+}
+
+#charSelector {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+#charSelector img {
+   display: none;
+   position: absolute;
+   box-sizing: border-box;
+   cursor: pointer;
+}
+
+.genderSymbol {
+   height: 200px;
+   bottom: 50px;
+}
+
+#maleSymbol {
+   right: 150px;
+}
+
+#femaleSymbol {
+   left: 150px;
+}
+
+#kiritoChar {
+   height: 200px;
+   left: 250px;
+   bottom: 0;
+}
+
+#yunoChar {
+   height: 270px;
+   left: 270px;
+   bottom: 0;
+}
+
+#erzaChar {
+   height: 340px;
+   left: 20px;
+   bottom: 0;
+}
+
+#asukaChar {
+   height: 360px;
+   left: 500px;
+   bottom: 0;
+}
+
+#saitamaChar {
+   height: 300px;
+   left: 10px;
+   bottom: 0;
+}
+
+#lChar {
+   height: 180px;
+   right: 0;
+   bottom: 0;
 }
 
 #overlay {
@@ -166,13 +206,14 @@ a {
 }
 
 #message {
-   width: 100px;
-   height: 48px;
+   width: 125px;
+   height: 60px;
    font-size: 10px;
    line-height: 11px;
    padding: 7px 7px 20px 7px;
    z-index: 1000;
    background: url("../img/game/speechBubble.png");
+   background-size: cover;
    display: none;
    position: absolute;
 }
@@ -189,7 +230,7 @@ a {
    height: 32px;
    background-color: white;
    position: absolute;
-   background: url('../img/game/sprites/kirito.png') 0 0;
+   background: url('../img/game/sprites/zero.png') 0 0;
    z-index: 20;
 }
 
