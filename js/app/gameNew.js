@@ -1,19 +1,106 @@
-use strict;
+"use strict";
 
-const GameModule = ( function () {
+let GameModule = ( function () {
 
    let myMap = new Int8Array( 1152 );
+
    let $player = $( "#mainChar" );
    let $solids = $( ".solids" );
+   let images = {};
 
+   let canvas = document.getElementById( "game-canvas" );
+   let context = canvas.getContext( "2d" );
+   context.imageSmoothingEnabled = false;
+   context.mozImageSmoothingEnabled = false;
+
+   let start = null;
+   let shouldAnimate = true;
+   let spriteAnimate = true;
+   let pressedKey = null;
+
+   let playerX = 0;
+   let playerY = 0;
 
    return {
+
+      test: () => {
+
+         GameModule.addCanvasImageObj( "level1", "img/game/levels/level1.png", 384, 768 );
+         GameModule.addCanvasImageObj( "kirito", "img/game/sprites/zero.png", 32, 32, 3 );
+         GameModule.setCanvasBackground( images[ "level1" ] );
+         GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 16 * 10 );
+         GameModule.animateSprite( images[ "kirito" ] );
+         GameModule.playerControls();
+
+      },
 
       init: () => {
 
       },
 
-      charControls: () => {
+      playerControls: () => {
+
+         $( document )
+            .keydown( ( key ) => {
+
+               switch ( key.which ) {
+
+               case 37:
+                  if ( pressedKey == null ) {
+                     window.requestAnimationFrame( GameModule.timer );
+                     GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                     playerX = images[ "kirito" ].xPos;
+                     playerY = images[ "kirito" ].yPos;
+                  }
+                  pressedKey = 37;
+                  break;
+
+               case 38:
+                  if ( pressedKey == null ) {
+                     window.requestAnimationFrame( GameModule.timer );
+                     GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
+                     playerX = images[ "kirito" ].xPos;
+                     playerY = images[ "kirito" ].yPos;
+                  }
+                  pressedKey = 38;
+                  break;
+
+               case 39:
+                  if ( pressedKey == null ) {
+                     window.requestAnimationFrame( GameModule.timer );
+                     GameModule.changeSpriteOrientation( images[ "kirito" ], "right" );
+                     playerX = images[ "kirito" ].xPos;
+                     playerY = images[ "kirito" ].yPos;
+                  }
+                  pressedKey = 39;
+                  break;
+
+               case 40:
+                  if ( pressedKey == null ) {
+                     window.requestAnimationFrame( GameModule.timer );
+                     GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
+                     playerX = images[ "kirito" ].xPos;
+                     playerY = images[ "kirito" ].yPos;
+                  }
+                  pressedKey = 40;
+                  break;
+
+               default:
+                  return;
+
+               }
+
+            } );
+
+         // $( document )
+         //    .keyup( ( key ) => {
+         //
+         //       // test if released key coincides with the first pressed key
+         //       if ( pressedKey == key.which ) {
+         //          pressedKey = null;
+         //       }
+         //
+         //    } );
 
       },
 
@@ -25,32 +112,60 @@ const GameModule = ( function () {
 
       },
 
-      animateSprite: () => {
+      animateSprite: ( spriteObj ) => {
+
+         GameModule.setSpriteFrame( spriteObj );
+         GameModule.getNextSpriteFrame( spriteObj );
 
       },
 
-      timer: () => {
+      timer: ( timeStamp ) => {
 
-      },
+         if ( !start ) {
+            start = timeStamp;
+         }
+         let progress = timeStamp - start;
 
-      getNextSpriteFrame: ( currentFrame, numberOfFrames ) => {
+         if ( progress * 16 / 400 <= 16 ) {
 
-         if ( currentFrame < numberOfFrames - 1 ) {
-            return currentFrame + 1;
+            GameModule.setCanvasBackground( images[ "level1" ] );
+
+            if ( progress % 200 <= 40 && spriteAnimate ) {
+               GameModule.animateSprite( images[ "kirito" ] );
+               spriteAnimate = false;
+            }
+
+            if ( progress % 200 >= 50 && !spriteAnimate ) {
+               spriteAnimate = true;
+            }
+
+            GameModule.moveSprite( images[ "kirito" ], Math.min( progress * 16 / 400, 16 ) );
+            GameModule.setSpriteFrame( images[ "kirito" ] );
+            window.requestAnimationFrame( GameModule.timer );
+
+         } else {
+            start = null;
+            pressedKey = null;
          }
 
-         if ( currentFrame == numberOfFrames - 1 ) {
-            return 0;
+      },
+
+      getNextSpriteFrame: ( spriteObj ) => {
+
+         if ( spriteObj.currentFrame < spriteObj.framesNumber - 1 ) {
+            spriteObj.currentFrame += 1;
+         } else {
+            spriteObj.currentFrame = 0;
          }
 
       },
 
-      setSpriteFrame: ( spriteObj, frame, width, height, orientation ) => {
+      setSpriteFrame: ( spriteObj ) => {
 
-         let width = spriteObj.width();
-         let height = spriteObj.height();
+         let xPosImage = spriteObj.currentFrame * spriteObj.width;
+         let yPosImage = spriteObj.orientation * spriteObj.height;
 
-         spriteObj.css( "background-position", `${( -frame ) * width}px ${( -orientation ) * height}px` );
+         GameModule.drawCanvasImageObj( spriteObj, xPosImage, yPosImage );
 
       },
 
@@ -77,36 +192,61 @@ const GameModule = ( function () {
          );
       },
 
-      startSpriteAnimation: () => {
+      moveSprite: ( spriteObj, dist ) => {
 
-      },
+         dist = parseInt( dist );
 
-      disableSprite: () => {
+         switch ( spriteObj.orientation ) {
 
-      },
-
-      changeSpriteOrientation: ( spriteObj, orientation, frame ) => {
-
-         switch ( orientation ) {
-         case "up":
-            setSpriteFrame( spriteObj, frame, width, height, 3 );
+         case 0:
+            spriteObj.yPos = playerY + dist;
             break;
 
-         case "down":
-            setSpriteFrame( spriteObj, frame, width, height, 0 );
+         case 1:
+            spriteObj.xPos = playerX - dist;
             break;
 
-         case "left":
-            setSpriteFrame( spriteObj, frame, width, height, 1 );
+         case 2:
+            spriteObj.xPos = playerX + dist;
             break;
 
-         case "right":
-            setSpriteFrame( spriteObj, frame, width, height, 2 );
+         case 3:
+            spriteObj.yPos = playerY - dist;
             break;
 
          default:
             return;
+
          }
+
+      },
+
+      changeSpriteOrientation: ( spriteObj, orientation ) => {
+
+         switch ( orientation ) {
+
+         case "up":
+            spriteObj.orientation = 3;
+            break;
+
+         case "down":
+            spriteObj.orientation = 0;
+            break;
+
+         case "left":
+            spriteObj.orientation = 1;
+            break;
+
+         case "right":
+            spriteObj.orientation = 2;
+            break;
+
+         default:
+            return;
+
+         }
+
+         GameModule.animateSprite( spriteObj );
 
       },
 
@@ -256,6 +396,57 @@ const GameModule = ( function () {
 
       },
 
+      setCanvasImageObjPos: ( obj, xPos, yPos ) => {
+
+         obj.xPos = xPos;
+         obj.yPos = yPos;
+
+      },
+
+      setCanvasBackground: ( obj ) => {
+
+         GameModule.drawCanvasImageObj( obj, 0, 0, 0, 0 );
+
+      },
+
+      addCanvasImageObj: ( name, imageUrl, objHeight, objWidth, frameTotal ) => {
+
+         let image = new Image();
+         image.src = imageUrl;
+
+         let obj = {
+            image,
+            name,
+            height: objHeight,
+            width: objWidth,
+            loaded: false,
+            xPos: 0,
+            yPos: 0
+         };
+
+         if ( frameTotal ) {
+            obj.framesNumber = frameTotal;
+            obj.currentFrame = 0;
+            obj.orientation = 0;
+         }
+
+         images[ name ] = obj;
+
+      },
+
+      drawCanvasImageObj: ( obj, xPosImage, yPosImage ) => {
+
+         if ( obj.loaded == false ) {
+            obj.image.addEventListener( "load", () => {
+               context.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+            }, false );
+            obj.loaded = true;
+         } else {
+            context.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+         }
+
+      },
+
       moveSolidToDirection: () => {
 
       },
@@ -277,5 +468,5 @@ const GameModule = ( function () {
 
 $( "html" )
    .imagesLoaded( function () {
-
+      GameModule.test();
    } );

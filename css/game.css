@@ -106,6 +106,24 @@ a {
 }
 
 
+/*newGame CSS*/
+
+#game {
+    border: solid black 1px;
+    height: 384px;
+    width: 768px;
+    position: fixed;
+    top: calc(50vh - 192px);
+    left: calc(50vw - 384px);
+    overflow: hidden;
+    cursor: url("../img/game/cursors/left_ptr.cur"), default;
+}
+
+#game-canvas {
+    background-color: lightgray;
+}
+
+
 /* game elements */
 
 #gameBox {
