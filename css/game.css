@@ -1,60 +1,60 @@
 * {
-    box-sizing: border-box;
+   box-sizing: border-box;
 }
 
 @font-face {
-    font-family: pixelFont;
-    src: url(../minecraftia/Minecraftia-Regular.ttf);
+   font-family: pixelFont;
+   src: url(../minecraftia/Minecraftia-Regular.ttf);
 }
 
 html {
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow-x: hidden;
+   margin: 0;
+   width: 100vw;
+   height: 100vh;
+   overflow-x: hidden;
 }
 
 body {
-    background: white url("../img/game/kirito.jpg");
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    margin: 0;
-    top: 0;
-    left: 0;
-    font-family: pixelFont;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+   background: white url("../img/game/kirito.jpg");
+   background-size: cover;
+   background-position: center;
+   position: absolute;
+   margin: 0;
+   top: 0;
+   left: 0;
+   font-family: pixelFont;
+   height: 100%;
+   width: 100%;
+   overflow: hidden;
 }
 
 .center {
-    text-align: center;
+   text-align: center;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+   color: inherit;
+   text-decoration: none;
 }
 
 .solid {
-    display: none;
+   display: none;
 }
 
 .noselect {
-    cursor: default;
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Chrome/Safari/Opera */
-    -khtml-user-select: none;
-    /* Konqueror */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE/Edge */
-    user-select: none;
-    /* non-prefixed version, currently
+   cursor: default;
+   -webkit-touch-callout: none;
+   /* iOS Safari */
+   -webkit-user-select: none;
+   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;
+   /* Konqueror */
+   -moz-user-select: none;
+   /* Firefox */
+   -ms-user-select: none;
+   /* IE/Edge */
+   user-select: none;
+   /* non-prefixed version, currently
   not supported by any browser */
 }
 
@@ -62,222 +62,235 @@ a {
 /* game creator elements */
 
 #gameCreator {
-    background-color: white;
-    height: 384px;
-    width: 768px;
-    position: fixed;
-    top: calc(50vh - 192px);
-    left: calc(50vw - 384px);
-    overflow: hidden;
-    box-sizing: border-box;
-    padding: 0;
+   background-color: white;
+   height: 384px;
+   width: 768px;
+   position: fixed;
+   top: calc(50vh - 192px);
+   left: calc(50vw - 384px);
+   overflow: hidden;
+   box-sizing: border-box;
+   padding: 0;
 }
 
 #selectedLevel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 384px;
-    width: 768px;
-    z-index: 10;
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 384px;
+   width: 768px;
+   z-index: 10;
 }
 
 .bitBox {
-    z-index: 100;
-    width: 16px;
-    height: 16px;
-    position: relative;
-    float: left;
-    box-sizing: border-box;
-    border: solid black 1px;
+   z-index: 100;
+   width: 16px;
+   height: 16px;
+   position: relative;
+   float: left;
+   box-sizing: border-box;
+   border: solid black 1px;
 }
 
 .bitBox:hover {
-    border-color: white;
+   border-color: white;
 }
 
 .bitSelected {
-    background-color: rgba(255, 0, 0, 0.5);
+   background-color: rgba(255, 0, 0, 0.5);
 }
 
 #levelSelector {
-    background-color: white;
-    display: inline-block;
+   background-color: white;
+   display: inline-block;
 }
 
 
 /*newGame CSS*/
 
 #game {
-    border: solid black 1px;
-    height: 384px;
-    width: 768px;
-    position: fixed;
-    top: calc(50vh - 192px);
-    left: calc(50vw - 384px);
-    overflow: hidden;
-    cursor: url("../img/game/cursors/left_ptr.cur"), default;
+   border: solid black 1px;
+   height: 384px;
+   width: 768px;
+   position: fixed;
+   top: calc(50vh - 192px);
+   left: calc(50vw - 384px);
+   overflow: hidden;
+   cursor: url("../img/game/cursors/left_ptr.cur"), default;
 }
 
-#game-canvas {
-    background-color: lightgray;
+#background-canvas {
+   position: absolute;
+   background-color: rgba(0, 0, 0, 1);
+   z-index: 1;
+}
+
+#character-canvas {
+   position: absolute;
+   z-index: 2;
+}
+
+#foreground-canvas {
+   position: absolute;
+   pointer-events: none;
+   z-index: 3;
 }
 
 
 /* game elements */
 
 #gameBox {
-    background: url("../img/game/levels/level1.png");
-    background-color: white;
-    height: 384px;
-    width: 768px;
-    position: fixed;
-    top: calc(50vh - 192px);
-    left: calc(50vw - 384px);
-    /*border: solid white 1px;*/
-    overflow: hidden;
-    cursor: url("../img/game/cursors/left_ptr.cur"), default;
+   background: url("../img/game/levels/level1.png");
+   background-color: white;
+   height: 384px;
+   width: 768px;
+   position: fixed;
+   top: calc(50vh - 192px);
+   left: calc(50vw - 384px);
+   /*border: solid white 1px;*/
+   overflow: hidden;
+   cursor: url("../img/game/cursors/left_ptr.cur"), default;
 }
 
 #intro {
-    text-align: center;
-    font-size: 18px;
-    color: white;
-    z-index: 1000;
-    background-color: black;
-    /*background: url("../img/game/levels/intro.png");*/
-    background-size: cover;
-    border: solid white 1px;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    padding: 20px;
+   text-align: center;
+   font-size: 18px;
+   color: white;
+   z-index: 1000;
+   background-color: black;
+   /*background: url("../img/game/levels/intro.png");*/
+   background-size: cover;
+   border: solid white 1px;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   padding: 20px;
 }
 
 .typed-cursor {
-    display: none;
+   display: none;
 }
 
 #charSelector {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
 }
 
 #charSelector img {
-    display: none;
-    position: absolute;
-    box-sizing: border-box;
-    cursor: pointer;
+   display: none;
+   position: absolute;
+   box-sizing: border-box;
+   cursor: pointer;
 }
 
 .genderSymbol {
-    height: 200px;
-    bottom: 50px;
+   height: 200px;
+   bottom: 50px;
 }
 
 #maleSymbol {
-    right: 150px;
+   right: 150px;
 }
 
 #femaleSymbol {
-    left: 150px;
+   left: 150px;
 }
 
 #kiritoChar {
-    height: 200px;
-    left: 250px;
-    bottom: 0;
+   height: 200px;
+   left: 250px;
+   bottom: 0;
 }
 
 #yunoChar {
-    height: 270px;
-    left: 270px;
-    bottom: 0;
+   height: 270px;
+   left: 270px;
+   bottom: 0;
 }
 
 #erzaChar {
-    height: 340px;
-    left: 20px;
-    bottom: 0;
+   height: 340px;
+   left: 20px;
+   bottom: 0;
 }
 
 #asukaChar {
-    height: 360px;
-    left: 500px;
-    bottom: 0;
+   height: 360px;
+   left: 500px;
+   bottom: 0;
 }
 
 #saitamaChar {
-    height: 300px;
-    left: 10px;
-    bottom: 0;
+   height: 300px;
+   left: 10px;
+   bottom: 0;
 }
 
 #lChar {
-    height: 180px;
-    right: 0;
-    bottom: 0;
+   height: 180px;
+   right: 0;
+   bottom: 0;
 }
 
 #overlay {
-    width: 768px;
-    height: 384px;
-    z-index: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
+   width: 768px;
+   height: 384px;
+   z-index: 100;
+   position: absolute;
+   top: 0;
+   left: 0;
 }
 
 #message {
-    width: 125px;
-    height: 60px;
-    font-size: 10px;
-    line-height: 11px;
-    padding: 7px 7px 20px 7px;
-    z-index: 1000;
-    background: url("../img/game/speechBubble.png");
-    background-size: cover;
-    display: none;
-    position: absolute;
+   width: 125px;
+   height: 60px;
+   font-size: 10px;
+   line-height: 11px;
+   padding: 7px 7px 20px 7px;
+   z-index: 1000;
+   background: url("../img/game/speechBubble.png");
+   background-size: cover;
+   display: none;
+   position: absolute;
 }
 
 .npc,
 .exit {
-    position: absolute;
-    cursor: url("../img/game/cursors/pointing_hand.cur"), pointer;
-    z-index: 101;
-    box-sizing: content-box;
+   position: absolute;
+   cursor: url("../img/game/cursors/pointing_hand.cur"), pointer;
+   z-index: 101;
+   box-sizing: content-box;
 }
 
 #mainChar {
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    position: absolute;
-    background: url('../img/game/sprites/zero.png') 0 0;
-    z-index: 20;
+   width: 32px;
+   height: 32px;
+   background-color: white;
+   position: absolute;
+   background: url('../img/game/sprites/zero.png') 0 0;
+   z-index: 20;
 }
 
 #boat {
-    opacity: 0;
+   opacity: 0;
 }
 
 #asuna {
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    position: absolute;
-    background: url('../img/game/gifs/asuna2.gif') 0 0;
+   width: 32px;
+   height: 32px;
+   background-color: white;
+   position: absolute;
+   background: url('../img/game/gifs/asuna2.gif') 0 0;
 }
 
 #asuna:hover::after {
-    font-size: 8px;
-    content: url('../img/game/greenCursor.png');
-    display: block;
-    position: absolute;
-    top: -18px;
-    left: 8px;
+   font-size: 8px;
+   content: url('../img/game/greenCursor.png');
+   display: block;
+   position: absolute;
+   top: -18px;
+   left: 8px;
 }

@@ -1,22 +1,32 @@
 "use strict";
 
-let GameModule = ( function () {
+let GameModule = ( () => {
 
    let myMap = new Int8Array( 1152 );
 
-   let $player = $( "#mainChar" );
    let $solids = $( ".solids" );
+   let currentLevel = 1;
    let images = {};
 
-   let canvas = document.getElementById( "game-canvas" );
+   let canvas = document.getElementById( "character-canvas" );
    let context = canvas.getContext( "2d" );
    context.imageSmoothingEnabled = false;
    context.mozImageSmoothingEnabled = false;
 
+   let background = document.getElementById( "background-canvas" );
+   let backgroundContext = background.getContext( "2d" );
+   backgroundContext.imageSmoothingEnabled = false;
+   backgroundContext.mozImageSmoothingEnabled = false;
+
+   let foreground = document.getElementById( "foreground-canvas" );
+   let foregroundContext = foreground.getContext( "2d" );
+   foregroundContext.imageSmoothingEnabled = false;
+   foregroundContext.mozImageSmoothingEnabled = false;
+
    let start = null;
-   let shouldAnimate = true;
+   let shouldAnimate = false;
    let spriteAnimate = true;
-   let pressedKey = null;
+   let pressedKey = 0;
 
    let playerX = 0;
    let playerY = 0;
@@ -25,12 +35,24 @@ let GameModule = ( function () {
 
       test: () => {
 
-         GameModule.addCanvasImageObj( "level1", "img/game/levels/level1.png", 384, 768 );
-         GameModule.addCanvasImageObj( "kirito", "img/game/sprites/zero.png", 32, 32, 3 );
-         GameModule.setCanvasBackground( images[ "level1" ] );
-         GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 16 * 10 );
-         GameModule.animateSprite( images[ "kirito" ] );
+         GameModule.setLevelArrayPrototype();
+         GameModule.arrayTo2DLevel( currentLevel );
+
+         GameModule.imageInsertion();
+
+         GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+         GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
+
+         GameModule.setCanvasImageObjPos( images[ "naruto" ], 32, 160 );
+         GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
+         GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
+         GameModule.setSpriteFrame( images[ "naruto" ] );
+
+         playerX = 32;
+         playerY = 160;
+
          GameModule.playerControls();
+         window.requestAnimationFrame( GameModule.timer );
 
       },
 
@@ -38,69 +60,65 @@ let GameModule = ( function () {
 
       },
 
+      imageInsertion: () => {
+
+         GameModule.addCanvasImageObj( "background1", "img/game/levels/level1.png", 384, 768 );
+         GameModule.addCanvasImageObj( "foreground1", "img/game/levels/level1Overlay.png", 384, 768 );
+
+         GameModule.addCanvasImageObj( "naruto", "img/game/sprites/narutoS.png", 32, 21, 4 );
+         GameModule.addCanvasImageObj( "miyazaki", "img/game/sprites/miyazaki.png", 32, 32 );
+
+      },
+
       playerControls: () => {
+
+         let player = images[ "naruto" ];
 
          $( document )
             .keydown( ( key ) => {
 
-               switch ( key.which ) {
+               if ( pressedKey == 0 && shouldAnimate == false ) {
 
-               case 37:
-                  if ( pressedKey == null ) {
-                     window.requestAnimationFrame( GameModule.timer );
-                     GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
-                     playerX = images[ "kirito" ].xPos;
-                     playerY = images[ "kirito" ].yPos;
+                  switch ( key.which ) {
+
+                  case 37:
+                     GameModule.changeSpriteOrientation( player, "left" );
+                     pressedKey = 37;
+                     break;
+
+                  case 38:
+                     GameModule.changeSpriteOrientation( player, "up" );
+                     pressedKey = 38;
+                     break;
+
+                  case 39:
+                     GameModule.changeSpriteOrientation( player, "right" );
+                     pressedKey = 39;
+                     break;
+
+                  case 40:
+                     GameModule.changeSpriteOrientation( player, "down" );
+                     pressedKey = 40;
+                     break;
+
+                  default:
+                     return;
+
                   }
-                  pressedKey = 37;
-                  break;
-
-               case 38:
-                  if ( pressedKey == null ) {
-                     window.requestAnimationFrame( GameModule.timer );
-                     GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
-                     playerX = images[ "kirito" ].xPos;
-                     playerY = images[ "kirito" ].yPos;
-                  }
-                  pressedKey = 38;
-                  break;
-
-               case 39:
-                  if ( pressedKey == null ) {
-                     window.requestAnimationFrame( GameModule.timer );
-                     GameModule.changeSpriteOrientation( images[ "kirito" ], "right" );
-                     playerX = images[ "kirito" ].xPos;
-                     playerY = images[ "kirito" ].yPos;
-                  }
-                  pressedKey = 39;
-                  break;
-
-               case 40:
-                  if ( pressedKey == null ) {
-                     window.requestAnimationFrame( GameModule.timer );
-                     GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
-                     playerX = images[ "kirito" ].xPos;
-                     playerY = images[ "kirito" ].yPos;
-                  }
-                  pressedKey = 40;
-                  break;
-
-               default:
-                  return;
 
                }
 
             } );
 
-         // $( document )
-         //    .keyup( ( key ) => {
-         //
-         //       // test if released key coincides with the first pressed key
-         //       if ( pressedKey == key.which ) {
-         //          pressedKey = null;
-         //       }
-         //
-         //    } );
+         $( document )
+            .keyup( ( key ) => {
+
+               // test if released key coincides with the first pressed key
+               if ( key.which == 37 || key.which == 38 || key.which == 39 || key.which == 40 ) {
+                  pressedKey = 0;
+               }
+
+            } );
 
       },
 
@@ -112,41 +130,52 @@ let GameModule = ( function () {
 
       },
 
-      animateSprite: ( spriteObj ) => {
-
-         GameModule.setSpriteFrame( spriteObj );
-         GameModule.getNextSpriteFrame( spriteObj );
-
-      },
-
       timer: ( timeStamp ) => {
 
-         if ( !start ) {
-            start = timeStamp;
-         }
-         let progress = timeStamp - start;
+         let player = images[ "naruto" ];
 
-         if ( progress * 16 / 400 <= 16 ) {
+         if ( pressedKey || shouldAnimate ) {
 
-            GameModule.setCanvasBackground( images[ "level1" ] );
+            shouldAnimate = true;
 
-            if ( progress % 200 <= 40 && spriteAnimate ) {
-               GameModule.animateSprite( images[ "kirito" ] );
-               spriteAnimate = false;
+            if ( !start ) {
+               start = timeStamp;
             }
 
-            if ( progress % 200 >= 50 && !spriteAnimate ) {
-               spriteAnimate = true;
-            }
+            let progress = timeStamp - start;
 
-            GameModule.moveSprite( images[ "kirito" ], Math.min( progress * 16 / 400, 16 ) );
-            GameModule.setSpriteFrame( images[ "kirito" ] );
-            window.requestAnimationFrame( GameModule.timer );
+            if ( progress * 16 / 200 <= 16 ) {
+
+               if ( progress % 100 <= 45 && spriteAnimate ) {
+                  GameModule.getNextSpriteFrame( player );
+                  spriteAnimate = false;
+               }
+
+               if ( progress % 100 >= 50 && !spriteAnimate ) {
+                  spriteAnimate = true;
+               }
+
+               GameModule.moveSprite( player, Math.min( progress * 16 / 200, 16 ) );
+               context.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.setSpriteFrame( player );
+
+            } else {
+
+               GameModule.moveSprite( player, 16 );
+
+               playerX = 16 * parseInt( player.xPos / 16 );
+               playerY = 16 * parseInt( player.yPos / 16 );
+
+               start = null;
+               shouldAnimate = false;
+
+            }
 
          } else {
             start = null;
-            pressedKey = null;
          }
+
+         requestAnimationFrame( GameModule.timer )
 
       },
 
@@ -165,7 +194,7 @@ let GameModule = ( function () {
          let xPosImage = spriteObj.currentFrame * spriteObj.width;
          let yPosImage = spriteObj.orientation * spriteObj.height;
 
-         GameModule.drawCanvasImageObj( spriteObj, xPosImage, yPosImage );
+         GameModule.drawCanvasImageObj( spriteObj, xPosImage, yPosImage, context );
 
       },
 
@@ -194,24 +223,34 @@ let GameModule = ( function () {
 
       moveSprite: ( spriteObj, dist ) => {
 
+         let player = images[ "naruto" ];
+
          dist = parseInt( dist );
 
          switch ( spriteObj.orientation ) {
 
          case 0:
-            spriteObj.yPos = playerY + dist;
+            if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY + 16, 32, 32 ) ) {
+               spriteObj.yPos = playerY + dist;
+            }
             break;
 
          case 1:
-            spriteObj.xPos = playerX - dist;
+            if ( GameModule.testForFreeSpaceInMap( playerX - 16, player.yPos, 32, 32 ) ) {
+               spriteObj.xPos = playerX - dist;
+            }
             break;
 
          case 2:
-            spriteObj.xPos = playerX + dist;
+            if ( GameModule.testForFreeSpaceInMap( playerX + 16, player.yPos, 32, 32 ) ) {
+               spriteObj.xPos = playerX + dist;
+            }
             break;
 
          case 3:
-            spriteObj.yPos = playerY - dist;
+            if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY - 16, 32, 32 ) ) {
+               spriteObj.yPos = playerY - dist;
+            }
             break;
 
          default:
@@ -246,7 +285,7 @@ let GameModule = ( function () {
 
          }
 
-         GameModule.animateSprite( spriteObj );
+         GameModule.setSpriteFrame( spriteObj );
 
       },
 
@@ -321,16 +360,7 @@ let GameModule = ( function () {
 
             showMap: () => {
 
-               let myLog = "";
-
-               for ( let line = yPos; line < yPos + height; line++ ) {
-                  for ( let column = xpos; column < xPos + width; column++ ) {
-                     myLog += myMap.get( line, column ) + " ";
-                  }
-                  myLog += '\n';
-               }
-
-               console.log( myLog );
+               console.log( myMap );
 
             }
 
@@ -338,9 +368,9 @@ let GameModule = ( function () {
 
       },
 
-      arrayTo2DLevel: ( level ) => {
+      arrayTo2DLevel: ( levelNumber ) => {
 
-         let levelData = LevelModule.getLevel( level );
+         let levelData = LevelModule.getLevel( levelNumber - 1 );
 
          for ( let boxNr = 0; boxNr < 1152; boxNr++ ) {
             myMap[ boxNr ] = levelData[ boxNr ];
@@ -369,7 +399,7 @@ let GameModule = ( function () {
 
       testForPosInMapBoundaries: ( xPos, yPos ) => {
 
-         if ( xPos >= 0 && yPos >= 0 && xPos < 48 && yPos < 24 ) {
+         if ( xPos >= 0 && yPos >= 0 && xPos < 48 * 16 && yPos < 24 * 16 ) {
             return true;
          }
 
@@ -377,15 +407,14 @@ let GameModule = ( function () {
 
       },
 
-      testForFreeSpaceInMap: () => {
+      testForFreeSpaceInMap: ( xPos, yPos, height, width ) => {
 
-         let {
-            width,
-            height
-         } = GameModule.getBlockSizeOfEl( obj );
+         if ( !GameModule.testForPosInMapBoundaries( xPos, yPos ) ) {
+            return false;
+         }
 
-         for ( let line = yPos; line < yPos + height; line++ ) {
-            for ( let column = xpos; column < xPos + width; column++ ) {
+         for ( let line = yPos / 16; line < ( yPos + height ) / 16; line++ ) {
+            for ( let column = xPos / 16; column < ( xPos + width ) / 16; column++ ) {
                if ( myMap.get( line, column ) > 0 ) {
                   return false;
                }
@@ -405,7 +434,27 @@ let GameModule = ( function () {
 
       setCanvasBackground: ( obj ) => {
 
-         GameModule.drawCanvasImageObj( obj, 0, 0, 0, 0 );
+         if ( obj.loaded == false ) {
+            obj.image.addEventListener( "load", () => {
+               backgroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+            }, false );
+            obj.loaded = true;
+         } else {
+            backgroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+         }
+
+      },
+
+      setCanvasForeground: ( obj ) => {
+
+         if ( obj.loaded == false ) {
+            obj.image.addEventListener( "load", () => {
+               foregroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+            }, false );
+            obj.loaded = true;
+         } else {
+            foregroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+         }
 
       },
 
@@ -434,15 +483,15 @@ let GameModule = ( function () {
 
       },
 
-      drawCanvasImageObj: ( obj, xPosImage, yPosImage ) => {
+      drawCanvasImageObj: ( obj, xPosImage, yPosImage, canvasContext ) => {
 
          if ( obj.loaded == false ) {
             obj.image.addEventListener( "load", () => {
-               context.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+               canvasContext.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
             }, false );
             obj.loaded = true;
          } else {
-            context.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+            canvasContext.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
          }
 
       },
@@ -467,6 +516,6 @@ let GameModule = ( function () {
 } )();
 
 $( "html" )
-   .imagesLoaded( function () {
+   .imagesLoaded( () => {
       GameModule.test();
    } );
