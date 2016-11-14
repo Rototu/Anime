@@ -4,9 +4,9 @@ let GameModule = ( () => {
 
    let myMap = new Int8Array( 1152 );
 
-   let $solids = $( ".solids" );
-   let currentLevel = 1;
+   let $game = $( "#game" );
    let images = {};
+   let npcs = [];
 
    let canvas = document.getElementById( "character-canvas" );
    let context = canvas.getContext( "2d" );
@@ -23,6 +23,11 @@ let GameModule = ( () => {
    foregroundContext.imageSmoothingEnabled = false;
    foregroundContext.mozImageSmoothingEnabled = false;
 
+   let portrait = document.getElementById( "portrait-canvas" );
+   let portraitContext = portrait.getContext( "2d" );
+   portraitContext.imageSmoothingEnabled = false;
+   portraitContext.mozImageSmoothingEnabled = false;
+
    let start = null;
    let shouldAnimate = false;
    let spriteAnimate = true;
@@ -30,6 +35,7 @@ let GameModule = ( () => {
 
    let playerX = 0;
    let playerY = 0;
+   let currentLevel = 1;
 
    return {
 
@@ -37,14 +43,13 @@ let GameModule = ( () => {
 
          GameModule.setLevelArrayPrototype();
          GameModule.arrayTo2DLevel( currentLevel );
+         GameModule.getNpcs( currentLevel );
 
          GameModule.imageInsertion();
 
          GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
          GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
 
-         GameModule.setCanvasImageObjPos( images[ "naruto" ], 32, 160 );
-         GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
          GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
          GameModule.setSpriteFrame( images[ "naruto" ] );
 
@@ -52,6 +57,7 @@ let GameModule = ( () => {
          playerY = 160;
 
          GameModule.playerControls();
+         GameModule.canvasMouseHandler();
          window.requestAnimationFrame( GameModule.timer );
 
       },
@@ -63,10 +69,15 @@ let GameModule = ( () => {
       imageInsertion: () => {
 
          GameModule.addCanvasImageObj( "background1", "img/game/levels/level1.png", 384, 768 );
+
          GameModule.addCanvasImageObj( "foreground1", "img/game/levels/level1Overlay.png", 384, 768 );
 
          GameModule.addCanvasImageObj( "naruto", "img/game/sprites/narutoS.png", 32, 21, 4 );
          GameModule.addCanvasImageObj( "miyazaki", "img/game/sprites/miyazaki.png", 32, 32 );
+         GameModule.addCanvasImageObj( "miyazakiPortrait", "img/game/misc/miyazakiportrait.png", 200, 200 );
+
+         GameModule.setCanvasImageObjPos( images[ "naruto" ], 32, 160 );
+         GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
 
       },
 
@@ -101,6 +112,20 @@ let GameModule = ( () => {
                      pressedKey = 40;
                      break;
 
+                  case 27:
+                     $( "#alert" )
+                        .fadeOut( 500, () => {
+
+                        } );
+                     break;
+
+                  case 13:
+                     $( "#alert" )
+                        .fadeOut( 500, () => {
+
+                        } );
+                     break;
+
                   default:
                      return;
 
@@ -122,12 +147,15 @@ let GameModule = ( () => {
 
       },
 
-      setSpeechBubblePos: () => {
+      alertTextDisplay: ( stringArray ) => {
+         $( "#speech-bubble" )
+            .typed( {
+               strings: stringArray,
+               typeSpeed: 10,
+               callback: () => {
 
-      },
-
-      speechBubbleControl: () => {
-
+               }
+            } );
       },
 
       timer: ( timeStamp ) => {
@@ -144,7 +172,7 @@ let GameModule = ( () => {
 
             let progress = timeStamp - start;
 
-            if ( progress * 16 / 200 <= 16 ) {
+            if ( progress * 16 / 160 <= 16 ) {
 
                if ( progress % 100 <= 45 && spriteAnimate ) {
                   GameModule.getNextSpriteFrame( player );
@@ -155,7 +183,7 @@ let GameModule = ( () => {
                   spriteAnimate = true;
                }
 
-               GameModule.moveSprite( player, Math.min( progress * 16 / 200, 16 ) );
+               GameModule.moveSprite( player, Math.min( progress * 16 / 160, 16 ) );
                context.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setSpriteFrame( player );
 
@@ -200,12 +228,9 @@ let GameModule = ( () => {
 
       getObjCenterPos: ( obj ) => {
 
-         let data = obj.get( 0 )
-            .getBoundingClientRect();
-
          return {
-            xCenterPos: data.left + data.width / 2,
-            yCenterPos: data.top + data.height / 2
+            xCenterPos: obj.xPos + obj.width / 2,
+            yCenterPos: obj.yPos + obj.height / 2
          };
 
       },
@@ -306,7 +331,7 @@ let GameModule = ( () => {
          let {
             width,
             height
-         } = GameModule.getBlockSizeOfEl( obj );
+         } = GameModule.objSizeToBlockSize( obj );
 
          for ( let line = yPos; line < yPos + height; line++ ) {
             for ( let column = xPos; column < xPos + width; column++ ) {
@@ -329,7 +354,7 @@ let GameModule = ( () => {
          let {
             width,
             height
-         } = GameModule.getBlockSizeOfEl( obj );
+         } = GameModule.objSizeToBlockSize( obj );
 
          let xPos = $el.mapPosX;
          let yPos = $el.mapPosY;
@@ -342,7 +367,7 @@ let GameModule = ( () => {
 
       },
 
-      getBlockSizeOfEl: ( obj ) => {
+      objSizeToBlockSize: ( obj ) => {
 
          let width = $el.width() / 16;
          let height = $el.height() / 16;
@@ -375,6 +400,12 @@ let GameModule = ( () => {
          for ( let boxNr = 0; boxNr < 1152; boxNr++ ) {
             myMap[ boxNr ] = levelData[ boxNr ];
          }
+
+      },
+
+      getNpcs: ( levelNumber ) => {
+
+         npcs = LevelModule.getNpcs( levelNumber - 1 );
 
       },
 
@@ -485,6 +516,9 @@ let GameModule = ( () => {
 
       drawCanvasImageObj: ( obj, xPosImage, yPosImage, canvasContext ) => {
 
+         // failure safety
+         canvasContext.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
+
          if ( obj.loaded == false ) {
             obj.image.addEventListener( "load", () => {
                canvasContext.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
@@ -504,7 +538,78 @@ let GameModule = ( () => {
 
       },
 
-      npcClickHandler: () => {
+      canvasMouseHandler: () => {
+
+         let offset = $game.offset();
+
+         $game.mousemove( ( mouse ) => {
+
+               let mouseLeft = parseInt( ( mouse.pageX - offset.left ) / 16 );
+               let mouseTop = parseInt( ( mouse.pageY - offset.top ) / 16 );
+
+               if ( myMap.get( mouseTop, mouseLeft ) >= 2 ) {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/pointing_hand.cur'), pointer`
+                  } );
+               } else {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/left_ptr.cur'), default`
+                  } );
+               }
+
+            } )
+            .click( ( mouse ) => {
+
+               let mouseLeft = parseInt( ( mouse.pageX - offset.left ) / 16 );
+               let mouseTop = parseInt( ( mouse.pageY - offset.top ) / 16 );
+
+               if ( myMap.get( mouseTop, mouseLeft ) >= 2 ) {
+                  GameModule.gameAction( myMap.get( mouseTop, mouseLeft ) );
+               }
+
+            } );
+
+      },
+
+      miyazaki: () => {
+
+         if ( GameModule.getDistanceBetweenObjects( images[ "miyazaki" ], images[ "naruto" ] ) < 48 ) {
+
+            switch ( currentLevel ) {
+
+            case 1:
+               let stringArray = [ "This my test string", "I hope it works" ];
+               GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
+               $( "#alert" )
+                  .fadeIn( 500, () => {
+                     GameModule.alertTextDisplay( stringArray );
+                  } );
+               break;
+
+            default:
+               break;
+
+            }
+
+         }
+      },
+
+      gameAction: ( id ) => {
+
+         let obj = npcs.filter( ( obj ) => {
+            return obj.id === id;
+         } )[ 0 ];
+
+         switch ( obj.name ) {
+
+         case "miyazaki":
+            GameModule.miyazaki();
+            break;
+
+         default:
+            break;
+
+         }
 
       },
 
@@ -515,7 +620,7 @@ let GameModule = ( () => {
    };
 } )();
 
-$( "html" )
+$( "#game" )
    .imagesLoaded( () => {
       GameModule.test();
    } );
