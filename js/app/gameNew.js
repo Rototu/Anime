@@ -51,7 +51,7 @@ let GameModule = ( () => {
          GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
 
          GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-         GameModule.setSpriteFrame( images[ "naruto" ] );
+         GameModule.setSpriteFrame( images[ "kirito" ] );
 
          playerX = 32;
          playerY = 160;
@@ -72,18 +72,18 @@ let GameModule = ( () => {
 
          GameModule.addCanvasImageObj( "foreground1", "img/game/levels/level1Overlay.png", 384, 768 );
 
-         GameModule.addCanvasImageObj( "naruto", "img/game/sprites/narutoS.png", 32, 21, 4 );
+         GameModule.addCanvasImageObj( "kirito", "img/game/sprites/kirito.png", 32, 32, 3 );
          GameModule.addCanvasImageObj( "miyazaki", "img/game/sprites/miyazaki.png", 32, 32 );
          GameModule.addCanvasImageObj( "miyazakiPortrait", "img/game/misc/miyazakiportrait.png", 200, 200 );
 
-         GameModule.setCanvasImageObjPos( images[ "naruto" ], 32, 160 );
+         GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 160 );
          GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
 
       },
 
       playerControls: () => {
 
-         let player = images[ "naruto" ];
+         let player = images[ "kirito" ];
 
          $( document )
             .keydown( ( key ) => {
@@ -160,7 +160,7 @@ let GameModule = ( () => {
 
       timer: ( timeStamp ) => {
 
-         let player = images[ "naruto" ];
+         let player = images[ "kirito" ];
 
          if ( pressedKey || shouldAnimate ) {
 
@@ -248,7 +248,7 @@ let GameModule = ( () => {
 
       moveSprite: ( spriteObj, dist ) => {
 
-         let player = images[ "naruto" ];
+         let player = images[ "kirito" ];
 
          dist = parseInt( dist );
 
@@ -446,6 +446,10 @@ let GameModule = ( () => {
 
          for ( let line = yPos / 16; line < ( yPos + height ) / 16; line++ ) {
             for ( let column = xPos / 16; column < ( xPos + width ) / 16; column++ ) {
+               if ( myMap.get( line, column ) < 0 ) {
+                  GameModule.moveToLevel( -myMap.get( line, column ) );
+                  return false;
+               }
                if ( myMap.get( line, column ) > 0 ) {
                   return false;
                }
@@ -530,14 +534,6 @@ let GameModule = ( () => {
 
       },
 
-      moveSolidToDirection: () => {
-
-      },
-
-      resizeHandler: () => {
-
-      },
-
       canvasMouseHandler: () => {
 
          let offset = $game.offset();
@@ -573,12 +569,16 @@ let GameModule = ( () => {
 
       miyazaki: () => {
 
-         if ( GameModule.getDistanceBetweenObjects( images[ "miyazaki" ], images[ "naruto" ] ) < 48 ) {
+         if ( GameModule.getDistanceBetweenObjects( images[ "miyazaki" ], images[ "kirito" ] ) < 48 ) {
 
             switch ( currentLevel ) {
 
             case 1:
-               let stringArray = [ "This my test string", "I hope it works" ];
+               let stringArray = [
+                  "Servus, bine ai venit în frumoasa lume a anime-urilor!",
+                  "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
+                  "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos!"
+               ];
                GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
                $( "#alert" )
                   .fadeIn( 500, () => {
@@ -613,8 +613,14 @@ let GameModule = ( () => {
 
       },
 
-      moveToLevel: () => {
-
+      moveToLevel: ( nextLevel ) => {
+         let player = images[ "kirito" ];
+         pressedKey = false;
+         shouldAnimate = false;
+         playerX = 16 * parseInt( player.xPos / 16 );
+         playerY = 16 * parseInt( player.yPos / 16 );
+         GameModule.setCanvasImageObjPos( player, playerX, playerY );
+         console.log( nextLevel );
       },
 
    };
