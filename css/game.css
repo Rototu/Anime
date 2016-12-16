@@ -136,6 +136,15 @@ a {
     z-index: 3;
 }
 
+#screen-transition {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+}
+
 #alert {
     position: absolute;
     height: 284px;

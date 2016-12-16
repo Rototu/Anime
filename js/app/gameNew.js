@@ -32,6 +32,7 @@ let GameModule = ( () => {
    let shouldAnimate = false;
    let spriteAnimate = true;
    let pressedKey = 0;
+   let listeningToKeyboard = true;
 
    let playerX = 0;
    let playerY = 0;
@@ -41,24 +42,37 @@ let GameModule = ( () => {
 
       test: () => {
 
-         GameModule.setLevelArrayPrototype();
-         GameModule.arrayTo2DLevel( currentLevel );
-         GameModule.getNpcs( currentLevel );
+         listeningToKeyboard = false;
+         $( "#screen-transition" )
+            .prop( "src", "img/game/gifs/instructions.gif" )
+            .fadeIn( 1500, () => {
 
-         GameModule.imageInsertion();
+               GameModule.setLevelArrayPrototype();
+               GameModule.arrayTo2DLevel( currentLevel );
+               GameModule.getNpcs( currentLevel );
 
-         GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
-         GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
+               GameModule.imageInsertion();
 
-         GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-         GameModule.setSpriteFrame( images[ "kirito" ] );
+               GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+               GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
 
-         playerX = 32;
-         playerY = 160;
+               GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
+               GameModule.setSpriteFrame( images[ "kirito" ] );
 
-         GameModule.playerControls();
-         GameModule.canvasMouseHandler();
-         window.requestAnimationFrame( GameModule.timer );
+               playerX = 32;
+               playerY = 160;
+
+               GameModule.playerControls();
+               GameModule.canvasMouseHandler();
+               window.requestAnimationFrame( GameModule.timer );
+
+               setTimeout( () => {
+                  $( "#screen-transition" )
+                     .fadeOut( 1500, function () {
+                        listeningToKeyboard = true;
+                     } )
+               }, 3000 );
+            } );
 
       },
 
@@ -88,7 +102,7 @@ let GameModule = ( () => {
          $( document )
             .keydown( ( key ) => {
 
-               if ( pressedKey == 0 && shouldAnimate == false ) {
+               if ( pressedKey == 0 && shouldAnimate == false && listeningToKeyboard == true ) {
 
                   switch ( key.which ) {
 
@@ -138,7 +152,7 @@ let GameModule = ( () => {
          $( document )
             .keyup( ( key ) => {
 
-               // test if released key coincides with the first pressed key
+               // test for arrow key
                if ( key.which == 37 || key.which == 38 || key.which == 39 || key.which == 40 ) {
                   pressedKey = 0;
                }
@@ -151,7 +165,8 @@ let GameModule = ( () => {
          $( "#speech-bubble" )
             .typed( {
                strings: stringArray,
-               typeSpeed: 10,
+               typeSpeed: 0,
+               backSpeed: 0,
                callback: () => {
 
                }
@@ -196,6 +211,7 @@ let GameModule = ( () => {
 
                start = null;
                shouldAnimate = false;
+               ``
 
             }
 
@@ -620,7 +636,23 @@ let GameModule = ( () => {
          playerX = 16 * parseInt( player.xPos / 16 );
          playerY = 16 * parseInt( player.yPos / 16 );
          GameModule.setCanvasImageObjPos( player, playerX, playerY );
-         console.log( nextLevel );
+         switch ( nextLevel ) {
+         case 2:
+            listeningToKeyboard = false;
+            $( "#screen-transition" )
+               .prop( "src", "img/game/gifs/kiriwave.gif" )
+               .fadeIn( 1500, () => {
+                  setTimeout( () => {
+                     $( "#screen-transition" )
+                        .fadeOut( 1500, function () {
+                           listeningToKeyboard = true;
+                        } )
+                  }, 3000 );
+               } );
+            break;
+         default:
+
+         }
       },
 
    };
