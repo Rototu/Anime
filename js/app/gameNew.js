@@ -37,6 +37,7 @@ let GameModule = ( () => {
    let playerX = 0;
    let playerY = 0;
    let currentLevel = 1;
+   let musicBg = [];
 
    return {
 
@@ -44,8 +45,8 @@ let GameModule = ( () => {
 
          listeningToKeyboard = false;
          $( "#screen-transition" )
-            .prop( "src", "img/game/gifs/instructions.gif" )
-            .fadeIn( 1500, () => {
+            .prop( "src", "img/game/white.png" )
+            .fadeIn( 1000, () => {
 
                GameModule.setLevelArrayPrototype();
                GameModule.arrayTo2DLevel( currentLevel );
@@ -68,10 +69,12 @@ let GameModule = ( () => {
 
                setTimeout( () => {
                   $( "#screen-transition" )
-                     .fadeOut( 1500, function () {
+                     .fadeOut( 1000, function () {
                         listeningToKeyboard = true;
+                        GameModule.loadAudio();
+                        GameModule.loopAudio( Math.floor( Math.random() * ( 7 ) ) );
                      } )
-               }, 3000 );
+               }, 500 );
             } );
 
       },
@@ -83,7 +86,6 @@ let GameModule = ( () => {
       imageInsertion: () => {
 
          GameModule.addCanvasImageObj( "background1", "img/game/levels/level1.png", 384, 768 );
-
          GameModule.addCanvasImageObj( "foreground1", "img/game/levels/level1Overlay.png", 384, 768 );
 
          GameModule.addCanvasImageObj( "kirito", "img/game/sprites/kirito.png", 32, 32, 3 );
@@ -92,6 +94,37 @@ let GameModule = ( () => {
 
          GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 160 );
          GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
+
+      },
+
+      loadAudio: () => {
+
+         let song1 = new Audio( 'sounds/fmaop3.mp3' ),
+            song2 = new Audio( 'sounds/killlakillop1.mp3' ),
+            song3 = new Audio( 'sounds/narutoop3.mp3' ),
+            song4 = new Audio( 'sounds/steinsgate.mp3' ),
+            song5 = new Audio( 'sounds/shigatsuop2.mp3' ),
+            song6 = new Audio( 'sounds/baccano.mp3' ),
+            song7 = new Audio( 'sounds/durarara.mp3' ),
+            song8 = new Audio( 'sounds/geassOp1.mp3' );
+
+         musicBg = [ song1, song2, song3, song4, song5, song6, song7, song8 ];
+
+      },
+
+      loopAudio: ( i ) => {
+
+         let currentSong = musicBg[ i ];
+         currentSong.volume = 0.05;
+         currentSong.play();
+         currentSong.onended = () => {
+            if ( i < 7 ) {
+               i++;
+            } else {
+               i = 0;
+            }
+            GameModule.loopAudio( i );
+         };
 
       },
 
@@ -165,8 +198,9 @@ let GameModule = ( () => {
          $( "#speech-bubble" )
             .typed( {
                strings: stringArray,
-               typeSpeed: 0,
-               backSpeed: 0,
+               typeSpeed: 100,
+               backSpeed: -50,
+               backDelay: 1000,
                callback: () => {
 
                }
@@ -306,6 +340,7 @@ let GameModule = ( () => {
          switch ( orientation ) {
 
          case "up":
+            console.log( "doing it" );
             spriteObj.orientation = 3;
             break;
 
@@ -487,10 +522,12 @@ let GameModule = ( () => {
 
          if ( obj.loaded == false ) {
             obj.image.addEventListener( "load", () => {
+               backgroundContext.clearRect( 0, 0, 768, 384 );
                backgroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
             }, false );
             obj.loaded = true;
          } else {
+            backgroundContext.clearRect( 0, 0, 768, 384 );
             backgroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
          }
 
@@ -500,10 +537,12 @@ let GameModule = ( () => {
 
          if ( obj.loaded == false ) {
             obj.image.addEventListener( "load", () => {
+               foregroundContext.clearRect( 0, 0, 768, 384 );
                foregroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
             }, false );
             obj.loaded = true;
          } else {
+            foregroundContext.clearRect( 0, 0, 768, 384 );
             foregroundContext.drawImage( obj.image, 0, 0, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
          }
 
@@ -593,7 +632,7 @@ let GameModule = ( () => {
                let stringArray = [
                   "Servus, bine ai venit în frumoasa lume a anime-urilor!",
                   "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
-                  "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos!"
+                  "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)"
                ];
                GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
                $( "#alert" )
@@ -633,8 +672,8 @@ let GameModule = ( () => {
          let player = images[ "kirito" ];
          pressedKey = false;
          shouldAnimate = false;
-         playerX = 16 * parseInt( player.xPos / 16 );
-         playerY = 16 * parseInt( player.yPos / 16 );
+         // playerX = 16 * parseInt( player.xPos / 16 );
+         // playerY = 16 * parseInt( player.yPos / 16 );
          GameModule.setCanvasImageObjPos( player, playerX, playerY );
          switch ( nextLevel ) {
          case 2:
@@ -642,12 +681,30 @@ let GameModule = ( () => {
             $( "#screen-transition" )
                .prop( "src", "img/game/gifs/kiriwave.gif" )
                .fadeIn( 1500, () => {
+
+                  currentLevel = 2;
+                  GameModule.arrayTo2DLevel( 2 );
+                  GameModule.getNpcs( 2 );
+                  playerX = 44 * 16;
+                  playerY = 32;
+                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                  context.clearRect( 0, 0, canvas.width, canvas.height );
+                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
+                  GameModule.setCanvasBackground( images[ "background" + 2 ] );
+                  GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+                  GameModule.setSpriteFrame( images[ "kirito" ] );
+
                   setTimeout( () => {
                      $( "#screen-transition" )
                         .fadeOut( 1500, function () {
                            listeningToKeyboard = true;
                         } )
                   }, 3000 );
+
                } );
             break;
          default:
