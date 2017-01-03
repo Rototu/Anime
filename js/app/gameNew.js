@@ -28,14 +28,20 @@ let GameModule = ( () => {
    portraitContext.imageSmoothingEnabled = false;
    portraitContext.mozImageSmoothingEnabled = false;
 
-   let start = null;
-   let shouldAnimate = false;
-   let spriteAnimate = true;
-   let pressedKey = 0;
-   let listeningToKeyboard = true;
+   let start = null,
+      globalStart = null;
 
-   let playerX = 0;
-   let playerY = 0;
+   let shouldAnimate = false,
+      spriteAnimate = true,
+      sheepAnimate = true,
+      crowAnimate = true;
+
+   let pressedKey = 0,
+      listeningToKeyboard = true;
+
+   let playerX = 0,
+      playerY = 0;
+
    let currentLevel = 1;
    let musicBg = [];
 
@@ -58,7 +64,8 @@ let GameModule = ( () => {
                GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
 
                GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-               GameModule.setSpriteFrame( images[ "kirito" ] );
+               GameModule.setSpriteFrame( images[ "kirito" ], context );
+               GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
 
                playerX = 32;
                playerY = 160;
@@ -89,11 +96,13 @@ let GameModule = ( () => {
          GameModule.addCanvasImageObj( "foreground1", "img/game/levels/level1Overlay.png", 384, 768 );
 
          GameModule.addCanvasImageObj( "kirito", "img/game/sprites/kirito.png", 32, 32, 3 );
+         GameModule.addCanvasImageObj( "crow", "img/game/sprites/crow.png", 32, 32, 12 );
          GameModule.addCanvasImageObj( "miyazaki", "img/game/sprites/miyazaki.png", 32, 32 );
          GameModule.addCanvasImageObj( "miyazakiPortrait", "img/game/misc/miyazakiportrait.png", 200, 200 );
 
          GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 160 );
          GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
+         GameModule.setCanvasImageObjPos( images[ "crow" ], 368, 134 );
 
       },
 
@@ -198,7 +207,7 @@ let GameModule = ( () => {
          $( "#speech-bubble" )
             .typed( {
                strings: stringArray,
-               typeSpeed: 100,
+               typeSpeed: 30,
                backSpeed: -50,
                backDelay: 1000,
                callback: () => {
@@ -209,17 +218,25 @@ let GameModule = ( () => {
 
       timer: ( timeStamp ) => {
 
+         let globalProgress;
+         globalProgress = timeStamp - globalStart;
+
+         if ( !globalStart ) {
+            globalStart = timeStamp;
+            globalProgress = timeStamp - globalStart;
+         }
+
          let player = images[ "kirito" ];
 
          if ( pressedKey || shouldAnimate ) {
 
             shouldAnimate = true;
+            let progress = timeStamp - start;
 
             if ( !start ) {
                start = timeStamp;
+               progress = timeStamp - start;
             }
-
-            let progress = timeStamp - start;
 
             if ( progress * 16 / 160 <= 16 ) {
 
@@ -234,7 +251,7 @@ let GameModule = ( () => {
 
                GameModule.moveSprite( player, Math.min( progress * 16 / 160, 16 ) );
                context.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.setSpriteFrame( player );
+               GameModule.setSpriteFrame( player, context );
 
             } else {
 
@@ -245,12 +262,64 @@ let GameModule = ( () => {
 
                start = null;
                shouldAnimate = false;
-               ``
 
             }
 
          } else {
             start = null;
+         }
+         switch ( currentLevel ) {
+
+         case 1:
+            if ( globalProgress % 300 <= 100 && crowAnimate ) {
+               GameModule.getNextSpriteFrame( images[ "crow" ] );
+               crowAnimate = false;
+               GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
+               GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
+               GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
+            }
+            if ( globalProgress % 300 >= 100 && !crowAnimate ) {
+               crowAnimate = true;
+            }
+            break;
+
+         case 2:
+            if ( globalProgress % 400 <= 100 && sheepAnimate ) {
+               let sheep = images[ "sheep" ];
+               GameModule.getNextSpriteFrame( sheep );
+               sheepAnimate = false;
+               GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+               GameModule.setSpriteFrame( sheep, backgroundContext );
+               if ( sheep.framesNumber == 6 && sheep.currentFrame == 5 ) {
+                  sheep.orientation = 1;
+                  sheep.framesNumber = 5;
+               } else if ( sheep.framesNumber == 5 && sheep.currentFrame == 4 ) {
+                  sheep.orientation = 2;
+                  sheep.framesNumber = 4;
+               } else if ( sheep.orientation == 2 ) {
+                  sheep.xPos = 8 * ( 35 + sheep.currentFrame );
+                  if ( sheep.currentFrame == 3 ) {
+                     sheep.orientation = 3;
+                     sheep.framesNumber = 4;
+                  }
+               } else if ( sheep.orientation == 3 ) {
+                  sheep.xPos = 8 * ( 37 - sheep.currentFrame );
+                  if ( sheep.currentFrame == 3 ) {
+                     sheep.orientation = 4;
+                     sheep.framesNumber = 3;
+                  }
+               } else if ( sheep.framesNumber == 3 && sheep.currentFrame == 2 ) {
+                  sheep.orientation = 0;
+                  sheep.framesNumber = 6;
+               }
+            }
+            if ( globalProgress % 400 >= 100 && !sheepAnimate ) {
+               sheepAnimate = true;
+            }
+            break;
+
+         default:
+
          }
 
          requestAnimationFrame( GameModule.timer )
@@ -267,12 +336,12 @@ let GameModule = ( () => {
 
       },
 
-      setSpriteFrame: ( spriteObj ) => {
+      setSpriteFrame: ( spriteObj, spriteContext ) => {
 
          let xPosImage = spriteObj.currentFrame * spriteObj.width;
          let yPosImage = spriteObj.orientation * spriteObj.height;
 
-         GameModule.drawCanvasImageObj( spriteObj, xPosImage, yPosImage, context );
+         GameModule.drawCanvasImageObj( spriteObj, xPosImage, yPosImage, spriteContext );
 
       },
 
@@ -361,7 +430,7 @@ let GameModule = ( () => {
 
          }
 
-         GameModule.setSpriteFrame( spriteObj );
+         GameModule.setSpriteFrame( spriteObj, context );
 
       },
 
@@ -694,9 +763,12 @@ let GameModule = ( () => {
                   backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                   GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
                   GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
+                  GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
                   GameModule.setCanvasBackground( images[ "background" + 2 ] );
                   GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-                  GameModule.setSpriteFrame( images[ "kirito" ] );
+                  GameModule.setSpriteFrame( images[ "kirito" ], context );
+                  GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
 
                   setTimeout( () => {
                      $( "#screen-transition" )
