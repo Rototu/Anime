@@ -180,6 +180,7 @@ let GameModule = (() => {
                                 break;
 
                             case 13:
+                              GameModule
                                 $("#alert")
                                     .fadeOut(500, () => {
 
@@ -757,7 +758,7 @@ let GameModule = (() => {
                 let frame1 = () => {
 
                     setTimeout(function() {
-                        fadeInText("Kon'nichiwa!", 22 * 16, 10 * 16);
+                        fadeInText("Kon'nichiwa!", 24 * 16, 10 * 16);
                     }, 1000);
 
                     setTimeout(function() {
@@ -792,10 +793,10 @@ let GameModule = (() => {
                     }, 3250);
 
                     setTimeout(function() {
-                       GameModule.addCanvasImageObj("lInput", "img/game/misc/Iinput.png", 80, 352);
+                       GameModule.addCanvasImageObj("lInput", "img/game/misc/lInput.png", 80, 352);
                        GameModule.setCanvasImageObjPos(images["lInput"], 18 * 16, 12 * 16);
                        fadeInImage(images["lInput"]);
-                    }, 3250);
+                    }, 5000);
 
 
                 }
