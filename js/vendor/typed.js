@@ -135,6 +135,15 @@
 
       // pass current string state to each function, types 1 char per call
       typewrite: function ( curString, curStrPos ) {
+
+         //custom stop on escape keypress
+         document.addEventListener( "keypress", ( event ) => {
+            let char = event.which || event.keyCode;
+            if ( char == 27 ) {
+               this.stop = true;
+            }
+         } )
+
          // exit when stopped
          if ( this.stop === true ) {
             return;
