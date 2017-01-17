@@ -99,6 +99,15 @@
       constructor: Typed,
 
       init: function () {
+
+         //custom stop on escape keypress
+         document.addEventListener( "keypress", ( event ) => {
+            let char = event.which || event.keyCode;
+            if ( char == 27 ) {
+               this.stop = true;
+            }
+         } );
+
          // begin the loop w/ first current string (global self.strings)
          // current string will be passed as an argument each time after this
          var self = this;
@@ -135,14 +144,6 @@
 
       // pass current string state to each function, types 1 char per call
       typewrite: function ( curString, curStrPos ) {
-
-         //custom stop on escape keypress
-         document.addEventListener( "keypress", ( event ) => {
-            let char = event.which || event.keyCode;
-            if ( char == 27 ) {
-               this.stop = true;
-            }
-         } )
 
          // exit when stopped
          if ( this.stop === true ) {

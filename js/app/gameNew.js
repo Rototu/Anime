@@ -723,6 +723,8 @@ let GameModule = ( () => {
 
       challengeL: () => {
 
+         let myGame = document.getElementById( "game" );
+
          if ( GameModule.getDistanceBetweenObjects( images[ "L" ], images[ "kirito" ] ) < 48 ) {
 
             GameModule.addCanvasImageObj( "lChallenge", "img/game/levels/lChallenge.png", 384, 768 );
@@ -778,24 +780,54 @@ let GameModule = ( () => {
             let frame2 = () => {
 
                foregroundContext.globalAlpha = 1;
-               foregroundContext.font = "16px sans-serif";
+               foregroundContext.font = "20px sans-serif";
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setCanvasForeground( images[ "lChallenge" ] );
 
                setTimeout( function () {
-                  fadeInText( "Dacă îmi spui care este numele meu,", 20 * 16, 10 * 16 );
+                  fadeInText( "Dacă îmi spui care este numele meu,", 18 * 16, 10 * 16 - 8 );
                }, 1750 );
 
                setTimeout( function () {
-                  fadeInText( "Am să îţi dau ceva de care ai nevoie.", 20 * 16, 11 * 16 );
+                  fadeInText( "Am să îţi dau ceva de care ai nevoie.", 18 * 16, 11 * 16 );
                }, 3250 );
 
                setTimeout( function () {
-                  GameModule.addCanvasImageObj( "lInput", "img/game/misc/lInput.png", 80, 352 );
-                  GameModule.setCanvasImageObjPos( images[ "lInput" ], 18 * 16, 12 * 16 );
-                  fadeInImage( images[ "lInput" ] );
+                  GameModule.addCanvasImageObj( "lOpt1", "img/game/misc/lOpt1.png", 32, 352 );
+                  GameModule.addCanvasImageObj( "lOpt2", "img/game/misc/lOpt2.png", 32, 352 );
+                  GameModule.addCanvasImageObj( "lOpt3", "img/game/misc/lOpt3.png", 32, 352 );
+                  GameModule.setCanvasImageObjPos( images[ "lOpt1" ], 18 * 16, 12 * 16 );
+                  GameModule.setCanvasImageObjPos( images[ "lOpt2" ], 18 * 16, 14 * 16 );
+                  GameModule.setCanvasImageObjPos( images[ "lOpt3" ], 18 * 16, 16 * 16 );
+                  fadeInImage( images[ "lOpt1" ] );
+                  fadeInImage( images[ "lOpt2" ] );
+                  fadeInImage( images[ "lOpt3" ] );
+                  challenge();
                }, 5000 );
 
+            }
+
+            let lQuizHandler = ( event ) => {
+
+               let offset = $game.offset();
+               let mouseLeft = parseInt( ( event.pageX - offset.left ) / 16 );
+               let mouseTop = parseInt( ( event.pageY - offset.top ) / 16 );
+
+               if ( mouseLeft >= 18 && mouseLeft < 28 && mouseTop >= 12 && mouseTop < 18 ) {
+                  if ( mouseTop < 14 ) {
+                     console.log( "a" );
+                  } else if ( mouseTop < 16 ) {
+                     console.log( "b" );
+                  } else {
+                     console.log( "c" );
+                  }
+                  myGame.removeEventListener( "click", lQuizHandler, false );
+               }
+
+            }
+
+            let challenge = () => {
+               myGame.addEventListener( "click", lQuizHandler, false );
             }
 
             frame1();
