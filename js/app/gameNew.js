@@ -898,6 +898,7 @@ let GameModule = ( () => {
 
                   myGame.removeEventListener( "click", rewardPlayer, false );
                   playerData.lChallengeCompleted = true;
+                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
 
                   setTimeout( function () {
                      GameModule.addCanvasImageObj( "reward01", "img/game/misc/reward01.png", 384, 768 );
@@ -908,6 +909,7 @@ let GameModule = ( () => {
 
                   setTimeout( function () {
                      GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+                     GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
                   }, 2500 );
 
                }
