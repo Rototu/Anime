@@ -7,9 +7,11 @@ let GameModule = ( () => {
    let $game = $( "#game" );
    let images = {};
    let npcs = [];
-   let items = {
+   let playerData = {
       coins: 0,
-      key: false
+      key: false,
+      lChallengeCompleted: false,
+      specialScreen: false
    };
 
    let canvas = document.getElementById( "character-canvas" );
@@ -674,14 +676,16 @@ let GameModule = ( () => {
                let mouseLeft = parseInt( ( mouse.pageX - offset.left ) / 16 );
                let mouseTop = parseInt( ( mouse.pageY - offset.top ) / 16 );
 
-               if ( myMap.get( mouseTop, mouseLeft ) >= 2 ) {
-                  $game.css( {
-                     cursor: `url('img/game/cursors/pointing_hand.cur'), pointer`
-                  } );
-               } else {
-                  $game.css( {
-                     cursor: `url('img/game/cursors/left_ptr.cur'), default`
-                  } );
+               if ( !playerData.specialScreen ) {
+                  if ( myMap.get( mouseTop, mouseLeft ) >= 2 ) {
+                     $game.css( {
+                        cursor: `url('img/game/cursors/pointing_hand.cur'), pointer`
+                     } );
+                  } else {
+                     $game.css( {
+                        cursor: `url('img/game/cursors/left_ptr.cur'), default`
+                     } );
+                  }
                }
 
             } )
@@ -690,7 +694,7 @@ let GameModule = ( () => {
                let mouseLeft = parseInt( ( mouse.pageX - offset.left ) / 16 );
                let mouseTop = parseInt( ( mouse.pageY - offset.top ) / 16 );
 
-               if ( myMap.get( mouseTop, mouseLeft ) >= 2 ) {
+               if ( myMap.get( mouseTop, mouseLeft ) >= 2 && !playerData.specialScreen ) {
                   GameModule.gameAction( myMap.get( mouseTop, mouseLeft ) );
                }
 
@@ -705,7 +709,11 @@ let GameModule = ( () => {
             switch ( currentLevel ) {
 
                case 1:
-                  let stringArray = [ "Servus, bine ai venit în frumoasa lume a anime-urilor!", "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.", "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)" ];
+                  let stringArray = [
+                     "Servus, bine ai venit în frumoasa lume a anime-urilor!",
+                     "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
+                     "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)"
+                  ];
                   GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
                   $( "#alert" )
                      .fadeIn( 500, () => {
@@ -725,11 +733,12 @@ let GameModule = ( () => {
 
          let myGame = document.getElementById( "game" );
 
-         if ( GameModule.getDistanceBetweenObjects( images[ "L" ], images[ "kirito" ] ) < 48 ) {
+         if ( GameModule.getDistanceBetweenObjects( images[ "L" ], images[ "kirito" ] ) < 48 && !playerData.lChallengeCompleted ) {
 
             GameModule.addCanvasImageObj( "lChallenge", "img/game/levels/lChallenge.png", 384, 768 );
             GameModule.setCanvasForeground( images[ "lChallenge" ] );
             foregroundContext.font = "32px sans-serif";
+            playerData.specialScreen = true;
 
             let fadeInText = ( text, x, y ) => {
                let alpha = 0,
@@ -814,21 +823,101 @@ let GameModule = ( () => {
                let mouseTop = parseInt( ( event.pageY - offset.top ) / 16 );
 
                if ( mouseLeft >= 18 && mouseLeft < 28 && mouseTop >= 12 && mouseTop < 18 ) {
+
                   if ( mouseTop < 14 ) {
-                     console.log( "a" );
+
+                     infoMiyazaki( wrongAnswer );
+
                   } else if ( mouseTop < 16 ) {
-                     console.log( "b" );
+
+                     infoMiyazaki( wrongAnswer );
+
                   } else {
-                     console.log( "c" );
+
+                     infoMiyazaki( rightAnswer );
+
                   }
+
+                  myGame.removeEventListener( "mousemove", lQuizHover, false );
                   myGame.removeEventListener( "click", lQuizHandler, false );
                }
 
             }
 
+            let lQuizHover = ( event ) => {
+
+               let offset = $game.offset();
+               let mouseLeft = parseInt( ( event.pageX - offset.left ) / 16 );
+               let mouseTop = parseInt( ( event.pageY - offset.top ) / 16 );
+
+               if ( mouseLeft >= 18 && mouseLeft < 28 && mouseTop >= 12 && mouseTop < 18 ) {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/pointing_hand.cur'), pointer`
+                  } );
+               } else {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/left_ptr.cur'), default`
+                  } );
+               }
+
+            }
+
+            let rightAnswer = [
+               "Corect! Eu sunt L Lawliet, cunoscut însă ca fiind doar L de majoritatea lumii.",
+               "În anime-ul Death Note, unul dintre cele mai populare titluri recente, am rolul de detectiv.",
+               "Duşmanul meu este Light, un tânăr care m-ar putea omorâ ştiindu-mi doar numele complet. ",
+               "Uite-ţi recompensa, vei avea nevoie de ea mai jos! (ESC)"
+            ];
+
+            let wrongAnswer = [
+               "Greşit! Numele meu este L Lawliet, dar foarte puţină lume ştie acest lucru. Public mi se spune doar L.",
+               "În anime-ul Death Note, unul dintre cele mai populare titluri recente, am rolul de detectiv.",
+               "Duşmanul meu este Light, un tânăr care m-ar putea omorâ ştiindu-mi doar numele complet. ",
+               "Pentru efortul tău am să îţi dau totuşi recompensa... Vei avea nevoie de ea în căsuţa de mai jos! (ESC)"
+            ];
+
+            let infoMiyazaki = ( answer ) => {
+
+
+               GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+               document.addEventListener( "keypress", rewardPlayer, false );
+               GameModule.addCanvasImageObj( "lPortrait", "img/game/misc/lPortrait.png", 200, 200 );
+               GameModule.drawCanvasImageObj( images[ "lPortrait" ], 0, 0, portraitContext );
+               playerData.specialScreen = false;
+
+               $( "#alert" )
+                  .fadeIn( 500, () => {
+                     GameModule.alertTextDisplay( answer );
+                  } );
+
+            }
+
+            let rewardPlayer = ( event ) => {
+               let char = event.which || event.keyCode;
+               if ( char == 27 ) {
+
+                  myGame.removeEventListener( "click", rewardPlayer, false );
+                  playerData.lChallengeCompleted = true;
+
+                  setTimeout( function () {
+                     GameModule.addCanvasImageObj( "reward01", "img/game/misc/reward01.png", 384, 768 );
+                     GameModule.setCanvasImageObjPos( images[ "reward01" ], 334, 152 );
+                     fadeInImage( images[ "reward01" ] );
+                     playerData.coins += 24;
+                  }, 1000 );
+
+                  setTimeout( function () {
+                     GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+                  }, 2500 );
+
+               }
+            }
+
             let challenge = () => {
                myGame.addEventListener( "click", lQuizHandler, false );
+               myGame.addEventListener( "mousemove", lQuizHover, false );
             }
+
 
             frame1();
 

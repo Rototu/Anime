@@ -106,7 +106,7 @@
             if ( char == 27 ) {
                this.stop = true;
             }
-         } );
+         }, false );
 
          // begin the loop w/ first current string (global self.strings)
          // current string will be passed as an argument each time after this
