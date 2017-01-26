@@ -82,7 +82,7 @@ let GameModule = ( () => {
 
                setTimeout( () => {
                   $( "#screen-transition" )
-                     .fadeOut( 1000, function () {
+                     .fadeOut( 1000, () => {
                         listeningToKeyboard = true;
                         GameModule.loadAudio();
                         GameModule.loopAudio( Math.floor( Math.random() * ( 7 ) ) );
@@ -322,6 +322,19 @@ let GameModule = ( () => {
                   }
                }
                if ( globalProgress % 400 >= 100 && !sheepAnimate ) {
+                  sheepAnimate = true;
+               }
+               break;
+
+            case 3:
+               if ( globalProgress % 400 < 100 && sheepAnimate ) {
+                  sheepAnimate = false;
+                  let asuna = images[ "asuna" ];
+                  GameModule.getNextSpriteFrame( asuna );
+                  sheepAnimate = false;
+                  GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+                  GameModule.setSpriteFrame( asuna, backgroundContext );
+               } else if ( globalProgress % 400 >= 100 && !sheepAnimate ) {
                   sheepAnimate = true;
                }
                break;
@@ -729,6 +742,31 @@ let GameModule = ( () => {
          }
       },
 
+      fadeInText: ( text, x, y ) => {
+         let alpha = 0;
+         let interval = setInterval( () => {
+            foregroundContext.fillStyle = "rgba(0, 0, 0, " + alpha + ")";
+            foregroundContext.fillText( text, x, y );
+            alpha += 0.05;
+            if ( alpha > 1 ) {
+               clearInterval( interval );
+            }
+         }, 50 );
+      },
+
+      fadeInImage: ( image ) => {
+         let alpha = 0,
+            interval = setInterval( () => {
+               foregroundContext.globalAlpha = alpha;
+               GameModule.drawCanvasImageObj( image, 0, 0, foregroundContext );
+               alpha += 0.05;
+               if ( alpha > 1 ) {
+                  clearInterval( interval );
+               }
+            }, 60 );
+      },
+
+
       challengeL: () => {
 
          let myGame = document.getElementById( "game" );
@@ -740,47 +778,23 @@ let GameModule = ( () => {
             foregroundContext.font = "32px sans-serif";
             playerData.specialScreen = true;
 
-            let fadeInText = ( text, x, y ) => {
-               let alpha = 0,
-                  interval = setInterval( function () {
-                     foregroundContext.fillStyle = "rgba(0, 0, 0, " + alpha + ")";
-                     foregroundContext.fillText( text, x, y );
-                     alpha += 0.05;
-                     if ( alpha > 1 ) {
-                        clearInterval( interval );
-                     }
-                  }, 50 );
-            }
-
-            let fadeInImage = ( image ) => {
-               let alpha = 0,
-                  interval = setInterval( function () {
-                     foregroundContext.globalAlpha = alpha;
-                     GameModule.drawCanvasImageObj( image, 0, 0, foregroundContext );
-                     alpha += 0.05;
-                     if ( alpha > 1 ) {
-                        clearInterval( interval );
-                     }
-                  }, 60 );
-            }
-
             let frame1 = () => {
 
-               setTimeout( function () {
-                  fadeInText( "Kon'nichiwa!", 24 * 16, 10 * 16 );
+               setTimeout( () => {
+                  GameModule.fadeInText( "Kon'nichiwa!", 24 * 16, 10 * 16 );
                }, 1000 );
 
-               setTimeout( function () {
-                  fadeInText( "Eu sunt ", 26 * 16, 12 * 16 );
+               setTimeout( () => {
+                  GameModule.fadeInText( "Eu sunt ", 26 * 16, 12 * 16 );
                }, 2500 );
 
-               setTimeout( function () {
+               setTimeout( () => {
                   GameModule.addCanvasImageObj( "lLogo", "img/game/misc/lLogo.png", 384, 768 );
                   GameModule.setCanvasImageObjPos( images[ "lLogo" ], 26 * 16, 12 * 16 );
-                  fadeInImage( images[ "lLogo" ] );
+                  GameModule.fadeInImage( images[ "lLogo" ] );
                }, 4000 );
 
-               setTimeout( function () {
+               setTimeout( () => {
                   frame2();
                }, 5500 );
 
@@ -793,24 +807,24 @@ let GameModule = ( () => {
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setCanvasForeground( images[ "lChallenge" ] );
 
-               setTimeout( function () {
-                  fadeInText( "Dacă îmi spui care este numele meu,", 18 * 16, 10 * 16 - 8 );
+               setTimeout( () => {
+                  GameModule.fadeInText( "Dacă îmi spui care este numele meu,", 18 * 16, 10 * 16 - 8 );
                }, 1750 );
 
-               setTimeout( function () {
-                  fadeInText( "Am să îţi dau ceva de care ai nevoie.", 18 * 16, 11 * 16 );
+               setTimeout( () => {
+                  GameModule.fadeInText( "Am să îţi dau ceva de care ai nevoie.", 18 * 16, 11 * 16 );
                }, 3250 );
 
-               setTimeout( function () {
+               setTimeout( () => {
                   GameModule.addCanvasImageObj( "lOpt1", "img/game/misc/lOpt1.png", 32, 352 );
                   GameModule.addCanvasImageObj( "lOpt2", "img/game/misc/lOpt2.png", 32, 352 );
                   GameModule.addCanvasImageObj( "lOpt3", "img/game/misc/lOpt3.png", 32, 352 );
                   GameModule.setCanvasImageObjPos( images[ "lOpt1" ], 18 * 16, 12 * 16 );
                   GameModule.setCanvasImageObjPos( images[ "lOpt2" ], 18 * 16, 14 * 16 );
                   GameModule.setCanvasImageObjPos( images[ "lOpt3" ], 18 * 16, 16 * 16 );
-                  fadeInImage( images[ "lOpt1" ] );
-                  fadeInImage( images[ "lOpt2" ] );
-                  fadeInImage( images[ "lOpt3" ] );
+                  GameModule.fadeInImage( images[ "lOpt1" ] );
+                  GameModule.fadeInImage( images[ "lOpt2" ] );
+                  GameModule.fadeInImage( images[ "lOpt3" ] );
                   challenge();
                }, 5000 );
 
@@ -865,14 +879,14 @@ let GameModule = ( () => {
             let rightAnswer = [
                "Corect! Eu sunt L Lawliet, cunoscut însă ca fiind doar L de majoritatea lumii.",
                "În anime-ul Death Note, unul dintre cele mai populare titluri recente, am rolul de detectiv.",
-               "Duşmanul meu este Light, un tânăr care m-ar putea omorâ ştiindu-mi doar numele complet. ",
+               "Duşmanul meu este Light, un tânăr care m-ar putea omorî ştiindu-mi doar numele complet. ",
                "Uite-ţi recompensa, vei avea nevoie de ea mai jos! (ESC)"
             ];
 
             let wrongAnswer = [
-               "Greşit! Numele meu este L Lawliet, dar foarte puţină lume ştie acest lucru. Public mi se spune doar L.",
+               "Greşit! Numele meu este L Lawliet, dar foarte puţină lume ştie acest lucru. ^500 Public mi se spune doar L.",
                "În anime-ul Death Note, unul dintre cele mai populare titluri recente, am rolul de detectiv.",
-               "Duşmanul meu este Light, un tânăr care m-ar putea omorâ ştiindu-mi doar numele complet. ",
+               "Duşmanul meu este Light, un tânăr care m-ar putea omorî ştiindu-mi doar numele complet. ",
                "Pentru efortul tău am să îţi dau totuşi recompensa... Vei avea nevoie de ea în căsuţa de mai jos! (ESC)"
             ];
 
@@ -881,6 +895,7 @@ let GameModule = ( () => {
 
                GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
                document.addEventListener( "keypress", rewardPlayer, false );
+               portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
                GameModule.addCanvasImageObj( "lPortrait", "img/game/misc/lPortrait.png", 200, 200 );
                GameModule.drawCanvasImageObj( images[ "lPortrait" ], 0, 0, portraitContext );
                playerData.specialScreen = false;
@@ -900,14 +915,14 @@ let GameModule = ( () => {
                   playerData.lChallengeCompleted = true;
                   GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
 
-                  setTimeout( function () {
+                  setTimeout( () => {
                      GameModule.addCanvasImageObj( "reward01", "img/game/misc/reward01.png", 384, 768 );
                      GameModule.setCanvasImageObjPos( images[ "reward01" ], 334, 152 );
-                     fadeInImage( images[ "reward01" ] );
+                     GameModule.fadeInImage( images[ "reward01" ] );
                      playerData.coins += 24;
                   }, 1000 );
 
-                  setTimeout( function () {
+                  setTimeout( () => {
                      GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
                      GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
                   }, 2500 );
@@ -927,6 +942,12 @@ let GameModule = ( () => {
 
       },
 
+      asuna: () => {
+         if ( GameModule.getDistanceBetweenObjects( images[ "asuna" ], images[ "kirito" ] ) < 48 ) {
+            console.log( "Asuna" );
+         }
+      },
+
       gameAction: ( id ) => {
 
          let obj = npcs.filter( ( obj ) => {
@@ -943,6 +964,15 @@ let GameModule = ( () => {
                GameModule.challengeL();
                break;
 
+            case "asuna":
+               GameModule.asuna();
+               break;
+
+            case "piano":
+               let pianoEffect = new Audio( 'sounds/piano.mp3' );
+               pianoEffect.volume = 0.05;
+               pianoEffect.play();
+
             default:
                break;
 
@@ -950,50 +980,113 @@ let GameModule = ( () => {
 
       },
 
+      addCoins: ( amount ) => {
+         playerData.coins += amount;
+      },
+
       moveToLevel: ( nextLevel ) => {
          let player = images[ "kirito" ];
-         pressedKey = false;
-         shouldAnimate = false;
-         // playerX = 16 * parseInt( player.xPos / 16 );
-         // playerY = 16 * parseInt( player.yPos / 16 );
-         GameModule.setCanvasImageObjPos( player, playerX, playerY );
          switch ( nextLevel ) {
             case 2:
-               listeningToKeyboard = false;
-               $( "#screen-transition" )
-                  .prop( "src", "img/game/gifs/kiriwave.gif" )
-                  .fadeIn( 1500, () => {
 
-                     currentLevel = 2;
-                     GameModule.arrayTo2DLevel( 2 );
-                     GameModule.getNpcs( 2 );
-                     playerX = 44 * 16;
-                     playerY = 32;
-                     GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                     GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
-                     context.clearRect( 0, 0, canvas.width, canvas.height );
-                     foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                     backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                     GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
-                     GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
-                     GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
-                     GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
-                     GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
-                     GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
-                     GameModule.setCanvasBackground( images[ "background" + 2 ] );
+               pressedKey = false;
+               shouldAnimate = false;
+               GameModule.setCanvasImageObjPos( player, playerX, playerY );
+
+               if ( currentLevel == 1 ) {
+
+                  listeningToKeyboard = false;
+                  playerX = 44 * 16;
+                  playerY = 32;
+                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+
+                  $( "#screen-transition" )
+                     .prop( "src", "img/game/gifs/kiriwave.gif" )
+                     .fadeIn( 1500, () => {
+
+                        setTimeout( () => {
+                           $( "#screen-transition" )
+                              .fadeOut( 1500, () => {
+                                 listeningToKeyboard = true;
+                              } )
+                        }, 3000 );
+
+                     } );
+
+               } else {
+
+                  listeningToKeyboard = false;
+                  playerX = 4 * 16;
+                  playerY = 19 * 16;
+                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                  setTimeout( () => {
+                     listeningToKeyboard = true
+                  }, 200 );
+
+               }
+
+               currentLevel = 2;
+               GameModule.arrayTo2DLevel( 2 );
+               GameModule.getNpcs( 2 );
+               context.clearRect( 0, 0, canvas.width, canvas.height );
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
+               GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
+               GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
+               GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
+               GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
+               GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
+               GameModule.setCanvasBackground( images[ "background" + 2 ] );
+               GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+               GameModule.setSpriteFrame( images[ "kirito" ], context );
+               GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
+
+               break;
+
+            case 3:
+               if ( playerData.coins == 24 ) {
+                  pressedKey = false;
+                  shouldAnimate = false;
+                  GameModule.setCanvasImageObjPos( player, playerX, playerY );
+                  listeningToKeyboard = false;
+                  playerData.coins -= 16;
+                  currentLevel = 3;
+                  GameModule.arrayTo2DLevel( 3 );
+                  GameModule.getNpcs( 3 );
+                  playerX = 368;
+                  playerY = 288;
+                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                  context.clearRect( 0, 0, canvas.width, canvas.height );
+                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.addCanvasImageObj( "background3", "img/game/levels/level3.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "foreground3", "img/game/levels/level3Overlay.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "asuna", "img/game/sprites/asunafix.png", 32, 32, 2 );
+                  GameModule.setCanvasBackground( images[ "background" + 3 ] );
+                  GameModule.setCanvasForeground( images[ "foreground" + 3 ] );
+                  GameModule.setCanvasImageObjPos( images[ "asuna" ], 16 * 16, 240 );
+                  GameModule.setSpriteFrame( images[ "kirito" ], context );
+                  GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
+                  sheepAnimate = true;
+
+                  listeningToKeyboard = true;
+               } else {
+
+                  GameModule.addCanvasImageObj( "tax01", "img/game/misc/tax01.png", 384, 768 );
+                  GameModule.setCanvasImageObjPos( images[ "tax01" ], 334, 152 );
+                  GameModule.fadeInImage( images[ "tax01" ] );
+
+                  setTimeout( () => {
                      GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
                      GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
-                     GameModule.setSpriteFrame( images[ "kirito" ], context );
-                     GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
+                  }, 2500 );
 
-                     setTimeout( () => {
-                        $( "#screen-transition" )
-                           .fadeOut( 1500, function () {
-                              listeningToKeyboard = true;
-                           } )
-                     }, 3000 );
-
-                  } );
+               }
                break;
             default:
 
