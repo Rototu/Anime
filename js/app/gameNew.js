@@ -40,6 +40,8 @@ let GameModule = ( () => {
    let shouldAnimate = false,
       spriteAnimate = true,
       sheepAnimate = true,
+      fireAnimate = true,
+      asunaAnimate = true,
       crowAnimate = true;
 
    let pressedKey = 0,
@@ -86,6 +88,10 @@ let GameModule = ( () => {
                         listeningToKeyboard = true;
                         GameModule.loadAudio();
                         GameModule.loopAudio( Math.floor( Math.random() * ( 7 ) ) );
+
+                        $( "#screen-transition" )
+                           .prop( "src", "img/game/gifs/kiriwave.gif" );
+
                      } )
                }, 500 );
             } );
@@ -257,13 +263,13 @@ let GameModule = ( () => {
                   spriteAnimate = true;
                }
 
-               GameModule.moveSprite( player, Math.min( progress * 16 / 160, 16 ) );
+               GameModule.movePlayerChar( player, Math.min( progress * 16 / 160, 16 ) );
                context.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setSpriteFrame( player, context );
 
             } else {
 
-               GameModule.moveSprite( player, 16 );
+               GameModule.movePlayerChar( player, 16 );
 
                playerX = 16 * parseInt( player.xPos / 16 );
                playerY = 16 * parseInt( player.yPos / 16 );
@@ -279,71 +285,273 @@ let GameModule = ( () => {
          switch ( currentLevel ) {
 
             case 1:
-               if ( globalProgress % 300 <= 100 && crowAnimate ) {
-                  GameModule.getNextSpriteFrame( images[ "crow" ] );
-                  crowAnimate = false;
-                  GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
-                  GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-                  GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
-               }
-               if ( globalProgress % 300 >= 100 && !crowAnimate ) {
-                  crowAnimate = true;
-               }
+               GameModule.crow( globalProgress );
                break;
 
             case 2:
-               if ( globalProgress % 400 <= 100 && sheepAnimate ) {
-                  let sheep = images[ "sheep" ];
-                  GameModule.getNextSpriteFrame( sheep );
-                  sheepAnimate = false;
-                  GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
-                  GameModule.setSpriteFrame( sheep, backgroundContext );
-                  if ( sheep.framesNumber == 6 && sheep.currentFrame == 5 ) {
-                     sheep.orientation = 1;
-                     sheep.framesNumber = 5;
-                  } else if ( sheep.framesNumber == 5 && sheep.currentFrame == 4 ) {
-                     sheep.orientation = 2;
-                     sheep.framesNumber = 4;
-                  } else if ( sheep.orientation == 2 ) {
-                     sheep.xPos = 8 * ( 35 + sheep.currentFrame );
-                     if ( sheep.currentFrame == 3 ) {
-                        sheep.orientation = 3;
-                        sheep.framesNumber = 4;
-                     }
-                  } else if ( sheep.orientation == 3 ) {
-                     sheep.xPos = 8 * ( 37 - sheep.currentFrame );
-                     if ( sheep.currentFrame == 3 ) {
-                        sheep.orientation = 4;
-                        sheep.framesNumber = 3;
-                     }
-                  } else if ( sheep.framesNumber == 3 && sheep.currentFrame == 2 ) {
-                     sheep.orientation = 0;
-                     sheep.framesNumber = 6;
-                  }
-               }
-               if ( globalProgress % 400 >= 100 && !sheepAnimate ) {
-                  sheepAnimate = true;
-               }
+               GameModule.sheep( globalProgress );
                break;
 
             case 3:
-               if ( globalProgress % 400 < 100 && sheepAnimate ) {
-                  sheepAnimate = false;
-                  let asuna = images[ "asuna" ];
-                  GameModule.getNextSpriteFrame( asuna );
-                  sheepAnimate = false;
-                  GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
-                  GameModule.setSpriteFrame( asuna, backgroundContext );
-               } else if ( globalProgress % 400 >= 100 && !sheepAnimate ) {
-                  sheepAnimate = true;
-               }
+               GameModule.houseSpriteAnimations( globalProgress );
+               break;
+
+            case 4:
                break;
 
             default:
+               break;
 
          }
 
          requestAnimationFrame( GameModule.timer )
+
+      },
+
+      fireBlast: ( x, y ) => {
+
+         let tower = images[ "tower" ];
+
+         let towerAnimate = setInterval( () => {
+            context.clearRect( 0, 0, canvas.width, canvas.height );
+            GameModule.getNextSpriteFrame( tower );
+            GameModule.setSpriteFrame( tower, context );
+            if ( tower.currentFrame == 8 ) {
+               clearInterval( towerAnimate );
+               laser();
+            }
+         }, 80 );
+
+         let laser = () => {
+            context.lineWidth = 5;
+            context.lineCap = "round";
+            context.strokeStyle = '#c80000';
+            context.beginPath();
+            context.moveTo( 105, 62 );
+            context.lineTo( x, y );
+            context.moveTo( 105, 60 );
+            context.lineTo( x, y );
+            context.moveTo( 105, 64 );
+            context.lineTo( x, y );
+            context.stroke();
+            GameModule.setCanvasImageObjPos( images[ "blast" ], x - 32, y - 31 );
+            GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
+            let laserEffect = new Audio( 'sounds/bomb.mp3' );
+            laserEffect.volume = 0.35;
+            laserEffect.play();
+            setTimeout( () => {
+               context.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.getNextSpriteFrame( tower );
+               GameModule.setSpriteFrame( tower, context );
+               GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
+               GameModule.titanShake();
+               setTimeout( () => {
+                  context.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.setSpriteFrame( tower, context );
+               }, 120 );
+            }, 120 );
+         }
+
+      },
+
+      goku: () => {
+
+         let goku = images[ "goku" ];
+         let titan = images[ "titan" ];
+
+         goku.yPos = 282;
+         goku.xPos = -66;
+
+         let gokuMove = setInterval( () => {
+
+            if ( goku.xPos < 120 ) {
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.setCanvasBackground( images[ "background" + 4 ] );
+               goku.xPos += 1;
+               GameModule.setSpriteFrame( goku, foregroundContext );
+               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+            } else {
+               clearInterval( gokuMove );
+               kamehameha();
+            }
+
+         }, 10 );
+
+         let kamehameha = () => {
+            let blastStarted = false;
+            let gokuAnimate = setInterval( () => {
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.setCanvasBackground( images[ "background" + 4 ] );
+               GameModule.getNextSpriteFrame( goku );
+               GameModule.setSpriteFrame( goku, foregroundContext );
+               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+               if ( goku.currentFrame == 5 ) {
+                  if ( !blastStarted ) {
+                     GameModule.meteorShower();
+                  }
+                  goku.currentFrame = 2;
+               }
+            }, 200 );
+         };
+
+      },
+
+      meteorShower: () => {
+
+      },
+
+      titanAttack: () => {
+
+         let titan = images[ "titan" ];
+
+         titan.yPos = 0;
+         titan.xPos = 768;
+
+         let titanInit = setInterval( () => {
+
+            if ( titan.xPos > 124 ) {
+               GameModule.setCanvasBackground( images[ "background" + 4 ] );
+               titan.xPos -= 2;
+               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+            } else {
+               clearInterval( titanInit );
+            }
+
+         }, 10 );
+
+      },
+
+      titanShake: () => {
+
+         let titan = images[ "titan" ];
+
+         let shakenLeft = false,
+            shakenRight = false;
+
+         let shake = setInterval( () => {
+
+            if ( !shakenLeft ) {
+               if ( titan.xPos > 114 ) {
+                  GameModule.setCanvasBackground( images[ "background" + 4 ] );
+                  titan.xPos -= 3;
+                  GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+               } else {
+                  shakenLeft = true;
+               }
+            } else if ( !shakenRight ) {
+               if ( titan.xPos < 138 ) {
+                  GameModule.setCanvasBackground( images[ "background" + 4 ] );
+                  titan.xPos += 3;
+                  GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+               } else {
+                  shakenRight = true;
+               }
+            } else {
+               if ( titan.xPos > 124 ) {
+                  GameModule.setCanvasBackground( images[ "background" + 4 ] );
+                  titan.xPos -= 3;
+                  GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+               } else {
+                  GameModule.setCanvasBackground( images[ "background" + 4 ] );
+                  titan.xPos = 124;
+                  GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+                  clearInterval( shake );
+               }
+            }
+
+         }, 10 );
+
+      },
+
+      crow: ( progress ) => {
+
+         if ( progress % 300 <= 100 && crowAnimate ) {
+            GameModule.getNextSpriteFrame( images[ "crow" ] );
+            crowAnimate = false;
+            GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
+            GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
+            GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
+         }
+         if ( progress % 300 >= 100 && !crowAnimate ) {
+            crowAnimate = true;
+         }
+
+      },
+
+      houseSpriteAnimations: ( progress ) => {
+
+         if ( progress % 100 < 60 && fireAnimate ) {
+
+            fireAnimate = false;
+            let fire = images[ "fire" ];
+            GameModule.getNextSpriteFrame( fire );
+            GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+            GameModule.setSpriteFrame( fire, backgroundContext );
+            GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
+
+            if ( progress % 400 < 60 && asunaAnimate ) {
+               asunaAnimate = false;
+               GameModule.getNextSpriteFrame( images[ "asuna" ] );
+            } else if ( progress % 400 >= 60 && !asunaAnimate ) {
+               asunaAnimate = true;
+            }
+
+         } else if ( progress % 100 >= 60 && !fireAnimate ) {
+            fireAnimate = true;
+         }
+
+      },
+
+      sheep: ( progress ) => {
+
+         if ( progress % 400 <= 100 && sheepAnimate ) {
+
+            let sheep = images[ "sheep" ];
+            GameModule.getNextSpriteFrame( sheep );
+            sheepAnimate = false;
+            GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
+            GameModule.setSpriteFrame( sheep, backgroundContext );
+
+            if ( sheep.framesNumber == 6 && sheep.currentFrame == 5 ) {
+
+               sheep.orientation = 1;
+               sheep.framesNumber = 5;
+
+            } else if ( sheep.framesNumber == 5 && sheep.currentFrame == 4 ) {
+
+               sheep.orientation = 2;
+               sheep.framesNumber = 4;
+
+            } else if ( sheep.orientation == 2 ) {
+
+               sheep.xPos = 8 * ( 35 + sheep.currentFrame );
+
+               if ( sheep.currentFrame == 3 ) {
+                  sheep.orientation = 3;
+                  sheep.framesNumber = 4;
+               }
+
+            } else if ( sheep.orientation == 3 ) {
+
+               sheep.xPos = 8 * ( 37 - sheep.currentFrame );
+
+               if ( sheep.currentFrame == 3 ) {
+                  sheep.orientation = 4;
+                  sheep.framesNumber = 3;
+               }
+
+            } else if ( sheep.framesNumber == 3 && sheep.currentFrame == 2 ) {
+
+               sheep.orientation = 0;
+               sheep.framesNumber = 6;
+
+            }
+
+         }
+
+         if ( progress % 400 >= 100 && !sheepAnimate ) {
+            sheepAnimate = true;
+         }
 
       },
 
@@ -383,7 +591,7 @@ let GameModule = ( () => {
          return Math.hypot( ( obj1Position.xCenterPos - obj2Position.xCenterPos ), ( obj1Position.yCenterPos - obj2Position.yCenterPos ) );
       },
 
-      moveSprite: ( spriteObj, dist ) => {
+      movePlayerChar: ( spriteObj, dist ) => {
 
          let player = images[ "kirito" ];
 
@@ -911,7 +1119,7 @@ let GameModule = ( () => {
                let char = event.which || event.keyCode;
                if ( char == 27 ) {
 
-                  myGame.removeEventListener( "click", rewardPlayer, false );
+                  document.removeEventListener( "keypress", rewardPlayer, false );
                   playerData.lChallengeCompleted = true;
                   GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
 
@@ -944,7 +1152,23 @@ let GameModule = ( () => {
 
       asuna: () => {
          if ( GameModule.getDistanceBetweenObjects( images[ "asuna" ], images[ "kirito" ] ) < 48 ) {
-            console.log( "Asuna" );
+
+            let asunaTxt = [ "Kirito, prietenul meu drag, în sfârşit ai venit la mine acasă!",
+               "Sţiu că eşti obosit de la atâta drum, nu vrei să joci nişte jocuri?",
+               "Probabil te-a stresat şi ciudatul acela de afară, detectivul L...",
+               "Alege ce vrei să joci! Dacă nu îţi place nici un joc şi preferi să înveţi ceva în loc,",
+               "apasă tasta 'esc' şi du-te la globul din colţul camerei, sau cântă un pic la pian!"
+            ];
+
+            portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
+            GameModule.addCanvasImageObj( "asunaPortrait", "img/game/misc/asuna.png", 200, 200 );
+            GameModule.drawCanvasImageObj( images[ "asunaPortrait" ], 0, 0, portraitContext );
+
+            $( "#alert" )
+               .fadeIn( 500, () => {
+                  GameModule.alertTextDisplay( asunaTxt );
+                  // document.addEventListener( "keypress", closeGame, false );
+               } );
          }
       },
 
@@ -985,9 +1209,33 @@ let GameModule = ( () => {
       },
 
       moveToLevel: ( nextLevel ) => {
+
          let player = images[ "kirito" ];
+
          switch ( nextLevel ) {
+
             case 2:
+
+               let level2Load = () => {
+                  currentLevel = 2;
+                  GameModule.arrayTo2DLevel( 2 );
+                  GameModule.getNpcs( 2 );
+                  context.clearRect( 0, 0, canvas.width, canvas.height );
+                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
+                  GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
+                  GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
+                  GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
+                  GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
+                  GameModule.setCanvasBackground( images[ "background" + 2 ] );
+                  GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+                  GameModule.setSpriteFrame( images[ "kirito" ], context );
+                  GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
+               };
+
 
                pressedKey = false;
                shouldAnimate = false;
@@ -1002,8 +1250,9 @@ let GameModule = ( () => {
                   GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
 
                   $( "#screen-transition" )
-                     .prop( "src", "img/game/gifs/kiriwave.gif" )
                      .fadeIn( 1500, () => {
+
+                        level2Load();
 
                         setTimeout( () => {
                            $( "#screen-transition" )
@@ -1020,61 +1269,51 @@ let GameModule = ( () => {
                   playerX = 4 * 16;
                   playerY = 19 * 16;
                   GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
                   setTimeout( () => {
-                     listeningToKeyboard = true
+                     listeningToKeyboard = true;
                   }, 200 );
+                  playerData.coins += 16;
+                  level2Load();
 
                }
-
-               currentLevel = 2;
-               GameModule.arrayTo2DLevel( 2 );
-               GameModule.getNpcs( 2 );
-               context.clearRect( 0, 0, canvas.width, canvas.height );
-               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
-               GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
-               GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
-               GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
-               GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
-               GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
-               GameModule.setCanvasBackground( images[ "background" + 2 ] );
-               GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
-               GameModule.setSpriteFrame( images[ "kirito" ], context );
-               GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
 
                break;
 
             case 3:
-               if ( playerData.coins == 24 ) {
+               if ( playerData.coins >= 16 ) {
+
                   pressedKey = false;
                   shouldAnimate = false;
                   GameModule.setCanvasImageObjPos( player, playerX, playerY );
                   listeningToKeyboard = false;
+
                   playerData.coins -= 16;
                   currentLevel = 3;
                   GameModule.arrayTo2DLevel( 3 );
                   GameModule.getNpcs( 3 );
                   playerX = 368;
                   playerY = 288;
+
                   GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+                  GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
                   context.clearRect( 0, 0, canvas.width, canvas.height );
                   foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                   backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                   GameModule.addCanvasImageObj( "background3", "img/game/levels/level3.png", 384, 768 );
                   GameModule.addCanvasImageObj( "foreground3", "img/game/levels/level3Overlay.png", 384, 768 );
                   GameModule.addCanvasImageObj( "asuna", "img/game/sprites/asunafix.png", 32, 32, 2 );
+                  GameModule.addCanvasImageObj( "fire", "img/game/sprites/fire.png", 32, 32, 7 );
                   GameModule.setCanvasBackground( images[ "background" + 3 ] );
                   GameModule.setCanvasForeground( images[ "foreground" + 3 ] );
                   GameModule.setCanvasImageObjPos( images[ "asuna" ], 16 * 16, 240 );
+                  GameModule.setCanvasImageObjPos( images[ "fire" ], 29 * 16, 80 );
                   GameModule.setSpriteFrame( images[ "kirito" ], context );
                   GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
-                  sheepAnimate = true;
+                  GameModule.setSpriteFrame( images[ "fire" ], backgroundContext );
 
                   listeningToKeyboard = true;
+
                } else {
 
                   GameModule.addCanvasImageObj( "tax01", "img/game/misc/tax01.png", 384, 768 );
@@ -1087,8 +1326,47 @@ let GameModule = ( () => {
                   }, 2500 );
 
                }
+
                break;
+
+            case 4:
+
+               pressedKey = false;
+               shouldAnimate = false;
+               GameModule.setCanvasImageObjPos( player, playerX, playerY );
+               listeningToKeyboard = false;
+
+               currentLevel = 4;
+
+               context.clearRect( 0, 0, canvas.width, canvas.height );
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.addCanvasImageObj( "background4", "img/game/levels/sky.png", 384, 768 );
+               GameModule.addCanvasImageObj( "foreground4", "img/game/levels/transparent.png", 384, 768 );
+               GameModule.addCanvasImageObj( "tower", "img/game/sprites/towerW169H350.png", 350, 169, 9 );
+               GameModule.addCanvasImageObj( "goku", "img/game/sprites/goku1.png", 102, 66, 6 );
+               GameModule.addCanvasImageObj( "meteor", "img/game/sprites/meteor.png", 331, 303, 10 );
+               GameModule.addCanvasImageObj( "blast", "img/game/misc/blast.png", 64, 57 );
+               GameModule.addCanvasImageObj( "titan", "img/game/misc/titan.png", 384, 655 );
+               GameModule.setCanvasBackground( images[ "background" + 4 ] );
+               GameModule.setCanvasForeground( images[ "foreground" + 4 ] );
+               GameModule.setCanvasImageObjPos( images[ "tower" ], 20, 44 );
+               GameModule.setSpriteFrame( images[ "tower" ], context );
+
+               listeningToKeyboard = true;
+
+               break;
+
+            case 5:
+               currentLevel = 5;
+               break;
+
+            case 6:
+               currentLevel = 6;
+               break;
+
             default:
+               break;
 
          }
       }
