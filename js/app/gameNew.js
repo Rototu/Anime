@@ -314,13 +314,13 @@ let GameModule = ( () => {
 
          let towerAnimate = setInterval( () => {
             context.clearRect( 0, 0, canvas.width, canvas.height );
-            GameModule.getNextSpriteFrame( tower );
             GameModule.setSpriteFrame( tower, context );
             if ( tower.currentFrame == 8 ) {
                clearInterval( towerAnimate );
                laser();
             }
-         }, 80 );
+            GameModule.getNextSpriteFrame( tower );
+         }, 120 );
 
          let laser = () => {
             context.lineWidth = 5;
@@ -341,7 +341,6 @@ let GameModule = ( () => {
             laserEffect.play();
             setTimeout( () => {
                context.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.getNextSpriteFrame( tower );
                GameModule.setSpriteFrame( tower, context );
                GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
                GameModule.titanShake();
@@ -366,10 +365,8 @@ let GameModule = ( () => {
 
             if ( goku.xPos < 120 ) {
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.setCanvasBackground( images[ "background" + 4 ] );
                goku.xPos += 1;
                GameModule.setSpriteFrame( goku, foregroundContext );
-               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
             } else {
                clearInterval( gokuMove );
                kamehameha();
@@ -379,24 +376,109 @@ let GameModule = ( () => {
 
          let kamehameha = () => {
             let blastStarted = false;
+            let tInterval = 200;
             let gokuAnimate = setInterval( () => {
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.setCanvasBackground( images[ "background" + 4 ] );
-               GameModule.getNextSpriteFrame( goku );
                GameModule.setSpriteFrame( goku, foregroundContext );
-               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
                if ( goku.currentFrame == 5 ) {
-                  if ( !blastStarted ) {
-                     GameModule.meteorShower();
-                  }
                   goku.currentFrame = 2;
+                  if ( !blastStarted ) {
+                     GameModule.kamehameha();
+                     blastStarted = true;
+                     tInterval = 300;
+                     clearInterval( gokuAnimate );
+                  }
                }
-            }, 200 );
+               GameModule.getNextSpriteFrame( goku );
+            }, tInterval );
          };
 
       },
 
-      meteorShower: () => {
+      kamehameha: () => {
+
+         let kame = images[ "kamehameha" ],
+            goku = images[ "goku" ],
+            kameX = 90,
+            kameY;
+
+         kame.currentFrame = 0;
+
+         let drawRotatedBlast = ( x, y ) => {
+            if ( x % 40 == 0 ) {
+               if ( goku.currentFrame == 5 ) {
+                  goku.currentFrame = 2;
+               }
+               GameModule.getNextSpriteFrame( goku );
+            }
+            kame.xPos = 0;
+            kame.yPos = 0;
+            foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+            GameModule.setSpriteFrame( goku, foregroundContext );
+            foregroundContext.save();
+            foregroundContext.translate( x + 64, y + 64 );
+            foregroundContext.rotate( 0.12125902920621191 );
+            GameModule.setSpriteFrame( kame, foregroundContext );
+            foregroundContext.restore();
+         }
+
+         let kameInterval = setInterval( () => {
+
+            if ( kameX < 506 - 64 ) {
+
+               kameX += 5;
+               kameY = 2 * 269 - 64 - Math.round( 0.20 * kameX + 258 );
+               drawRotatedBlast( kameX, kameY );
+
+               if ( kameX == 100 ) {
+                  GameModule.getNextSpriteFrame( kame );
+               } else if ( kameX == 200 ) {
+                  GameModule.getNextSpriteFrame( kame );
+               } else if ( kameX == 200 ) {
+                  GameModule.getNextSpriteFrame( kame );
+               } else if ( kameX == 300 ) {
+                  GameModule.getNextSpriteFrame( kame );
+               } else if ( kameX == 400 ) {
+                  GameModule.getNextSpriteFrame( kame );
+               }
+
+            } else {
+
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.setSpriteFrame( goku, foregroundContext );
+               GameModule.titanShake();
+               clearInterval( kameInterval );
+
+               let tInterval = 200;
+               let gokuAnimate = setInterval( () => {
+                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.setSpriteFrame( goku, foregroundContext );
+                  if ( goku.currentFrame == 5 ) {
+
+                     clearInterval( gokuAnimate );
+                     foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+
+                     let gokuMove = setInterval( () => {
+
+                        if ( goku.xPos > -67 ) {
+                           foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                           goku.xPos -= 2;
+                           GameModule.setSpriteFrame( goku, foregroundContext );
+                        } else {
+                           clearInterval( gokuMove );
+                           foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                           GameModule.getNextSpriteFrame( kame );
+                        }
+
+                     }, 10 );
+
+                  }
+                  GameModule.getNextSpriteFrame( goku );
+               }, tInterval );
+
+            }
+
+         }, 10 );
 
       },
 
@@ -1346,6 +1428,7 @@ let GameModule = ( () => {
                GameModule.addCanvasImageObj( "tower", "img/game/sprites/towerW169H350.png", 350, 169, 9 );
                GameModule.addCanvasImageObj( "goku", "img/game/sprites/goku1.png", 102, 66, 6 );
                GameModule.addCanvasImageObj( "meteor", "img/game/sprites/meteor.png", 331, 303, 10 );
+               GameModule.addCanvasImageObj( "kamehameha", "img/game/sprites/kamehameha.png", 128, 128, 6 );
                GameModule.addCanvasImageObj( "blast", "img/game/misc/blast.png", 64, 57 );
                GameModule.addCanvasImageObj( "titan", "img/game/misc/titan.png", 384, 655 );
                GameModule.setCanvasBackground( images[ "background" + 4 ] );
@@ -1353,7 +1436,7 @@ let GameModule = ( () => {
                GameModule.setCanvasImageObjPos( images[ "tower" ], 20, 44 );
                GameModule.setSpriteFrame( images[ "tower" ], context );
 
-               listeningToKeyboard = true;
+               // listeningToKeyboard = true;
 
                break;
 
