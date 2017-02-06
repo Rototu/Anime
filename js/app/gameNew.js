@@ -1492,9 +1492,11 @@ let GameModule = ( () => {
                let pianoEffect = new Audio( 'sounds/piano.mp3' );
                pianoEffect.volume = 0.05;
                pianoEffect.play();
+               break;
 
             case "back":
                window.location.href = "index.html";
+               break;
 
             default:
                break;
