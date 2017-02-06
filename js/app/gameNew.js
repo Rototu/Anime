@@ -154,6 +154,22 @@ let GameModule = ( () => {
             GameModule.loopAudio( i );
          };
 
+         let specialSong = new Audio( 'sounds/attackOnTitan.mp3' );
+         specialSong.volume = 0.05;
+
+         document.addEventListener( "attack", () => {
+            currentSong.pause();
+            specialSong.play();
+            specialSong.onended = () => {
+               specialSong.play();
+            };
+         }, false );
+
+         document.addEventListener( "music", () => {
+            specialSong.pause();
+            currentSong.play();
+         }, false );
+
       },
 
       playerControls: () => {
@@ -361,22 +377,54 @@ let GameModule = ( () => {
          goku.yPos = 282;
          goku.xPos = -66;
 
-         let gokuMove = setInterval( () => {
+         let gokuTxt = [ "Cred că ar fi timpul să te ajut!" ];
+         let gokuKameTxt = [ "KAMEHAMEHAAAAAA!!!" ];
 
-            if ( goku.xPos < 120 ) {
-               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               goku.xPos += 1;
-               GameModule.setSpriteFrame( goku, foregroundContext );
-            } else {
-               clearInterval( gokuMove );
-               kamehameha();
-            }
+         portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
+         GameModule.addCanvasImageObj( "gokuPortrait", "img/game/misc/goku.png", 200, 200 );
+         GameModule.drawCanvasImageObj( images[ "gokuPortrait" ], 0, 0, portraitContext );
 
-         }, 10 );
+         $( "#alert" )
+            .fadeIn( 500, () => {
+               GameModule.alertTextDisplay( gokuTxt );
+               setTimeout( () => {
+
+                  $( "#alert" )
+                     .fadeOut( 500, () => {
+
+                        let gokuMove = setInterval( () => {
+
+                           if ( goku.xPos < 120 ) {
+                              foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                              goku.xPos += 1;
+                              GameModule.setSpriteFrame( goku, foregroundContext );
+                           } else {
+                              clearInterval( gokuMove );
+                              let kameAudio = new Audio( 'sounds/Kamehameha.mp3' );
+                              kameAudio.volume = 1;
+                              kameAudio.play();
+                              $( "#alert" )
+                                 .fadeIn( 500, () => {
+                                    GameModule.alertTextDisplay( gokuKameTxt );
+                                    setTimeout( function () {
+                                       $( "#alert" )
+                                          .fadeOut( 500, () => {
+                                             setTimeout( kamehameha, 2000 );
+                                          } );
+                                    }, 5000 );
+                                 } );
+                           }
+
+                        }, 10 );
+
+                     } );
+
+               }, 3000 );
+            } );
 
          let kamehameha = () => {
             let blastStarted = false;
-            let tInterval = 200;
+            let tInterval = 400;
             let gokuAnimate = setInterval( () => {
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setSpriteFrame( goku, foregroundContext );
@@ -468,6 +516,7 @@ let GameModule = ( () => {
                            clearInterval( gokuMove );
                            foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                            GameModule.getNextSpriteFrame( kame );
+                           setTimeout( GameModule.titanRetreat, 4500 );
                         }
 
                      }, 10 );
@@ -478,7 +527,7 @@ let GameModule = ( () => {
 
             }
 
-         }, 10 );
+         }, 40 );
 
       },
 
@@ -497,6 +546,34 @@ let GameModule = ( () => {
                GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
             } else {
                clearInterval( titanInit );
+               GameModule.quiz();
+            }
+
+         }, 10 );
+
+      },
+
+      titanRetreat: () => {
+
+         let titan = images[ "titan" ];
+
+         titan.yPos = 0;
+         titan.xPos = 124;
+
+         let titanInit = setInterval( () => {
+
+            if ( titan.xPos < 768 ) {
+               GameModule.setCanvasBackground( images[ "background" + 4 ] );
+               titan.xPos += 2;
+               GameModule.drawCanvasImageObj( titan, 0, 0, backgroundContext );
+            } else {
+               clearInterval( titanInit );
+               let event = new CustomEvent( 'music', {
+                  'detail': "iAmNoPotato"
+               } );
+               document.dispatchEvent( event );
+               GameModule.addCoins( 16 );
+               GameModule.moveToLevel( 3 );
             }
 
          }, 10 );
@@ -545,16 +622,144 @@ let GameModule = ( () => {
 
       },
 
+      quiz: () => {
+
+         let myGame = document.getElementById( "game" );
+         let choices = LevelModule.getChoices();
+         let counter = 0;
+
+         let getRandomIntInclusive = ( min, max ) => {
+            min = Math.ceil( min );
+            max = Math.floor( max );
+            return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+         }
+
+         let closeGame = ( e ) => {
+
+            console.log( e.keyCode );
+
+            if ( e.keyCode === 27 ) {
+               GameModule.addCoins( 16 );
+               GameModule.moveToLevel( 3 );
+               myGame.removeEventListener( 'click', optionSelect, false );
+               document.removeEventListener( 'keypress', closeGame, false );
+            }
+
+         }
+
+         let optionSelect = ( event ) => {
+
+            let mouseLeft = event.layerX;
+            let mouseTop = event.layerY;
+
+            if ( mouseTop >= 240 && mouseTop <= 336 ) {
+               if ( mouseLeft >= 232 && mouseLeft <= 472 ) {
+                  let selectedOption = Math.floor( ( mouseLeft - 232 ) / 80 );
+                  let event = new CustomEvent( 'optionClicked', {
+                     'detail': selectedOption
+                  } );
+                  myGame.dispatchEvent( event );
+               }
+            }
+
+         }
+
+         let quizHover = ( event ) => {
+
+
+            let mouseLeft = event.layerX;
+            let mouseTop = event.layerY;
+
+            if ( mouseTop >= 240 && mouseTop <= 336 ) {
+               if ( mouseLeft >= 232 && mouseLeft <= 472 ) {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/pointing_hand.cur'), pointer`
+                  } );
+               } else {
+                  $game.css( {
+                     cursor: `url('img/game/cursors/left_ptr.cur'), default`
+                  } );
+               }
+            } else {
+               $game.css( {
+                  cursor: `url('img/game/cursors/left_ptr.cur'), default`
+               } );
+            }
+
+         }
+
+         myGame.addEventListener( 'click', optionSelect, false );
+         myGame.addEventListener( 'mousemove', quizHover, false );
+         document.addEventListener( 'keypress', closeGame, false );
+
+         GameModule.addCanvasImageObj( "whiteBar", "img/game/misc/whiteBar.png", 32, 768 );
+         GameModule.setCanvasImageObjPos( images[ "whiteBar" ], 0, 0 );
+
+         let nextQuizOption = () => {
+
+            let option = getRandomIntInclusive( 0, 2 );
+            console.log( option );
+
+            context.clearRect( 0, 0, canvas.width, canvas.height );
+            GameModule.addCanvasImageObj( "choice" + counter, choices[ counter ].imgSrc, 128, 256 );
+            GameModule.setCanvasImageObjPos( images[ "choice" + counter ], 224, 224 );
+            GameModule.fadeInImage( images[ "choice" + counter ] );
+            GameModule.drawCanvasImageObj( images[ "choice" + counter ], 0, 0, context );
+            GameModule.drawCanvasImageObj( images[ "tower" ], 0, 0, context );
+            GameModule.drawCanvasImageObj( images[ "whiteBar" ], 0, 0, context );
+            foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+            GameModule.fadeInText( choices[ counter ].characters[ option ], 320, 20 );
+
+            let optionCompare = ( e ) => {
+
+               let moveOn = () => {
+                  myGame.removeEventListener( 'optionClicked', optionCompare, false );
+                  if ( counter < 7 ) {
+                     counter++;
+                     nextQuizOption();
+                  } else {
+                     myGame.removeEventListener( 'click', optionSelect, false );
+                     document.removeEventListener( 'keypress', closeGame, false );
+                     context.clearRect( 0, 0, canvas.width, canvas.height );
+                     GameModule.drawCanvasImageObj( images[ "tower" ], 0, 0, context );
+                     GameModule.goku();
+                  }
+               }
+
+               if ( e.detail == option ) {
+                  // let yay = new Audio( 'sounds/yay.mp3' );
+                  // yay.volume = 1;
+                  // yay.play();
+                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+                  GameModule.fireBlast( getRandomIntInclusive( 600, 700 ), getRandomIntInclusive( 100, 300 ) );
+                  setTimeout( moveOn, 1500 );
+               } else {
+                  let boo = new Audio( 'sounds/boo.mp3' );
+                  boo.volume = 1;
+                  boo.play();
+                  moveOn();
+               }
+
+            }
+
+            myGame.addEventListener( 'optionClicked', optionCompare, false );
+
+         }
+
+         nextQuizOption();
+
+      },
+
       crow: ( progress ) => {
 
-         if ( progress % 300 <= 100 && crowAnimate ) {
+         if ( progress % 150 <= 100 && crowAnimate ) {
             GameModule.getNextSpriteFrame( images[ "crow" ] );
             crowAnimate = false;
             GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
             GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
             GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
          }
-         if ( progress % 300 >= 100 && !crowAnimate ) {
+         if ( progress % 150 >= 100 && !crowAnimate ) {
             crowAnimate = true;
          }
 
@@ -1236,20 +1441,29 @@ let GameModule = ( () => {
          if ( GameModule.getDistanceBetweenObjects( images[ "asuna" ], images[ "kirito" ] ) < 48 ) {
 
             let asunaTxt = [ "Kirito, prietenul meu drag, în sfârşit ai venit la mine acasă!",
-               "Sţiu că eşti obosit de la atâta drum, nu vrei să joci nişte jocuri?",
-               "Probabil te-a stresat şi ciudatul acela de afară, detectivul L...",
-               "Alege ce vrei să joci! Dacă nu îţi place nici un joc şi preferi să înveţi ceva în loc,",
-               "apasă tasta 'esc' şi du-te la globul din colţul camerei, sau cântă un pic la pian!"
+               "Sţiu că eşti obosit de la atâta drum, nu vrei să joci un joc?",
+               "Trebuie să recunoşti personaje din anime-uri!",
+               "Dacă nu îţi place jocul şi preferi să înveţi ceva în loc,",
+               "apasă tasta 'esc' şi du-te la globul din colţul camerei, sau cântă un pic la pian."
             ];
 
             portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
             GameModule.addCanvasImageObj( "asunaPortrait", "img/game/misc/asuna.png", 200, 200 );
             GameModule.drawCanvasImageObj( images[ "asunaPortrait" ], 0, 0, portraitContext );
 
+            let closeGame = ( e ) => {
+               if ( e.keyCode === 27 ) {
+                  $( "#alert" )
+                     .fadeOut( 500, () => {} );
+                  document.removeEventListener( "keypress", closeGame, false );
+                  GameModule.moveToLevel( 4 );
+               }
+            }
+
             $( "#alert" )
                .fadeIn( 500, () => {
+                  document.addEventListener( "keypress", closeGame, false );
                   GameModule.alertTextDisplay( asunaTxt );
-                  // document.addEventListener( "keypress", closeGame, false );
                } );
          }
       },
@@ -1278,6 +1492,9 @@ let GameModule = ( () => {
                let pianoEffect = new Audio( 'sounds/piano.mp3' );
                pianoEffect.volume = 0.05;
                pianoEffect.play();
+
+            case "back":
+               window.location.href = "index.html";
 
             default:
                break;
@@ -1413,6 +1630,11 @@ let GameModule = ( () => {
 
             case 4:
 
+               let event = new CustomEvent( 'attack', {
+                  'detail': "iAmPotato"
+               } );
+               document.dispatchEvent( event );
+
                pressedKey = false;
                shouldAnimate = false;
                GameModule.setCanvasImageObjPos( player, playerX, playerY );
@@ -1437,6 +1659,7 @@ let GameModule = ( () => {
                GameModule.setSpriteFrame( images[ "tower" ], context );
 
                // listeningToKeyboard = true;
+               GameModule.titanAttack();
 
                break;
 
