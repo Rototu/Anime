@@ -1,0 +1,38 @@
+* {
+   box-sizing: border-box;
+}
+
+html {
+   margin: 0;
+}
+
+body {
+   background-color: white;
+   position: absolute;
+   margin: 0;
+   top: 0;
+   left: 0;
+   font-family: 'Roboto', sans-serif;
+}
+
+a {
+   color: inherit;
+   text-decoration: none;
+}
+
+.noselect {
+   cursor: default;
+   -webkit-touch-callout: none;
+   /* iOS Safari */
+   -webkit-user-select: none;
+   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;
+   /* Konqueror */
+   -moz-user-select: none;
+   /* Firefox */
+   -ms-user-select: none;
+   /* IE/Edge */
+   user-select: none;
+   /* non-prefixed version, currently
+   not supported by any browser */
+}
