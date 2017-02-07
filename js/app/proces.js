@@ -12,6 +12,8 @@ var MainModule = ( () => {
    let scrollAcc = 0;
    let time = date.getTime();
    let bodyWidth, bodyHeight;
+   let scrollAmount = 0,
+      scrolling = false;
 
    return {
 
@@ -55,20 +57,46 @@ var MainModule = ( () => {
 
          if ( MainModule.timeDiff() > 100 ) {
             time = MainModule.getTime();
-            const scrollValue = document.body.scrollLeft + 20 * e.deltaY;
-            $( document.body )
-               .animate( {
-                  scrollLeft: scrollValue
-               }, {
-                  queue: false,
-                  duration: 1000,
-                  delay: 0,
-                  easing: "easeInOutCubic",
-                  step: MainModule.drawCanvas
-               } );
+            MainModule.scrollAnimate( e.deltaY * 40 );
          }
 
          e.preventDefault();
+
+      },
+
+      scrollAnimate: ( delta ) => {
+
+         if ( ( scrollAmount > 0 && delta < 0 ) || ( scrollAmount < 0 && delta > 0 ) ) {
+            scrollAmount = delta;
+         } else {
+            scrollAmount += delta;
+         }
+
+         time = MainModule.getTime();
+
+         scrollAcc = Math.sign( delta ) * 4;
+
+         if ( scrollAmount != 0 && !scrolling ) {
+
+            scrolling = true;
+
+            let frameRender = () => {
+
+               document.body.scrollLeft += scrollAcc;
+               scrollAmount -= scrollAcc;
+
+               if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
+                  window.requestAnimationFrame( frameRender );
+               } else {
+                  scrollAcc = 0;
+                  scrolling = false;
+               }
+
+            }
+
+            window.requestAnimationFrame( frameRender );
+
+         }
 
       },
 
