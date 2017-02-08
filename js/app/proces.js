@@ -44,14 +44,61 @@ var MainModule = ( () => {
          $( window )
             .resize( MainModule.respondCanvas );
 
-
-         let lastScrollPos = 0;
-         let ticking = false;
          $( "body" )
             .scroll( MainModule.drawCanvas );
+
          window.addEventListener( 'wheel', MainModule.scrollHorizontally, false );
          window.addEventListener( 'mousewheel', MainModule.scrollHorizontally, false );
 
+         $( ".next-page" )
+            .click( MainModule.scrollToNextPage );
+         $( ".previous-page" )
+            .click( MainModule.scrollToPrevPage );
+
+
+      },
+
+      scrollToPrevPage: () => {
+
+         let scrPos, pageWidth = bodyWidth / 3;
+
+         if ( document.body.scrollLeft > pageWidth ) {
+            scrPos = pageWidth;
+         } else {
+            scrPos = 0;
+         }
+
+         $( "body" )
+            .animate( {
+               scrollLeft: scrPos
+            }, {
+               queue: false,
+               duration: 2000,
+               delay: 0,
+               easing: "easeInOutCubic"
+            } );
+
+      },
+
+      scrollToNextPage: () => {
+
+         let scrPos, pageWidth = bodyWidth / 3;
+
+         if ( document.body.scrollLeft < pageWidth ) {
+            scrPos = pageWidth;
+         } else {
+            scrPos = 2 * pageWidth;
+         }
+
+         $( "body" )
+            .animate( {
+               scrollLeft: scrPos
+            }, {
+               queue: false,
+               duration: 2000,
+               delay: 0,
+               easing: "easeInOutCubic"
+            } );
 
       },
 
@@ -75,7 +122,6 @@ var MainModule = ( () => {
          }
 
          time = MainModule.getTime();
-
          scrollAcc = Math.sign( delta ) * step;
 
          if ( scrollAmount != 0 && !scrolling ) {
@@ -86,7 +132,6 @@ var MainModule = ( () => {
 
                document.body.scrollLeft += scrollAcc;
                scrollAmount -= scrollAcc;
-               // MainModule.drawCanvas();
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
                   window.requestAnimationFrame( frameRender );
@@ -135,6 +180,7 @@ var MainModule = ( () => {
          const imgWidth = bodyHeight * 16 / 9;
          const iterations = Math.ceil( bodyWidth / imgWidth );
          const scrPos = document.body.scrollLeft;
+         const pageWidth = bodyWidth / 3;
          let pos1, pos2, pos3;
 
          MainModule.fillCanvas();
@@ -142,17 +188,17 @@ var MainModule = ( () => {
          for ( let i = 0; i <= iterations; i++ ) {
 
             pos1 = -0.05 * scrPos + i * imgWidth;
-            if ( pos1 <= scrPos + bodyWidth && pos1 > scrPos - imgWidth ) {
+            if ( pos1 <= scrPos + pageWidth && pos1 > scrPos - imgWidth ) {
                ctx.drawImage( stars[ 0 ], pos1, 0, imgWidth, bodyHeight );
             }
 
             pos2 = -0.30 * scrPos + i * imgWidth;
-            if ( pos2 <= scrPos + bodyWidth && pos2 > scrPos - imgWidth ) {
+            if ( pos2 <= scrPos + pageWidth && pos2 > scrPos - imgWidth ) {
                ctx.drawImage( stars[ 1 ], pos2, 0, imgWidth, bodyHeight );
             }
 
             pos3 = -0.50 * scrPos + i * imgWidth;
-            if ( pos3 <= scrPos + bodyWidth && pos3 > scrPos - imgWidth ) {
+            if ( pos3 <= scrPos + pageWidth && pos3 > scrPos - imgWidth ) {
                ctx.drawImage( stars[ 2 ], pos3, 0, imgWidth, bodyHeight );
             }
 
