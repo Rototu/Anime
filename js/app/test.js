@@ -12,11 +12,11 @@ ctx.fill();
 
 let randX = () => Math.floor( Math.random() * 3841 );
 let randY = () => Math.floor( Math.random() * 2161 );
-let randRad = () => Math.floor( Math.random() * 3 ) + 1;
+let randRad = () => Math.floor( Math.random() * 2 ) + 1;
 
 let x, y, r;
 
-for ( let i = 1; i <= 3000; i++ ) {
+for ( let i = 1; i <= 4000; i++ ) {
 
    // create star
    x = randX();

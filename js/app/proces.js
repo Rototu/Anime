@@ -4,8 +4,7 @@ var MainModule = ( () => {
    const c = $( '#canvas' );
    const ctx = c.get( 0 )
       .getContext( '2d' );
-   const container = $( c )
-      .parent();
+   const container = c.parent();
 
    const stars = [];
    let date = new Date();
@@ -23,13 +22,13 @@ var MainModule = ( () => {
             middleStars = new Image,
             foregroundStars = new Image;
 
-         backgroundStars.src = "img/proces/stars.png";
+         backgroundStars.src = 'img/proces/stars.png';
          stars.push( backgroundStars );
 
-         middleStars.src = "img/proces/starsMiddle.png";
+         middleStars.src = 'img/proces/starsMiddle.png';
          stars.push( middleStars );
 
-         foregroundStars.src = "img/proces/starsClose.png";
+         foregroundStars.src = 'img/proces/starsClose.png';
          stars.push( foregroundStars );
 
 
@@ -37,7 +36,6 @@ var MainModule = ( () => {
          MainModule.fillCanvas();
          MainModule.drawCanvas();
          MainModule.bindHandlers();
-
       },
 
       bindHandlers: () => {
@@ -45,10 +43,13 @@ var MainModule = ( () => {
          $( window )
             .resize( MainModule.respondCanvas );
 
+
+         let lastScrollPos = 0;
+         let ticking = false;
          $( "body" )
             .scroll( MainModule.drawCanvas );
-
-         window.addEventListener( "wheel", MainModule.scrollHorizontally, false );
+         window.addEventListener( 'wheel', MainModule.scrollHorizontally, false );
+         window.addEventListener( 'mousewheel', MainModule.scrollHorizontally, false );
 
 
       },
@@ -57,14 +58,14 @@ var MainModule = ( () => {
 
          if ( MainModule.timeDiff() > 100 ) {
             time = MainModule.getTime();
-            MainModule.scrollAnimate( e.deltaY * 40 );
+            MainModule.scrollAnimate( e.deltaY * 40, 4 );
          }
 
          e.preventDefault();
 
       },
 
-      scrollAnimate: ( delta ) => {
+      scrollAnimate: ( delta, step ) => {
 
          if ( ( scrollAmount > 0 && delta < 0 ) || ( scrollAmount < 0 && delta > 0 ) ) {
             scrollAmount = delta;
@@ -74,7 +75,7 @@ var MainModule = ( () => {
 
          time = MainModule.getTime();
 
-         scrollAcc = Math.sign( delta ) * 4;
+         scrollAcc = Math.sign( delta ) * step;
 
          if ( scrollAmount != 0 && !scrolling ) {
 
@@ -82,8 +83,11 @@ var MainModule = ( () => {
 
             let frameRender = () => {
 
+               console.log( MainModule.timeDiff() );
+
                document.body.scrollLeft += scrollAcc;
                scrollAmount -= scrollAcc;
+               // MainModule.drawCanvas();
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
                   window.requestAnimationFrame( frameRender );
@@ -117,10 +121,8 @@ var MainModule = ( () => {
 
       respondCanvas: () => {
 
-         bodyHeight = $( container )
-            .height();
-         bodyWidth = $( container )
-            .width();
+         bodyHeight = container.height();
+         bodyWidth = container.width();
 
          c.attr( 'width', bodyWidth );
          c.attr( 'height', bodyHeight );
@@ -149,7 +151,7 @@ var MainModule = ( () => {
 
          ctx.beginPath();
          ctx.rect( 0, 0, bodyWidth, bodyHeight );
-         ctx.fillStyle = "black";
+         ctx.fillStyle = 'black';
          ctx.fill();
 
       }
@@ -159,6 +161,6 @@ var MainModule = ( () => {
 } )();
 
 $( document )
-   .on( "ready", function () {
+   .on( 'ready', function () {
       MainModule.init();
    } );
