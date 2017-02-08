@@ -83,8 +83,6 @@ var MainModule = ( () => {
 
             let frameRender = () => {
 
-               console.log( MainModule.timeDiff() );
-
                document.body.scrollLeft += scrollAcc;
                scrollAmount -= scrollAcc;
                // MainModule.drawCanvas();
