@@ -34,8 +34,9 @@ var MainModule = ( () => {
 
          MainModule.respondCanvas();
          MainModule.fillCanvas();
-         MainModule.drawCanvas();
          MainModule.bindHandlers();
+         setTimeout( MainModule.drawCanvas, 100 );
+
       },
 
       bindHandlers: () => {
@@ -131,16 +132,30 @@ var MainModule = ( () => {
 
       drawCanvas: () => {
 
-         MainModule.fillCanvas();
-
          const imgWidth = bodyHeight * 16 / 9;
          const iterations = Math.ceil( bodyWidth / imgWidth );
          const scrPos = document.body.scrollLeft;
+         let pos1, pos2, pos3;
+
+         MainModule.fillCanvas();
 
          for ( let i = 0; i <= iterations; i++ ) {
-            ctx.drawImage( stars[ 0 ], -0.05 * scrPos + i * imgWidth, 0, imgWidth, bodyHeight );
-            ctx.drawImage( stars[ 1 ], -0.30 * scrPos + i * imgWidth, 0, imgWidth, bodyHeight );
-            ctx.drawImage( stars[ 2 ], -0.50 * scrPos + i * imgWidth, 0, imgWidth, bodyHeight );
+
+            pos1 = -0.05 * scrPos + i * imgWidth;
+            if ( pos1 <= scrPos + bodyWidth && pos1 > scrPos - imgWidth ) {
+               ctx.drawImage( stars[ 0 ], pos1, 0, imgWidth, bodyHeight );
+            }
+
+            pos2 = -0.30 * scrPos + i * imgWidth;
+            if ( pos2 <= scrPos + bodyWidth && pos2 > scrPos - imgWidth ) {
+               ctx.drawImage( stars[ 1 ], pos2, 0, imgWidth, bodyHeight );
+            }
+
+            pos3 = -0.50 * scrPos + i * imgWidth;
+            if ( pos3 <= scrPos + bodyWidth && pos3 > scrPos - imgWidth ) {
+               ctx.drawImage( stars[ 2 ], pos3, 0, imgWidth, bodyHeight );
+            }
+
          }
 
       },
