@@ -106,26 +106,26 @@ a {
 
 .image-row {
    text-align: center;
+   overflow: hidden;
+   width: 100%;
+   margin: 1vh 0;
 }
 
 .half-column {
-   height: 45%;
-   margin: 2.5% 0;
+   height: calc(50% - 4vh);
 }
 
 .full-column {
    height: 100%;
 }
 
-.image-row > img {
+.image-row>img {
    margin-top: auto;
-   max-height: 100%;
-   max-width: 100%;
+   width: 100%;
 }
 
 .text-column {
    color: white;
-   background-color: white;
    float: left;
    width: 45%;
    height: calc(92vh - 8vw);
@@ -136,4 +136,21 @@ a {
 .title-row {
    text-align: center;
    width: 100%;
+   line-height: 100px;
+   font-size: 64px;
+   margin-bottom: 40px;
+   font-weight: 400;
+}
+
+.vertical-center {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-flow: column;
+}
+
+.text-content {
+   font-size: 18px;
+   font-weight: 100;
+   text-align: justify;
 }
