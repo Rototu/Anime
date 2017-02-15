@@ -4,7 +4,7 @@ var MainModule = ( () => {
    const c = $( '#canvas' );
    const ctx = c.get( 0 )
       .getContext( '2d' );
-   const container = c.parent();
+   const container = $("#container");
 
    const stars = [];
    let date = new Date();
@@ -13,6 +13,8 @@ var MainModule = ( () => {
    let bodyWidth, bodyHeight;
    let scrollAmount = 0,
       scrolling = false;
+   let compatibilityTest = false,
+      compatibilityMode = false;
 
    return {
 
@@ -35,7 +37,7 @@ var MainModule = ( () => {
          MainModule.respondCanvas();
          MainModule.fillCanvas();
          MainModule.bindHandlers();
-         setTimeout( MainModule.drawCanvas, 100 );
+         setTimeout( MainModule.drawCanvas, 250 );
 
       },
 
@@ -131,6 +133,15 @@ var MainModule = ( () => {
             let frameRender = () => {
 
                document.body.scrollLeft += scrollAcc;
+               if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
+                  $('body').css({width: "300vw"});
+                  $('container').css({width: "100%"});
+                  compatibilityMode = true;
+               }
+               if (compatibilityMode) {
+                  MainModule.drawCanvas();
+               }
+               compatibilityTest = true;
                scrollAmount -= scrollAcc;
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
