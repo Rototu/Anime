@@ -17,6 +17,7 @@ body {
    left: 0;
    font-family: 'Roboto', sans-serif;
    height: inherit;
+   width: inherit;
    overflow-y: hidden;
 }
 
