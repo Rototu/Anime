@@ -4,7 +4,7 @@ var MainModule = ( () => {
    const c = $( '#canvas' );
    const ctx = c.get( 0 )
       .getContext( '2d' );
-   const container = $("#container");
+   const container = $( "#container" );
 
    const stars = [];
    let date = new Date();
@@ -134,11 +134,17 @@ var MainModule = ( () => {
 
                document.body.scrollLeft += scrollAcc;
                if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
-                  $('body').css({width: "300vw"});
-                  $('container').css({width: "100%"});
+                  $( 'body' )
+                     .css( {
+                        width: "300vw"
+                     } );
+                  $( 'container' )
+                     .css( {
+                        width: "100%"
+                     } );
                   compatibilityMode = true;
                }
-               if (compatibilityMode) {
+               if ( compatibilityMode ) {
                   MainModule.drawCanvas();
                }
                compatibilityTest = true;

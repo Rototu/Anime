@@ -68,7 +68,7 @@ var ScrollModule = ( function () {
          $( "html, body" )
             .scrollTop( 0 );
 
-         //init windowWidth
+         // init windowWidth
          windowWidth = $( window )
             .width();
 
@@ -403,7 +403,7 @@ var ScrollModule = ( function () {
                // prezTxt parallax effect
                var scale = 0.705 + 0.25 * ( relativeTopPos / windowHeight - 1 );
                $prezTxt.css( {
-                  transform: "scale(" + scale + ") translateY(-50%)",
+                  transform: "scale(" + scale + ") translateY(-50%) translateX(-50%)",
                   right: "30px"
                   // color: "rgb("+ (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + "," + (relativeTopPos / windowHeight) + ")"
                } );
