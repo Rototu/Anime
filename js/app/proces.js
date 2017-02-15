@@ -24,13 +24,13 @@ var MainModule = ( () => {
             middleStars = new Image,
             foregroundStars = new Image;
 
-         backgroundStars.src = 'stars.png';
+         backgroundStars.src = 'img/proces/stars.png';
          stars.push( backgroundStars );
 
-         middleStars.src = 'starsMiddle.png';
+         middleStars.src = 'img/proces/starsMiddle.png';
          stars.push( middleStars );
 
-         foregroundStars.src = 'starsClose.png';
+         foregroundStars.src = 'img/proces/starsClose.png';
          stars.push( foregroundStars );
 
 
