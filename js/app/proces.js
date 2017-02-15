@@ -13,6 +13,8 @@ var MainModule = ( () => {
    let bodyWidth, bodyHeight;
    let scrollAmount = 0,
       scrolling = false;
+   let compatibilityTest = false,
+      compatibilityMode = false;
 
    return {
 
@@ -22,13 +24,13 @@ var MainModule = ( () => {
             middleStars = new Image,
             foregroundStars = new Image;
 
-         backgroundStars.src = 'img/proces/stars.png';
+         backgroundStars.src = 'stars.png';
          stars.push( backgroundStars );
 
-         middleStars.src = 'img/proces/starsMiddle.png';
+         middleStars.src = 'starsMiddle.png';
          stars.push( middleStars );
 
-         foregroundStars.src = 'img/proces/starsClose.png';
+         foregroundStars.src = 'starsClose.png';
          stars.push( foregroundStars );
 
 
@@ -114,9 +116,6 @@ var MainModule = ( () => {
       },
 
       scrollAnimate: ( delta, step ) => {
-         
-         //delete this
-         console.log(delta, step);
 
          if ( ( scrollAmount > 0 && delta < 0 ) || ( scrollAmount < 0 && delta > 0 ) ) {
             scrollAmount = delta;
@@ -134,6 +133,15 @@ var MainModule = ( () => {
             let frameRender = () => {
 
                document.body.scrollLeft += scrollAcc;
+               if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
+                  $('body').css({width: "300vw"});
+                  $('container').css({width: "100%"});
+                  compatibilityMode = true;
+               }
+               if (compatibilityMode) {
+                  MainModule.drawCanvas();
+               }
+               compatibilityTest = true;
                scrollAmount -= scrollAcc;
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
