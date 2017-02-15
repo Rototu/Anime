@@ -114,6 +114,9 @@ var MainModule = ( () => {
       },
 
       scrollAnimate: ( delta, step ) => {
+         
+         //delete this
+         console.log(delta, step);
 
          if ( ( scrollAmount > 0 && delta < 0 ) || ( scrollAmount < 0 && delta > 0 ) ) {
             scrollAmount = delta;
@@ -182,6 +185,8 @@ var MainModule = ( () => {
          const scrPos = document.body.scrollLeft;
          const pageWidth = bodyWidth / 3;
          let pos1, pos2, pos3;
+         //delete this
+         console.log(imgWidth, iterations, scrPos, pageWidth);
 
          MainModule.fillCanvas();
 
