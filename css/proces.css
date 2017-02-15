@@ -16,18 +16,16 @@ body {
    left: 0;
    font-family: 'Roboto', sans-serif;
    height: 100%;
-   width: 300vw;
    overflow-y: hidden;
 }
 
 #wrapper {
-   width: 100%;
    height: 100%;
    position: relative;
 }
 
 #container {
-   width: 100%;
+   width: 300vw;
    height: 100%;
    position: absolute;
    top: 0;
