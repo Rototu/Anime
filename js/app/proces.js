@@ -24,13 +24,13 @@ var MainModule = ( () => {
             middleStars = new Image,
             foregroundStars = new Image;
 
-         backgroundStars.src = 'img/proces/stars.png';
+         backgroundStars.src = 'stars.png';
          stars.push( backgroundStars );
 
-         middleStars.src = 'img/proces/starsMiddle.png';
+         middleStars.src = 'starsMiddle.png';
          stars.push( middleStars );
 
-         foregroundStars.src = 'img/proces/starsClose.png';
+         foregroundStars.src = 'starsClose.png';
          stars.push( foregroundStars );
 
 
@@ -46,7 +46,9 @@ var MainModule = ( () => {
          $( window )
             .resize( MainModule.respondCanvas );
 
-         window.addEventListener( 'scroll', MainModule.drawCanvas, false);
+         $( "body" )
+            .scroll( MainModule.drawCanvas );
+
          window.addEventListener( 'wheel', MainModule.scrollHorizontally, false );
          window.addEventListener( 'mousewheel', MainModule.scrollHorizontally, false );
 
@@ -131,15 +133,15 @@ var MainModule = ( () => {
             let frameRender = () => {
 
                document.body.scrollLeft += scrollAcc;
-//                if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
-//                   $('body').css({width: "300vw"});
-//                   $('container').css({width: "100%"});
-//                   compatibilityMode = true;
-//                }
-//                if (compatibilityMode) {
-//                   MainModule.drawCanvas();
-//                }
-//                compatibilityTest = true;
+               if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
+                  $('body').css({width: "300vw"});
+                  $('container').css({width: "100%"});
+                  compatibilityMode = true;
+               }
+               if (compatibilityMode) {
+                  MainModule.drawCanvas();
+               }
+               compatibilityTest = true;
                scrollAmount -= scrollAcc;
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
@@ -191,8 +193,6 @@ var MainModule = ( () => {
          const scrPos = document.body.scrollLeft;
          const pageWidth = bodyWidth / 3;
          let pos1, pos2, pos3;
-         //delete this
-         console.log(imgWidth, iterations, scrPos, pageWidth);
 
          MainModule.fillCanvas();
 
