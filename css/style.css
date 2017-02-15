@@ -260,6 +260,14 @@ div.tl-slide-content, div.tl-slide-scrollable-container, div.tl-slide-content-co
    color: white;
 }
 
+#procesDiv {
+   background: white url("../img/parallax/game.jpg");
+   background-size: cover;
+   background-position: center;
+   height: calc(100vh - 50px);
+   color: white;
+}
+
 #gamepad {
    height: 30vh;
    position: absolute;
