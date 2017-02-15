@@ -99,7 +99,7 @@ a {
 .image-column {
    width: 35%;
    height: calc(92vh - 8vw);
-   margin: 4vh 4vh 4vh 8vh;
+   margin: 4vh 4vh 4vh 100px;
    overflow: hidden;
    float: left;
 }
@@ -129,7 +129,7 @@ a {
    float: left;
    width: 45%;
    height: calc(92vh - 8vw);
-   margin: 4vh auto 4vh 4vh;
+   margin: 4vh auto 4vh 20px;
    overflow: hidden;
 }
 
