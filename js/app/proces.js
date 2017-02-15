@@ -4,7 +4,7 @@ var MainModule = ( () => {
    const c = $( '#canvas' );
    const ctx = c.get( 0 )
       .getContext( '2d' );
-   const container = c.parent();
+   const container = $("#container");
 
    const stars = [];
    let date = new Date();
