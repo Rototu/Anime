@@ -46,9 +46,7 @@ var MainModule = ( () => {
          $( window )
             .resize( MainModule.respondCanvas );
 
-         $( "body" )
-            .scroll( MainModule.drawCanvas );
-
+         window.addEventListener( 'scroll', MainModule.drawCanvas, false);
          window.addEventListener( 'wheel', MainModule.scrollHorizontally, false );
          window.addEventListener( 'mousewheel', MainModule.scrollHorizontally, false );
 
@@ -133,15 +131,15 @@ var MainModule = ( () => {
             let frameRender = () => {
 
                document.body.scrollLeft += scrollAcc;
-               if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
-                  $('body').css({width: "300vw"});
-                  $('container').css({width: "100%"});
-                  compatibilityMode = true;
-               }
-               if (compatibilityMode) {
-                  MainModule.drawCanvas();
-               }
-               compatibilityTest = true;
+//                if ( !( window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || compatibilityTest ) ) {
+//                   $('body').css({width: "300vw"});
+//                   $('container').css({width: "100%"});
+//                   compatibilityMode = true;
+//                }
+//                if (compatibilityMode) {
+//                   MainModule.drawCanvas();
+//                }
+//                compatibilityTest = true;
                scrollAmount -= scrollAcc;
 
                if ( scrollAmount != 0 && MainModule.timeDiff() < 600 ) {
