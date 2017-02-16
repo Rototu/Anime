@@ -306,14 +306,15 @@ div.tl-slide-content-container {
 #gamepad {
    height: 30vh;
    position: absolute;
-   top: calc(50vh - 25px - 15vh);
+   top: 50%;
    left: 10vw;
+   transform: translateY(-50%);
 }
 
 #game {
    max-height: 200px;
    line-height: 50px;
-   top: calc(50vh - 25px);
+   top: 50%;
    transform: translateY(-50%);
    text-align: center;
    position: absolute;
