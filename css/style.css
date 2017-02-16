@@ -307,7 +307,7 @@ div.tl-slide-content-container {
    height: 30vh;
    position: absolute;
    top: 50%;
-   left: 37.5vw;
+   left: 42.5vw;
    transform: translateY(-50%) translateX(-50%);
 }
 
@@ -317,7 +317,7 @@ div.tl-slide-content-container {
    transform: translateY(-50%);
    text-align: center;
    position: absolute;
-   right: 10vw;
+   right: 15vw;
    font-size: 32px;
    max-width: 25vw;
 }
