@@ -307,8 +307,8 @@ div.tl-slide-content-container {
    height: 30vh;
    position: absolute;
    top: 50%;
-   left: 10vw;
-   transform: translateY(-50%);
+   left: 37.5vw;
+   transform: translateY(-50%) translateX(-50%);
 }
 
 #game {
