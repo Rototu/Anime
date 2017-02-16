@@ -307,7 +307,7 @@ div.tl-slide-content-container {
    height: 30vh;
    position: absolute;
    top: 50%;
-   left: 42.5vw;
+   left: 30vw;
    transform: translateY(-50%) translateX(-50%);
 }
 
