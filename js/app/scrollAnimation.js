@@ -250,8 +250,7 @@ var ScrollModule = ( function () {
                "end": "self",
                "fn": function ( $el, pcnt ) {
                   $el.css( {
-                     height: 30 + 20 * pcnt + "vh",
-                     top: 50 - ( 20 + 10 * pcnt ) + "vh"
+                     height: 30 + 10 * pcnt + "vh",
                   } );
                }
             },
