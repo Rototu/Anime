@@ -109,7 +109,10 @@ var MainModule = ( function () {
 
                      // when animation done
                      var loadDone = function () {
-                        $loadPerc.text( "100%" );
+                        var myPercentage = ( Math.round( 100 * $loadPerc.width() / loadingBarWidth ) );
+                        if ( myPercentage >= 100 ) myPercentage = 100; // pure 100% value
+                        $( "#loadedPercentage" )
+                           .text( myPercentage + "%" );
                      };
 
                      // animation step handler
