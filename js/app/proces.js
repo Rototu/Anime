@@ -37,7 +37,7 @@ var MainModule = ( () => {
          MainModule.respondCanvas();
          MainModule.fillCanvas();
          MainModule.bindHandlers();
-         setTimeout( MainModule.drawCanvas, 250 );
+         setInterval( MainModule.drawCanvas, 250 );
 
       },
 
