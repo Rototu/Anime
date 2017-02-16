@@ -109,15 +109,13 @@ var MainModule = ( function () {
 
                      // when animation done
                      var loadDone = function () {
-                        var myPercentage = ( Math.round( 100 * $loadPerc.width() / loadingBarWidth ) );
-                        if ( myPercentage >= 95 ) myPercentage = 100; // pure 100% value
-                        $loadPerc.text( myPercentage + "%" );
+                        $loadPerc.text( "100%" );
                      };
 
                      // animation step handler
                      var loadStep = function () {
                         var myPercentage = ( Math.round( 100 * $loadPerc.width() / loadingBarWidth ) );
-                        if ( myPercentage == 101 || myPercentage == 99 ) myPercentage = 100; // pure 100% value
+                        if ( myPercentage >= 100 ) myPercentage = 100; // pure 100% value
                         $( "#loadedPercentage" )
                            .text( myPercentage + "%" );
                      };
@@ -150,7 +148,7 @@ var MainModule = ( function () {
                         .width();
                      $( "#loadedPercentage" )
                         .stop()
-                        .css( "width", loadingBarWidth * imgCounter / imgNumber + 1 );
+                        .css( "width", loadingBarWidth * imgCounter / imgNumber );
 
                   } );
 
