@@ -388,12 +388,13 @@ video {
 #citate {
    background: black url("../img/parallax/AzusaThankYouLetters.png") no-repeat;
    background-size: cover;
+   background-position: center;
    position: relative;
 }
 
 #citate h1 {
    position: relative;
-   color: black;
+   color: white;
    width: 100%;
    text-align: center;
    margin: 5vh 0;
@@ -402,7 +403,7 @@ video {
    font-weight: 600;
 }
 
-.citatBox{
+#citatBox{
    position: relative;
    width: 100%;
    left: 0;
