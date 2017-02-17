@@ -385,6 +385,52 @@ video {
    background-size: cover;
 }
 
+#citate {
+   background: black url("../img/parallax/AzusaThankYouLetters.png") no-repeat;
+   background-size: cover;
+   position: relative;
+}
+
+#citate h1 {
+   position: relative;
+   color: black;
+   width: 100%;
+   text-align: center;
+   margin: 5vh 0;
+   line-height: 40px;
+   font-size: 36px;
+   font-weight: 600;
+}
+
+.citatBox{
+   position: relative;
+   width: 100%;
+   left: 0;
+   margin-bottom: 5vh;
+}
+
+.citat{
+   font-size: 24px;
+   display: block;
+   width: 9%;
+   margin: 15px 3vw;
+   background-color: white;
+   color: black;
+   opacity: 0.6;
+   transition: opacity 0.3s;
+   padding: 10px;
+   font-weight: 100;
+}
+
+.citat i{
+   font-size: 20px;
+   font-weight: 100;
+}
+
+.citat:hover{
+   opacity: 1;
+}
+
 #info {
    width: 60%;
    height: 80vh;
