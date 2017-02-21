@@ -37,7 +37,7 @@ var MainModule = ( function () {
 
          // set audio volume
          $( "#audio" )
-            .prop( "volume", 0.3 );
+            .prop( "volume", 0.5 );
 
          // loadingBar init values
          imgNumber = $( "img" )
