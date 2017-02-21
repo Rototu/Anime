@@ -1393,6 +1393,7 @@ let GameModule = ( () => {
                portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
                GameModule.addCanvasImageObj( "lPortrait", "img/game/misc/lPortrait.png", 200, 200 );
                GameModule.drawCanvasImageObj( images[ "lPortrait" ], 0, 0, portraitContext );
+               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
                playerData.specialScreen = false;
 
                $( "#alert" )
