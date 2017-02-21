@@ -353,7 +353,7 @@ let GameModule = ( () => {
             GameModule.setCanvasImageObjPos( images[ "blast" ], x - 32, y - 31 );
             GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
             let laserEffect = new Audio( 'sounds/bomb.mp3' );
-            laserEffect.volume = 0.35;
+            laserEffect.volume = 0.8;
             laserEffect.play();
             setTimeout( () => {
                context.clearRect( 0, 0, canvas.width, canvas.height );
@@ -1490,7 +1490,7 @@ let GameModule = ( () => {
 
             case "piano":
                let pianoEffect = new Audio( 'sounds/piano.mp3' );
-               pianoEffect.volume = 0.05;
+               pianoEffect.volume = 1;
                pianoEffect.play();
                break;
 
