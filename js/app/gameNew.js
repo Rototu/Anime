@@ -383,6 +383,7 @@ let GameModule = ( () => {
          portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
          GameModule.addCanvasImageObj( "gokuPortrait", "img/game/misc/goku.png", 200, 200 );
          GameModule.drawCanvasImageObj( images[ "gokuPortrait" ], 0, 0, portraitContext );
+         foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
 
          $( "#alert" )
             .fadeIn( 500, () => {
@@ -642,7 +643,7 @@ let GameModule = ( () => {
                GameModule.addCoins( 16 );
                GameModule.moveToLevel( 3 );
                myGame.removeEventListener( 'click', optionSelect, false );
-               document.removeEventListener( 'keypress', closeGame, false );
+               document.removeEventListener( 'keydown', closeGame, false );
             }
 
          }
@@ -690,7 +691,7 @@ let GameModule = ( () => {
 
          myGame.addEventListener( 'click', optionSelect, false );
          myGame.addEventListener( 'mousemove', quizHover, false );
-         document.addEventListener( 'keypress', closeGame, false );
+         document.addEventListener( 'keydown', closeGame, false );
 
          GameModule.addCanvasImageObj( "whiteBar", "img/game/misc/whiteBar.png", 32, 768 );
          GameModule.setCanvasImageObjPos( images[ "whiteBar" ], 0, 0 );
@@ -719,7 +720,7 @@ let GameModule = ( () => {
                      nextQuizOption();
                   } else {
                      myGame.removeEventListener( 'click', optionSelect, false );
-                     document.removeEventListener( 'keypress', closeGame, false );
+                     document.removeEventListener( 'keydown', closeGame, false );
                      context.clearRect( 0, 0, canvas.width, canvas.height );
                      GameModule.drawCanvasImageObj( images[ "tower" ], 0, 0, context );
                      GameModule.goku();
