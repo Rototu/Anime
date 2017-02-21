@@ -143,7 +143,7 @@ let GameModule = ( () => {
       loopAudio: ( i ) => {
 
          let currentSong = musicBg[ i ];
-         currentSong.volume = 0.10;
+         currentSong.volume = 0.40;
          currentSong.play();
          currentSong.onended = () => {
             if ( i < 7 ) {
@@ -155,7 +155,7 @@ let GameModule = ( () => {
          };
 
          let specialSong = new Audio( 'sounds/attackOnTitan.mp3' );
-         specialSong.volume = 0.05;
+         specialSong.volume = 0.3;
 
          document.addEventListener( "attack", () => {
             currentSong.pause();
