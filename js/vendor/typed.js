@@ -99,18 +99,20 @@
       constructor: Typed,
 
       init: function () {
+         
+         var self = this;
 
          //custom stop on escape keypress
-         document.addEventListener( "keypress", ( event ) => {
+         document.addEventListener( "keydown", ( event ) => {
             let char = event.which || event.keyCode;
             if ( char == 27 ) {
-               this.stop = true;
+               self.stop = true;
             }
          }, false );
 
+
          // begin the loop w/ first current string (global self.strings)
          // current string will be passed as an argument each time after this
-         var self = this;
          self.timeout = setTimeout( function () {
             for ( var i = 0; i < self.strings.length; ++i ) self.sequence[ i ] = i;
 
