@@ -255,6 +255,7 @@
                   // add characters one by one
                   curStrPos++;
                   var audio = new Audio( 'sounds/keyPress.mp3' );
+                  audio.volume = 1;
                   audio.play();
                   // loop the function
                   self.typewrite( curString, curStrPos );
