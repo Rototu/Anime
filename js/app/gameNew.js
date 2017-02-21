@@ -1389,7 +1389,7 @@ let GameModule = ( () => {
 
 
                GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-               document.addEventListener( "keypress", rewardPlayer, false );
+               document.addEventListener( "keydown", rewardPlayer, false );
                portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
                GameModule.addCanvasImageObj( "lPortrait", "img/game/misc/lPortrait.png", 200, 200 );
                GameModule.drawCanvasImageObj( images[ "lPortrait" ], 0, 0, portraitContext );
@@ -1406,7 +1406,7 @@ let GameModule = ( () => {
                let char = event.which || event.keyCode;
                if ( char == 27 ) {
 
-                  document.removeEventListener( "keypress", rewardPlayer, false );
+                  document.removeEventListener( "keydown", rewardPlayer, false );
                   playerData.lChallengeCompleted = true;
                   GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
 
@@ -1455,14 +1455,14 @@ let GameModule = ( () => {
                if ( e.keyCode === 27 ) {
                   $( "#alert" )
                      .fadeOut( 500, () => {} );
-                  document.removeEventListener( "keypress", closeGame, false );
+                  document.removeEventListener( "keydown", closeGame, false );
                   GameModule.moveToLevel( 4 );
                }
             }
 
             $( "#alert" )
                .fadeIn( 500, () => {
-                  document.addEventListener( "keypress", closeGame, false );
+                  document.addEventListener( "keydown", closeGame, false );
                   GameModule.alertTextDisplay( asunaTxt );
                } );
          }
