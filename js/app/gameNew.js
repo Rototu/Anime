@@ -183,39 +183,39 @@ let GameModule = ( () => {
 
                   switch ( key.which ) {
 
-                     case 37:
-                        GameModule.changeSpriteOrientation( player, "left" );
-                        pressedKey = 37;
-                        break;
+                  case 37:
+                     GameModule.changeSpriteOrientation( player, "left" );
+                     pressedKey = 37;
+                     break;
 
-                     case 38:
-                        GameModule.changeSpriteOrientation( player, "up" );
-                        pressedKey = 38;
-                        break;
+                  case 38:
+                     GameModule.changeSpriteOrientation( player, "up" );
+                     pressedKey = 38;
+                     break;
 
-                     case 39:
-                        GameModule.changeSpriteOrientation( player, "right" );
-                        pressedKey = 39;
-                        break;
+                  case 39:
+                     GameModule.changeSpriteOrientation( player, "right" );
+                     pressedKey = 39;
+                     break;
 
-                     case 40:
-                        GameModule.changeSpriteOrientation( player, "down" );
-                        pressedKey = 40;
-                        break;
+                  case 40:
+                     GameModule.changeSpriteOrientation( player, "down" );
+                     pressedKey = 40;
+                     break;
 
-                     case 27:
-                        $( "#alert" )
-                           .fadeOut( 500, () => {} );
-                        break;
+                  case 27:
+                     $( "#alert" )
+                        .fadeOut( 500, () => {} );
+                     break;
 
-                     case 13:
-                        GameModule.alertTextDisplay( [ "" ] );
-                        $( "#alert" )
-                           .fadeOut( 500, () => {} );
-                        break;
+                  case 13:
+                     GameModule.alertTextDisplay( [ "" ] );
+                     $( "#alert" )
+                        .fadeOut( 500, () => {} );
+                     break;
 
-                     default:
-                        return;
+                  default:
+                     return;
 
                   }
 
@@ -300,23 +300,23 @@ let GameModule = ( () => {
          }
          switch ( currentLevel ) {
 
-            case 1:
-               GameModule.crow( globalProgress );
-               break;
+         case 1:
+            GameModule.crow( globalProgress );
+            break;
 
-            case 2:
-               GameModule.sheep( globalProgress );
-               break;
+         case 2:
+            GameModule.sheep( globalProgress );
+            break;
 
-            case 3:
-               GameModule.houseSpriteAnimations( globalProgress );
-               break;
+         case 3:
+            GameModule.houseSpriteAnimations( globalProgress );
+            break;
 
-            case 4:
-               break;
+         case 4:
+            break;
 
-            default:
-               break;
+         default:
+            break;
 
          }
 
@@ -887,32 +887,32 @@ let GameModule = ( () => {
 
          switch ( spriteObj.orientation ) {
 
-            case 0:
-               if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY + 16, 32, 32 ) ) {
-                  spriteObj.yPos = playerY + dist;
-               }
-               break;
+         case 0:
+            if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY + 16, 32, 32 ) ) {
+               spriteObj.yPos = playerY + dist;
+            }
+            break;
 
-            case 1:
-               if ( GameModule.testForFreeSpaceInMap( playerX - 16, player.yPos, 32, 32 ) ) {
-                  spriteObj.xPos = playerX - dist;
-               }
-               break;
+         case 1:
+            if ( GameModule.testForFreeSpaceInMap( playerX - 16, player.yPos, 32, 32 ) ) {
+               spriteObj.xPos = playerX - dist;
+            }
+            break;
 
-            case 2:
-               if ( GameModule.testForFreeSpaceInMap( playerX + 16, player.yPos, 32, 32 ) ) {
-                  spriteObj.xPos = playerX + dist;
-               }
-               break;
+         case 2:
+            if ( GameModule.testForFreeSpaceInMap( playerX + 16, player.yPos, 32, 32 ) ) {
+               spriteObj.xPos = playerX + dist;
+            }
+            break;
 
-            case 3:
-               if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY - 16, 32, 32 ) ) {
-                  spriteObj.yPos = playerY - dist;
-               }
-               break;
+         case 3:
+            if ( GameModule.testForFreeSpaceInMap( player.xPos, playerY - 16, 32, 32 ) ) {
+               spriteObj.yPos = playerY - dist;
+            }
+            break;
 
-            default:
-               return;
+         default:
+            return;
 
          }
 
@@ -922,24 +922,24 @@ let GameModule = ( () => {
 
          switch ( orientation ) {
 
-            case "up":
-               spriteObj.orientation = 3;
-               break;
+         case "up":
+            spriteObj.orientation = 3;
+            break;
 
-            case "down":
-               spriteObj.orientation = 0;
-               break;
+         case "down":
+            spriteObj.orientation = 0;
+            break;
 
-            case "left":
-               spriteObj.orientation = 1;
-               break;
+         case "left":
+            spriteObj.orientation = 1;
+            break;
 
-            case "right":
-               spriteObj.orientation = 2;
-               break;
+         case "right":
+            spriteObj.orientation = 2;
+            break;
 
-            default:
-               return;
+         default:
+            return;
 
          }
 
@@ -1217,21 +1217,21 @@ let GameModule = ( () => {
 
             switch ( currentLevel ) {
 
-               case 1:
-                  let stringArray = [
-                     "Servus, bine ai venit în frumoasa lume a anime-urilor!",
-                     "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
-                     "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)"
-                  ];
-                  GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
-                  $( "#alert" )
-                     .fadeIn( 500, () => {
-                        GameModule.alertTextDisplay( stringArray );
-                     } );
-                  break;
+            case 1:
+               let stringArray = [
+                  "Servus, bine ai venit în frumoasa lume a anime-urilor!",
+                  "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
+                  "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)"
+               ];
+               GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
+               $( "#alert" )
+                  .fadeIn( 500, () => {
+                     GameModule.alertTextDisplay( stringArray );
+                  } );
+               break;
 
-               default:
-                  break;
+            default:
+               break;
 
             }
 
@@ -1478,30 +1478,30 @@ let GameModule = ( () => {
 
          switch ( obj.name ) {
 
-            case "miyazaki":
-               GameModule.miyazaki();
-               break;
+         case "miyazaki":
+            GameModule.miyazaki();
+            break;
 
-            case "L":
-               GameModule.challengeL();
-               break;
+         case "L":
+            GameModule.challengeL();
+            break;
 
-            case "asuna":
-               GameModule.asuna();
-               break;
+         case "asuna":
+            GameModule.asuna();
+            break;
 
-            case "piano":
-               let pianoEffect = new Audio( 'sounds/piano.mp3' );
-               pianoEffect.volume = 1;
-               pianoEffect.play();
-               break;
+         case "piano":
+            let pianoEffect = new Audio( 'sounds/piano.mp3' );
+            pianoEffect.volume = 1;
+            pianoEffect.play();
+            break;
 
-            case "back":
-               window.location.href = "index.html";
-               break;
+         case "back":
+            window.location.href = "index.html";
+            break;
 
-            default:
-               break;
+         default:
+            break;
 
          }
 
@@ -1517,166 +1517,171 @@ let GameModule = ( () => {
 
          switch ( nextLevel ) {
 
-            case 2:
+         case 2:
 
-               let level2Load = () => {
-                  currentLevel = 2;
-                  GameModule.arrayTo2DLevel( 2 );
-                  GameModule.getNpcs( 2 );
-                  context.clearRect( 0, 0, canvas.width, canvas.height );
-                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                  backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                  GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
-                  GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
-                  GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
-                  GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
-                  GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
-                  GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
+            let level2Load = () => {
+               currentLevel = 2;
+               GameModule.arrayTo2DLevel( 2 );
+               GameModule.getNpcs( 2 );
+               context.clearRect( 0, 0, canvas.width, canvas.height );
+               foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+               GameModule.addCanvasImageObj( "background2", "img/game/levels/level2.png", 384, 768 );
+               GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
+               GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
+               GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
+               GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
+               GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
+               GameModule.setCanvasBackground( images[ "background" + 2 ] );
+               GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+               setTimeout( () => {
                   GameModule.setCanvasBackground( images[ "background" + 2 ] );
                   GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
                   GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
-                  GameModule.setSpriteFrame( images[ "kirito" ], context );
-                  GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
-               };
+               }, 200 ); // loading problems
+               GameModule.setSpriteFrame( images[ "kirito" ], context );
+               GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
+            };
 
 
-               pressedKey = false;
-               shouldAnimate = false;
-               GameModule.setCanvasImageObjPos( player, playerX, playerY );
+            pressedKey = false;
+            shouldAnimate = false;
+            GameModule.setCanvasImageObjPos( player, playerX, playerY );
 
-               if ( currentLevel == 1 ) {
+            if ( currentLevel == 1 ) {
 
-                  listeningToKeyboard = false;
-                  playerX = 44 * 16;
-                  playerY = 32;
-                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                  GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+               listeningToKeyboard = false;
+               playerX = 44 * 16;
+               playerY = 32;
+               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
 
-                  $( "#screen-transition" )
-                     .fadeIn( 1500, () => {
+               $( "#screen-transition" )
+                  .fadeIn( 1500, () => {
 
-                        level2Load();
+                     level2Load();
 
-                        setTimeout( () => {
-                           $( "#screen-transition" )
-                              .fadeOut( 1500, () => {
-                                 listeningToKeyboard = true;
-                              } )
-                        }, 3000 );
+                     setTimeout( () => {
+                        $( "#screen-transition" )
+                           .fadeOut( 1500, () => {
+                              listeningToKeyboard = true;
+                           } )
+                     }, 3000 );
 
-                     } );
+                  } );
 
-               } else {
+            } else {
 
-                  listeningToKeyboard = false;
-                  playerX = 4 * 16;
-                  playerY = 19 * 16;
-                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                  GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
-                  setTimeout( () => {
-                     listeningToKeyboard = true;
-                  }, 200 );
-                  playerData.coins += 16;
-                  level2Load();
-
-               }
-
-               break;
-
-            case 3:
-               if ( playerData.coins >= 16 ) {
-
-                  pressedKey = false;
-                  shouldAnimate = false;
-                  GameModule.setCanvasImageObjPos( player, playerX, playerY );
-                  listeningToKeyboard = false;
-
-                  playerData.coins -= 16;
-                  currentLevel = 3;
-                  GameModule.arrayTo2DLevel( 3 );
-                  GameModule.getNpcs( 3 );
-                  playerX = 368;
-                  playerY = 288;
-
-                  GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-                  GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
-                  context.clearRect( 0, 0, canvas.width, canvas.height );
-                  foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                  backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-                  GameModule.addCanvasImageObj( "background3", "img/game/levels/level3.png", 384, 768 );
-                  GameModule.addCanvasImageObj( "foreground3", "img/game/levels/level3Overlay.png", 384, 768 );
-                  GameModule.addCanvasImageObj( "asuna", "img/game/sprites/asunafix.png", 32, 32, 2 );
-                  GameModule.addCanvasImageObj( "fire", "img/game/sprites/fire.png", 32, 32, 7 );
-                  GameModule.setCanvasBackground( images[ "background" + 3 ] );
-                  GameModule.setCanvasForeground( images[ "foreground" + 3 ] );
-                  GameModule.setCanvasImageObjPos( images[ "asuna" ], 16 * 16, 240 );
-                  GameModule.setCanvasImageObjPos( images[ "fire" ], 29 * 16, 80 );
-                  GameModule.setSpriteFrame( images[ "kirito" ], context );
-                  GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
-                  GameModule.setSpriteFrame( images[ "fire" ], backgroundContext );
-
+               listeningToKeyboard = false;
+               playerX = 4 * 16;
+               playerY = 19 * 16;
+               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
+               setTimeout( () => {
                   listeningToKeyboard = true;
+               }, 200 );
+               playerData.coins += 16;
+               level2Load();
 
-               } else {
+            }
 
-                  GameModule.addCanvasImageObj( "tax01", "img/game/misc/tax01.png", 384, 768 );
-                  GameModule.setCanvasImageObjPos( images[ "tax01" ], 334, 152 );
-                  GameModule.fadeInImage( images[ "tax01" ] );
+            break;
 
-                  setTimeout( () => {
-                     GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-                     GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
-                  }, 2500 );
-
-               }
-
-               break;
-
-            case 4:
-
-               let event = new CustomEvent( 'attack', {
-                  'detail': "iAmPotato"
-               } );
-               document.dispatchEvent( event );
+         case 3:
+            if ( playerData.coins >= 16 ) {
 
                pressedKey = false;
                shouldAnimate = false;
                GameModule.setCanvasImageObjPos( player, playerX, playerY );
                listeningToKeyboard = false;
 
-               currentLevel = 4;
+               playerData.coins -= 16;
+               currentLevel = 3;
+               GameModule.arrayTo2DLevel( 3 );
+               GameModule.getNpcs( 3 );
+               playerX = 368;
+               playerY = 288;
 
+               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
                context.clearRect( 0, 0, canvas.width, canvas.height );
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.addCanvasImageObj( "background4", "img/game/levels/sky.png", 384, 768 );
-               GameModule.addCanvasImageObj( "foreground4", "img/game/levels/transparent.png", 384, 768 );
-               GameModule.addCanvasImageObj( "tower", "img/game/sprites/towerW169H350.png", 350, 169, 9 );
-               GameModule.addCanvasImageObj( "goku", "img/game/sprites/goku1.png", 102, 66, 6 );
-               GameModule.addCanvasImageObj( "meteor", "img/game/sprites/meteor.png", 331, 303, 10 );
-               GameModule.addCanvasImageObj( "kamehameha", "img/game/sprites/kamehameha.png", 128, 128, 6 );
-               GameModule.addCanvasImageObj( "blast", "img/game/misc/blast.png", 64, 57 );
-               GameModule.addCanvasImageObj( "titan", "img/game/misc/titan.png", 384, 655 );
-               GameModule.setCanvasBackground( images[ "background" + 4 ] );
-               GameModule.setCanvasForeground( images[ "foreground" + 4 ] );
-               GameModule.setCanvasImageObjPos( images[ "tower" ], 20, 44 );
-               GameModule.setSpriteFrame( images[ "tower" ], context );
+               GameModule.addCanvasImageObj( "background3", "img/game/levels/level3.png", 384, 768 );
+               GameModule.addCanvasImageObj( "foreground3", "img/game/levels/level3Overlay.png", 384, 768 );
+               GameModule.addCanvasImageObj( "asuna", "img/game/sprites/asunafix.png", 32, 32, 2 );
+               GameModule.addCanvasImageObj( "fire", "img/game/sprites/fire.png", 32, 32, 7 );
+               GameModule.setCanvasBackground( images[ "background" + 3 ] );
+               GameModule.setCanvasForeground( images[ "foreground" + 3 ] );
+               GameModule.setCanvasImageObjPos( images[ "asuna" ], 16 * 16, 240 );
+               GameModule.setCanvasImageObjPos( images[ "fire" ], 29 * 16, 80 );
+               GameModule.setSpriteFrame( images[ "kirito" ], context );
+               GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
+               GameModule.setSpriteFrame( images[ "fire" ], backgroundContext );
 
-               // listeningToKeyboard = true;
-               GameModule.titanAttack();
+               listeningToKeyboard = true;
 
-               break;
+            } else {
 
-            case 5:
-               currentLevel = 5;
-               break;
+               GameModule.addCanvasImageObj( "tax01", "img/game/misc/tax01.png", 384, 768 );
+               GameModule.setCanvasImageObjPos( images[ "tax01" ], 334, 152 );
+               GameModule.fadeInImage( images[ "tax01" ] );
 
-            case 6:
-               currentLevel = 6;
-               break;
+               setTimeout( () => {
+                  GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
+                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+               }, 2500 );
 
-            default:
-               break;
+            }
+
+            break;
+
+         case 4:
+
+            let event = new CustomEvent( 'attack', {
+               'detail': "iAmPotato"
+            } );
+            document.dispatchEvent( event );
+
+            pressedKey = false;
+            shouldAnimate = false;
+            GameModule.setCanvasImageObjPos( player, playerX, playerY );
+            listeningToKeyboard = false;
+
+            currentLevel = 4;
+
+            context.clearRect( 0, 0, canvas.width, canvas.height );
+            foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+            backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
+            GameModule.addCanvasImageObj( "background4", "img/game/levels/sky.png", 384, 768 );
+            GameModule.addCanvasImageObj( "foreground4", "img/game/levels/transparent.png", 384, 768 );
+            GameModule.addCanvasImageObj( "tower", "img/game/sprites/towerW169H350.png", 350, 169, 9 );
+            GameModule.addCanvasImageObj( "goku", "img/game/sprites/goku1.png", 102, 66, 6 );
+            GameModule.addCanvasImageObj( "meteor", "img/game/sprites/meteor.png", 331, 303, 10 );
+            GameModule.addCanvasImageObj( "kamehameha", "img/game/sprites/kamehameha.png", 128, 128, 6 );
+            GameModule.addCanvasImageObj( "blast", "img/game/misc/blast.png", 64, 57 );
+            GameModule.addCanvasImageObj( "titan", "img/game/misc/titan.png", 384, 655 );
+            GameModule.setCanvasBackground( images[ "background" + 4 ] );
+            GameModule.setCanvasForeground( images[ "foreground" + 4 ] );
+            GameModule.setCanvasImageObjPos( images[ "tower" ], 20, 44 );
+            GameModule.setSpriteFrame( images[ "tower" ], context );
+
+            // listeningToKeyboard = true;
+            GameModule.titanAttack();
+
+            break;
+
+         case 5:
+            currentLevel = 5;
+            break;
+
+         case 6:
+            currentLevel = 6;
+            break;
+
+         default:
+            break;
 
          }
       }
