@@ -53,7 +53,7 @@ var prezModule = ( function () {
                         .height()
                   }, {
                      queue: false,
-                     duration: 20000,
+                     duration: 40000,
                      delay: 0,
                      easing: "linear"
                   } );

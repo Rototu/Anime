@@ -4,6 +4,7 @@
 
 html {
    margin: 0;
+   width: 100%;
    height: 100%;
    overflow-y: hidden;
 }
@@ -15,19 +16,13 @@ body {
    top: 0;
    left: 0;
    font-family: 'Roboto', sans-serif;
-   height: 100%;
-   width: 100%;
+   height: inherit;
+   width: inherit;
    overflow-y: hidden;
 }
 
-#wrapper {
-   width: 300%;
-   height: 100%;
-   position: relative;
-}
-
 #container {
-   width: 100%;
+   width: 300vw;
    height: 100%;
    position: absolute;
    top: 0;
@@ -99,41 +94,58 @@ a {
 .image-column {
    width: 35%;
    height: calc(92vh - 8vw);
-   margin: 4vh;
+   margin: 4vh 4vh 4vh 100px;
    overflow: hidden;
    float: left;
 }
 
 .image-row {
    text-align: center;
+   overflow: hidden;
+   width: 100%;
+   margin: 1vh 0;
 }
 
 .half-column {
-   height: 45%;
-   margin: 2.5% 0;
+   width: 100%;
 }
 
 .full-column {
    height: 100%;
+   max-width: 100%;
 }
 
-.image-row > img {
+.image-row>img {
    margin-top: auto;
-   max-height: 100%;
-   max-width: 100%;
 }
 
 .text-column {
    color: white;
-   background-color: white;
    float: left;
    width: 45%;
    height: calc(92vh - 8vw);
-   margin: 4vh auto 4vh 8vh;
+   margin: 4vh auto 4vh 20px;
    overflow: hidden;
 }
 
 .title-row {
    text-align: center;
    width: 100%;
+   line-height: 50px;
+   font-size: 44px;
+   margin-bottom: 40px;
+   font-weight: 400;
+}
+
+.vertical-center {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-flow: column;
+}
+
+.text-content {
+   font-size: 22px;
+   font-weight: 100;
+   text-align: center;
 }
