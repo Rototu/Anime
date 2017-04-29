@@ -1,6 +1,6 @@
-"use strict";
-
 let GameModule = ( () => {
+  
+  'use strict';
 
    let myMap = new Int8Array( 1152 );
 
@@ -71,9 +71,9 @@ let GameModule = ( () => {
                GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
                GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
 
-               GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-               GameModule.setSpriteFrame( images[ "kirito" ], context );
-               GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
+               GameModule.drawCanvasImageObj( images.miyazaki, 0, 0, foregroundContext );
+               GameModule.setSpriteFrame( images.kirito, context );
+               GameModule.setSpriteFrame( images.crow, foregroundContext );
 
                playerX = 32;
                playerY = 160;
@@ -92,7 +92,7 @@ let GameModule = ( () => {
                         $( "#screen-transition" )
                            .prop( "src", "img/game/gifs/kiriwave.gif" );
 
-                     } )
+                     } );
                }, 500 );
             } );
 
@@ -110,9 +110,9 @@ let GameModule = ( () => {
          GameModule.addCanvasImageObj( "miyazaki", "img/game/sprites/miyazaki.png", 32, 32 );
          GameModule.addCanvasImageObj( "miyazakiPortrait", "img/game/misc/miyazakiportrait.png", 200, 200 );
 
-         GameModule.setCanvasImageObjPos( images[ "kirito" ], 32, 160 );
-         GameModule.setCanvasImageObjPos( images[ "miyazaki" ], 416, 224 );
-         GameModule.setCanvasImageObjPos( images[ "crow" ], 368, 134 );
+         GameModule.setCanvasImageObjPos( images.kirito, 32, 160 );
+         GameModule.setCanvasImageObjPos( images.miyazaki, 416, 224 );
+         GameModule.setCanvasImageObjPos( images.crow, 368, 134 );
 
       },
 
@@ -174,12 +174,12 @@ let GameModule = ( () => {
 
       playerControls: () => {
 
-         let player = images[ "kirito" ];
+         let player = images.kirito;
 
          $( document )
             .keydown( ( key ) => {
 
-               if ( pressedKey == 0 && shouldAnimate == false && listeningToKeyboard == true ) {
+               if ( pressedKey === 0 && shouldAnimate === false && listeningToKeyboard === true ) {
 
                   switch ( key.which ) {
 
@@ -256,7 +256,7 @@ let GameModule = ( () => {
             globalProgress = timeStamp - globalStart;
          }
 
-         let player = images[ "kirito" ];
+         let player = images.kirito;
 
          if ( pressedKey || shouldAnimate ) {
 
@@ -320,13 +320,13 @@ let GameModule = ( () => {
 
          }
 
-         requestAnimationFrame( GameModule.timer )
+         requestAnimationFrame( GameModule.timer );
 
       },
 
       fireBlast: ( x, y ) => {
 
-         let tower = images[ "tower" ];
+         let tower = images.tower;
 
          let towerAnimate = setInterval( () => {
             context.clearRect( 0, 0, canvas.width, canvas.height );
@@ -350,29 +350,28 @@ let GameModule = ( () => {
             context.moveTo( 105, 64 );
             context.lineTo( x, y );
             context.stroke();
-            GameModule.setCanvasImageObjPos( images[ "blast" ], x - 32, y - 31 );
-            GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
+            GameModule.setCanvasImageObjPos( images.blast, x - 32, y - 31 );
+            GameModule.drawCanvasImageObj( images.blast, 0, 0, context );
             let laserEffect = new Audio( 'sounds/bomb.mp3' );
             laserEffect.volume = 0.8;
             laserEffect.play();
             setTimeout( () => {
                context.clearRect( 0, 0, canvas.width, canvas.height );
                GameModule.setSpriteFrame( tower, context );
-               GameModule.drawCanvasImageObj( images[ "blast" ], 0, 0, context );
+               GameModule.drawCanvasImageObj( images.blast, 0, 0, context );
                GameModule.titanShake();
                setTimeout( () => {
                   context.clearRect( 0, 0, canvas.width, canvas.height );
                   GameModule.setSpriteFrame( tower, context );
                }, 120 );
             }, 120 );
-         }
+         };
 
       },
 
       goku: () => {
 
-         let goku = images[ "goku" ];
-         let titan = images[ "titan" ];
+         let goku = images.goku;
 
          goku.yPos = 282;
          goku.xPos = -66;
@@ -382,7 +381,7 @@ let GameModule = ( () => {
 
          portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
          GameModule.addCanvasImageObj( "gokuPortrait", "img/game/misc/goku.png", 200, 200 );
-         GameModule.drawCanvasImageObj( images[ "gokuPortrait" ], 0, 0, portraitContext );
+         GameModule.drawCanvasImageObj( images.gokuPortrait, 0, 0, portraitContext );
          foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
 
          $( "#alert" )
@@ -446,15 +445,15 @@ let GameModule = ( () => {
 
       kamehameha: () => {
 
-         let kame = images[ "kamehameha" ],
-            goku = images[ "goku" ],
+         let kame = images.kamehameha,
+            goku = images.goku,
             kameX = 90,
             kameY;
 
          kame.currentFrame = 0;
 
          let drawRotatedBlast = ( x, y ) => {
-            if ( x % 40 == 0 ) {
+            if ( x % 40 === 0 ) {
                if ( goku.currentFrame == 5 ) {
                   goku.currentFrame = 2;
                }
@@ -469,7 +468,7 @@ let GameModule = ( () => {
             foregroundContext.rotate( 0.12125902920621191 );
             GameModule.setSpriteFrame( kame, foregroundContext );
             foregroundContext.restore();
-         }
+         };
 
          let kameInterval = setInterval( () => {
 
@@ -534,7 +533,7 @@ let GameModule = ( () => {
 
       titanAttack: () => {
 
-         let titan = images[ "titan" ];
+         let titan = images.titan;
 
          titan.yPos = 0;
          titan.xPos = 768;
@@ -556,7 +555,7 @@ let GameModule = ( () => {
 
       titanRetreat: () => {
 
-         let titan = images[ "titan" ];
+         let titan = images.titan;
 
          titan.yPos = 0;
          titan.xPos = 124;
@@ -583,7 +582,7 @@ let GameModule = ( () => {
 
       titanShake: () => {
 
-         let titan = images[ "titan" ];
+         let titan = images.titan;
 
          let shakenLeft = false,
             shakenRight = false;
@@ -633,7 +632,7 @@ let GameModule = ( () => {
             min = Math.ceil( min );
             max = Math.floor( max );
             return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
-         }
+         };
 
          let closeGame = ( e ) => {
 
@@ -646,7 +645,7 @@ let GameModule = ( () => {
                document.removeEventListener( 'keydown', closeGame, false );
             }
 
-         }
+         };
 
          let optionSelect = ( event ) => {
 
@@ -663,7 +662,7 @@ let GameModule = ( () => {
                }
             }
 
-         }
+         };
 
          let quizHover = ( event ) => {
 
@@ -687,14 +686,14 @@ let GameModule = ( () => {
                } );
             }
 
-         }
+         };
 
          myGame.addEventListener( 'click', optionSelect, false );
          myGame.addEventListener( 'mousemove', quizHover, false );
          document.addEventListener( 'keydown', closeGame, false );
 
          GameModule.addCanvasImageObj( "whiteBar", "img/game/misc/whiteBar.png", 32, 768 );
-         GameModule.setCanvasImageObjPos( images[ "whiteBar" ], 0, 0 );
+         GameModule.setCanvasImageObjPos( images.whiteBar, 0, 0 );
 
          let nextQuizOption = () => {
 
@@ -706,8 +705,8 @@ let GameModule = ( () => {
             GameModule.setCanvasImageObjPos( images[ "choice" + counter ], 224, 224 );
             GameModule.fadeInImage( images[ "choice" + counter ] );
             GameModule.drawCanvasImageObj( images[ "choice" + counter ], 0, 0, context );
-            GameModule.drawCanvasImageObj( images[ "tower" ], 0, 0, context );
-            GameModule.drawCanvasImageObj( images[ "whiteBar" ], 0, 0, context );
+            GameModule.drawCanvasImageObj( images.tower, 0, 0, context );
+            GameModule.drawCanvasImageObj( images.whiteBar, 0, 0, context );
             foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
             GameModule.fadeInText( choices[ counter ].characters[ option ], 320, 20 );
 
@@ -722,10 +721,10 @@ let GameModule = ( () => {
                      myGame.removeEventListener( 'click', optionSelect, false );
                      document.removeEventListener( 'keydown', closeGame, false );
                      context.clearRect( 0, 0, canvas.width, canvas.height );
-                     GameModule.drawCanvasImageObj( images[ "tower" ], 0, 0, context );
+                     GameModule.drawCanvasImageObj( images.tower, 0, 0, context );
                      GameModule.goku();
                   }
-               }
+               };
 
                if ( e.detail == option ) {
                   // let yay = new Audio( 'sounds/yay.mp3' );
@@ -741,11 +740,11 @@ let GameModule = ( () => {
                   moveOn();
                }
 
-            }
+            };
 
             myGame.addEventListener( 'optionClicked', optionCompare, false );
 
-         }
+         };
 
          nextQuizOption();
 
@@ -754,11 +753,11 @@ let GameModule = ( () => {
       crow: ( progress ) => {
 
          if ( progress % 150 <= 100 && crowAnimate ) {
-            GameModule.getNextSpriteFrame( images[ "crow" ] );
+            GameModule.getNextSpriteFrame( images.crow );
             crowAnimate = false;
             GameModule.setCanvasForeground( images[ "foreground" + currentLevel ] );
-            GameModule.drawCanvasImageObj( images[ "miyazaki" ], 0, 0, foregroundContext );
-            GameModule.setSpriteFrame( images[ "crow" ], foregroundContext );
+            GameModule.drawCanvasImageObj( images.miyazaki, 0, 0, foregroundContext );
+            GameModule.setSpriteFrame( images.crow, foregroundContext );
          }
          if ( progress % 150 >= 100 && !crowAnimate ) {
             crowAnimate = true;
@@ -771,15 +770,15 @@ let GameModule = ( () => {
          if ( progress % 100 < 60 && fireAnimate ) {
 
             fireAnimate = false;
-            let fire = images[ "fire" ];
+            let fire = images.fire;
             GameModule.getNextSpriteFrame( fire );
             GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
             GameModule.setSpriteFrame( fire, backgroundContext );
-            GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
+            GameModule.setSpriteFrame( images.asuna, backgroundContext );
 
             if ( progress % 400 < 60 && asunaAnimate ) {
                asunaAnimate = false;
-               GameModule.getNextSpriteFrame( images[ "asuna" ] );
+               GameModule.getNextSpriteFrame( images.asuna );
             } else if ( progress % 400 >= 60 && !asunaAnimate ) {
                asunaAnimate = true;
             }
@@ -794,7 +793,7 @@ let GameModule = ( () => {
 
          if ( progress % 400 <= 100 && sheepAnimate ) {
 
-            let sheep = images[ "sheep" ];
+            let sheep = images.sheep;
             GameModule.getNextSpriteFrame( sheep );
             sheepAnimate = false;
             GameModule.setCanvasBackground( images[ "background" + currentLevel ] );
@@ -881,7 +880,7 @@ let GameModule = ( () => {
 
       movePlayerChar: ( spriteObj, dist ) => {
 
-         let player = images[ "kirito" ];
+         let player = images.kirito;
 
          dist = parseInt( dist );
 
@@ -951,7 +950,7 @@ let GameModule = ( () => {
 
          let randomOption = Math.floor( Math.random() * ( numberOfOptions ) );
 
-         obj.css( "background-position", `${ (-randomOption) * size}px 0` );
+         obj.css( "background-position", `${ ( -randomOption ) * obj.size }px 0` );
 
       },
 
@@ -980,12 +979,12 @@ let GameModule = ( () => {
 
       },
 
-      deleteObjFromMap: ( obj ) => {
+      deleteObjFromMap: ( $el ) => {
 
          let {
             width,
             height
-         } = GameModule.objSizeToBlockSize( obj );
+         } = GameModule.objSizeToBlockSize( $el );
 
          let xPos = $el.mapPosX;
          let yPos = $el.mapPosY;
@@ -998,7 +997,7 @@ let GameModule = ( () => {
 
       },
 
-      objSizeToBlockSize: ( obj ) => {
+      objSizeToBlockSize: ( $el ) => {
 
          let width = $el.width() / 16;
          let height = $el.height() / 16;
@@ -1101,7 +1100,7 @@ let GameModule = ( () => {
 
       setCanvasBackground: ( obj ) => {
 
-         if ( obj.loaded == false ) {
+         if ( obj.loaded === false ) {
             obj
                .image
                .addEventListener( "load", () => {
@@ -1118,7 +1117,7 @@ let GameModule = ( () => {
 
       setCanvasForeground: ( obj ) => {
 
-         if ( obj.loaded == false ) {
+         if ( obj.loaded === false ) {
             obj
                .image
                .addEventListener( "load", () => {
@@ -1163,7 +1162,7 @@ let GameModule = ( () => {
          // failure safety
          canvasContext.drawImage( obj.image, xPosImage, yPosImage, obj.width, obj.height, obj.xPos, obj.yPos, obj.width, obj.height );
 
-         if ( obj.loaded == false ) {
+         if ( obj.loaded === false ) {
             obj
                .image
                .addEventListener( "load", () => {
@@ -1213,7 +1212,7 @@ let GameModule = ( () => {
 
       miyazaki: () => {
 
-         if ( GameModule.getDistanceBetweenObjects( images[ "miyazaki" ], images[ "kirito" ] ) < 48 ) {
+         if ( GameModule.getDistanceBetweenObjects( images.miyazaki, images.kirito ) < 48 ) {
 
             switch ( currentLevel ) {
 
@@ -1223,7 +1222,7 @@ let GameModule = ( () => {
                   "Aici o să poți învăța într-un mod interactiv despre tot ce ține de lumea aceasta.",
                   "Pentru început, ca să ajungi în orașul central, urcă în barca de mai jos! </br> ^1000 (Apasă ESC pentru a închide un dialog)"
                ];
-               GameModule.drawCanvasImageObj( images[ "miyazakiPortrait" ], 0, 0, portraitContext );
+               GameModule.drawCanvasImageObj( images.miyazakiPortrait, 0, 0, portraitContext );
                $( "#alert" )
                   .fadeIn( 500, () => {
                      GameModule.alertTextDisplay( stringArray );
@@ -1267,10 +1266,10 @@ let GameModule = ( () => {
 
          let myGame = document.getElementById( "game" );
 
-         if ( GameModule.getDistanceBetweenObjects( images[ "L" ], images[ "kirito" ] ) < 48 && !playerData.lChallengeCompleted ) {
+         if ( GameModule.getDistanceBetweenObjects( images.L, images.kirito ) < 48 && !playerData.lChallengeCompleted ) {
 
             GameModule.addCanvasImageObj( "lChallenge", "img/game/levels/lChallenge.png", 384, 768 );
-            GameModule.setCanvasForeground( images[ "lChallenge" ] );
+            GameModule.setCanvasForeground( images.lChallenge );
             foregroundContext.font = "32px sans-serif";
             playerData.specialScreen = true;
 
@@ -1286,22 +1285,22 @@ let GameModule = ( () => {
 
                setTimeout( () => {
                   GameModule.addCanvasImageObj( "lLogo", "img/game/misc/lLogo.png", 384, 768 );
-                  GameModule.setCanvasImageObjPos( images[ "lLogo" ], 26 * 16, 12 * 16 );
-                  GameModule.fadeInImage( images[ "lLogo" ] );
+                  GameModule.setCanvasImageObjPos( images.lLogo, 26 * 16, 12 * 16 );
+                  GameModule.fadeInImage( images.lLogo );
                }, 4000 );
 
                setTimeout( () => {
                   frame2();
                }, 5500 );
 
-            }
+            };
 
             let frame2 = () => {
 
                foregroundContext.globalAlpha = 1;
                foregroundContext.font = "20px sans-serif";
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
-               GameModule.setCanvasForeground( images[ "lChallenge" ] );
+               GameModule.setCanvasForeground( images.lChallenge );
 
                setTimeout( () => {
                   GameModule.fadeInText( "Dacă îmi spui care este numele meu,", 18 * 16, 10 * 16 - 8 );
@@ -1315,16 +1314,16 @@ let GameModule = ( () => {
                   GameModule.addCanvasImageObj( "lOpt1", "img/game/misc/lOpt1.png", 32, 352 );
                   GameModule.addCanvasImageObj( "lOpt2", "img/game/misc/lOpt2.png", 32, 352 );
                   GameModule.addCanvasImageObj( "lOpt3", "img/game/misc/lOpt3.png", 32, 352 );
-                  GameModule.setCanvasImageObjPos( images[ "lOpt1" ], 18 * 16, 12 * 16 );
-                  GameModule.setCanvasImageObjPos( images[ "lOpt2" ], 18 * 16, 14 * 16 );
-                  GameModule.setCanvasImageObjPos( images[ "lOpt3" ], 18 * 16, 16 * 16 );
-                  GameModule.fadeInImage( images[ "lOpt1" ] );
-                  GameModule.fadeInImage( images[ "lOpt2" ] );
-                  GameModule.fadeInImage( images[ "lOpt3" ] );
+                  GameModule.setCanvasImageObjPos( images.lOpt1, 18 * 16, 12 * 16 );
+                  GameModule.setCanvasImageObjPos( images.lOpt2, 18 * 16, 14 * 16 );
+                  GameModule.setCanvasImageObjPos( images.lOpt3, 18 * 16, 16 * 16 );
+                  GameModule.fadeInImage( images.lOpt1 );
+                  GameModule.fadeInImage( images.lOpt2 );
+                  GameModule.fadeInImage( images.lOpt3 );
                   challenge();
                }, 5000 );
 
-            }
+            };
 
             let lQuizHandler = ( event ) => {
 
@@ -1352,7 +1351,7 @@ let GameModule = ( () => {
                   myGame.removeEventListener( "click", lQuizHandler, false );
                }
 
-            }
+            };
 
             let lQuizHover = ( event ) => {
 
@@ -1370,7 +1369,7 @@ let GameModule = ( () => {
                   } );
                }
 
-            }
+            };
 
             let rightAnswer = [
                "Corect! Eu sunt L Lawliet, cunoscut însă ca fiind doar L de majoritatea lumii.",
@@ -1393,8 +1392,8 @@ let GameModule = ( () => {
                document.addEventListener( "keydown", rewardPlayer, false );
                portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
                GameModule.addCanvasImageObj( "lPortrait", "img/game/misc/lPortrait.png", 200, 200 );
-               GameModule.drawCanvasImageObj( images[ "lPortrait" ], 0, 0, portraitContext );
-               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+               GameModule.drawCanvasImageObj( images.lPortrait, 0, 0, portraitContext );
+               GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
                playerData.specialScreen = false;
 
                $( "#alert" )
@@ -1402,7 +1401,7 @@ let GameModule = ( () => {
                      GameModule.alertTextDisplay( answer );
                   } );
 
-            }
+            };
 
             let rewardPlayer = ( event ) => {
                let char = event.which || event.keyCode;
@@ -1410,27 +1409,27 @@ let GameModule = ( () => {
 
                   document.removeEventListener( "keydown", rewardPlayer, false );
                   playerData.lChallengeCompleted = true;
-                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+                  GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
 
                   setTimeout( () => {
                      GameModule.addCanvasImageObj( "reward01", "img/game/misc/reward01.png", 384, 768 );
-                     GameModule.setCanvasImageObjPos( images[ "reward01" ], 334, 152 );
-                     GameModule.fadeInImage( images[ "reward01" ] );
+                     GameModule.setCanvasImageObjPos( images.reward01, 334, 152 );
+                     GameModule.fadeInImage( images.reward01 );
                      playerData.coins += 24;
                   }, 1000 );
 
                   setTimeout( () => {
                      GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-                     GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+                     GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
                   }, 2500 );
 
                }
-            }
+            };
 
             let challenge = () => {
                myGame.addEventListener( "click", lQuizHandler, false );
                myGame.addEventListener( "mousemove", lQuizHover, false );
-            }
+            };
 
 
             frame1();
@@ -1440,7 +1439,7 @@ let GameModule = ( () => {
       },
 
       asuna: () => {
-         if ( GameModule.getDistanceBetweenObjects( images[ "asuna" ], images[ "kirito" ] ) < 48 ) {
+         if ( GameModule.getDistanceBetweenObjects( images.asuna, images.kirito ) < 48 ) {
 
             let asunaTxt = [ "Kirito, prietenul meu drag, în sfârşit ai venit la mine acasă!",
                "Sţiu că eşti obosit de la atâta drum, nu vrei să joci un joc?",
@@ -1451,7 +1450,7 @@ let GameModule = ( () => {
 
             portraitContext.clearRect( 0, 0, portrait.width, portrait.height );
             GameModule.addCanvasImageObj( "asunaPortrait", "img/game/misc/asuna.png", 200, 200 );
-            GameModule.drawCanvasImageObj( images[ "asunaPortrait" ], 0, 0, portraitContext );
+            GameModule.drawCanvasImageObj( images.asunaPortrait, 0, 0, portraitContext );
 
             let closeGame = ( e ) => {
                if ( e.keyCode === 27 ) {
@@ -1460,7 +1459,7 @@ let GameModule = ( () => {
                   document.removeEventListener( "keydown", closeGame, false );
                   GameModule.moveToLevel( 4 );
                }
-            }
+            };
 
             $( "#alert" )
                .fadeIn( 500, () => {
@@ -1513,7 +1512,7 @@ let GameModule = ( () => {
 
       moveToLevel: ( nextLevel ) => {
 
-         let player = images[ "kirito" ];
+         let player = images.kirito;
 
          switch ( nextLevel ) {
 
@@ -1530,18 +1529,18 @@ let GameModule = ( () => {
                GameModule.addCanvasImageObj( "foreground2", "img/game/levels/level2Overlay.png", 384, 768 );
                GameModule.addCanvasImageObj( "sheep", "img/game/sprites/sheep.png", 32, 32, 6 );
                GameModule.addCanvasImageObj( "L", "img/game/sprites/Lchar.png", 32, 32 );
-               GameModule.setCanvasImageObjPos( images[ "sheep" ], 17 * 16, 14 * 16 );
-               GameModule.setCanvasImageObjPos( images[ "L" ], 7 * 16, 5 * 16 );
+               GameModule.setCanvasImageObjPos( images.sheep, 17 * 16, 14 * 16 );
+               GameModule.setCanvasImageObjPos( images.L, 7 * 16, 5 * 16 );
                GameModule.setCanvasBackground( images[ "background" + 2 ] );
                GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-               GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+               GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
                setTimeout( () => {
                   GameModule.setCanvasBackground( images[ "background" + 2 ] );
                   GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+                  GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
                }, 200 ); // loading problems
-               GameModule.setSpriteFrame( images[ "kirito" ], context );
-               GameModule.setSpriteFrame( images[ "sheep" ], backgroundContext );
+               GameModule.setSpriteFrame( images.kirito, context );
+               GameModule.setSpriteFrame( images.sheep, backgroundContext );
             };
 
 
@@ -1554,8 +1553,8 @@ let GameModule = ( () => {
                listeningToKeyboard = false;
                playerX = 44 * 16;
                playerY = 32;
-               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-               GameModule.changeSpriteOrientation( images[ "kirito" ], "left" );
+               GameModule.setCanvasImageObjPos( images.kirito, playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images.kirito, "left" );
 
                $( "#screen-transition" )
                   .fadeIn( 1500, () => {
@@ -1566,7 +1565,7 @@ let GameModule = ( () => {
                         $( "#screen-transition" )
                            .fadeOut( 1500, () => {
                               listeningToKeyboard = true;
-                           } )
+                           } );
                      }, 3000 );
 
                   } );
@@ -1576,8 +1575,8 @@ let GameModule = ( () => {
                listeningToKeyboard = false;
                playerX = 4 * 16;
                playerY = 19 * 16;
-               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-               GameModule.changeSpriteOrientation( images[ "kirito" ], "down" );
+               GameModule.setCanvasImageObjPos( images.kirito, playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images.kirito, "down" );
                setTimeout( () => {
                   listeningToKeyboard = true;
                }, 200 );
@@ -1603,8 +1602,8 @@ let GameModule = ( () => {
                playerX = 368;
                playerY = 288;
 
-               GameModule.setCanvasImageObjPos( images[ "kirito" ], playerX, playerY, context );
-               GameModule.changeSpriteOrientation( images[ "kirito" ], "up" );
+               GameModule.setCanvasImageObjPos( images.kirito, playerX, playerY, context );
+               GameModule.changeSpriteOrientation( images.kirito, "up" );
                context.clearRect( 0, 0, canvas.width, canvas.height );
                foregroundContext.clearRect( 0, 0, canvas.width, canvas.height );
                backgroundContext.clearRect( 0, 0, canvas.width, canvas.height );
@@ -1614,23 +1613,23 @@ let GameModule = ( () => {
                GameModule.addCanvasImageObj( "fire", "img/game/sprites/fire.png", 32, 32, 7 );
                GameModule.setCanvasBackground( images[ "background" + 3 ] );
                GameModule.setCanvasForeground( images[ "foreground" + 3 ] );
-               GameModule.setCanvasImageObjPos( images[ "asuna" ], 16 * 16, 240 );
-               GameModule.setCanvasImageObjPos( images[ "fire" ], 29 * 16, 80 );
-               GameModule.setSpriteFrame( images[ "kirito" ], context );
-               GameModule.setSpriteFrame( images[ "asuna" ], backgroundContext );
-               GameModule.setSpriteFrame( images[ "fire" ], backgroundContext );
+               GameModule.setCanvasImageObjPos( images.asuna, 16 * 16, 240 );
+               GameModule.setCanvasImageObjPos( images.fire, 29 * 16, 80 );
+               GameModule.setSpriteFrame( images.kirito, context );
+               GameModule.setSpriteFrame( images.asuna, backgroundContext );
+               GameModule.setSpriteFrame( images.fire, backgroundContext );
 
                listeningToKeyboard = true;
 
             } else {
 
                GameModule.addCanvasImageObj( "tax01", "img/game/misc/tax01.png", 384, 768 );
-               GameModule.setCanvasImageObjPos( images[ "tax01" ], 334, 152 );
-               GameModule.fadeInImage( images[ "tax01" ] );
+               GameModule.setCanvasImageObjPos( images.tax01, 334, 152 );
+               GameModule.fadeInImage( images.tax01 );
 
                setTimeout( () => {
                   GameModule.setCanvasForeground( images[ "foreground" + 2 ] );
-                  GameModule.drawCanvasImageObj( images[ "L" ], 0, 0, foregroundContext );
+                  GameModule.drawCanvasImageObj( images.L, 0, 0, foregroundContext );
                }, 2500 );
 
             }
@@ -1664,8 +1663,8 @@ let GameModule = ( () => {
             GameModule.addCanvasImageObj( "titan", "img/game/misc/titan.png", 384, 655 );
             GameModule.setCanvasBackground( images[ "background" + 4 ] );
             GameModule.setCanvasForeground( images[ "foreground" + 4 ] );
-            GameModule.setCanvasImageObjPos( images[ "tower" ], 20, 44 );
-            GameModule.setSpriteFrame( images[ "tower" ], context );
+            GameModule.setCanvasImageObjPos( images.tower, 20, 44 );
+            GameModule.setSpriteFrame( images.tower, context );
 
             // listeningToKeyboard = true;
             GameModule.titanAttack();
@@ -1690,5 +1689,6 @@ let GameModule = ( () => {
 
 $( "#game" )
    .imagesLoaded( () => {
+     'use strict';
       GameModule.test();
-   } );
+} );
